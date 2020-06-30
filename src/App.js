@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Nav from './Components/Nav';
+import Body from './Components/Body';
 
 class App extends React.Component {
   constructor() {
@@ -12,8 +13,7 @@ class App extends React.Component {
     return (
       <main className="App">
         <Nav />
-        {/* logo + title + search form + loginBTN */}
-        {/* <Body /> */}
+        <Body />
         {/* renders all the movies with ratings */}
       </main>
     );
