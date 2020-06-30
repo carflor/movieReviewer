@@ -1,43 +1,22 @@
 import React from 'react';
 import './Body.css'
+import MovieCard from './MovieCard'
 
-const Body = () => {
+const Body = props => {
   // create a variable to contain the mapping of the cards and interpolate in section
-
-  return (
-    <section className="movie-container">
-      <section className="movie-card">
-        {/* cards should exist here */}
-        <img src="https://image.tmdb.org/t/p/original//8WUVHemHFH2ZIP6NWkwlHWsyrEL.jpg" className="movie-poster" alt="film-poster" />
-        <section className="rating-box">
-          <section>AVG RATING</section>
-          <section>USER RATING</section>
-        </section>
-
+  console.log(props.movies, 'props')
+  if(props.movies) {
+    const movieCards = props.movies.map(movie => (
+      <MovieCard {...movie} key={movie.id} />
+    ))
+    return (
+      <section className="movie-container">
+        { movieCards }
       </section>
-
-      <section className="movie-card">
-        {/* cards should exist here */}
-        <img src="https://image.tmdb.org/t/p/original//8WUVHemHFH2ZIP6NWkwlHWsyrEL.jpg" className="movie-poster" alt="film-poster" />
-        <section className="rating-box">
-          <section>AVG RATING</section>
-          <section>USER RATING</section>
-        </section>
-
-      </section>
-
-      <section className="movie-card">
-        {/* cards should exist here */}
-        <img src="https://image.tmdb.org/t/p/original//8WUVHemHFH2ZIP6NWkwlHWsyrEL.jpg" className="movie-poster" alt="film-poster" />
-        <section className="rating-box">
-          <section>AVG RATING</section>
-          <section>USER RATING</section>
-        </section>
-
-      </section>
-    </section>
-  )
-
+    )
+  } else {
+    return <p>Loading...</p>
+  }
 }
 
 export default Body;
