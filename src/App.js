@@ -26,14 +26,18 @@ class App extends React.Component {
       .then(data => this.setState({ 
         movies: data.movies, 
         isLoading: false 
-    })).catch(err => console.log(err.message))
+    })).catch(error => this.setState({ error, isLoading: false}))
   } 
 
   render() {
-    const { movies, isLoading } = this.state
+    const { movies, isLoading, error } = this.state
 
     if(isLoading) {
       return <p>Loading...</p>
+    }
+
+    if(error) {
+    return <p>{error.message}</p>
     }
     
     return (
