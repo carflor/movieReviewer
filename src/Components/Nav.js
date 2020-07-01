@@ -6,6 +6,7 @@ function Nav() {
     <nav className="nav">
       <h1 className="nav-title">DOPE NOPE</h1>
       {/* ICON IMAGE */}
+      <label></label>
       <input 
         className='search-bar'
         type='search' 

@@ -21,7 +21,7 @@ class App extends React.Component {
         if(response.ok) {
           return response.json() 
         } else {
-          throw new Error('Pardon the disturbance..')
+          throw new Error('Pardon the disturbance...')
         }})
       .then(data => this.setState({ 
         movies: data.movies, 
