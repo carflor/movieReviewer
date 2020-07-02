@@ -15,6 +15,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true })
+    // set logged in as a property on state - boolean
+    // switch to true after logged in and conditional render 
+
+    // the other option is to use router, ask teachers
 
     fetch('https://rancid-tomatillos.herokuapp.com/api/v2/movies')
       .then(response => {
@@ -47,6 +51,7 @@ class App extends React.Component {
       </main>
     );
   }
+  // logged out screen component
 }
 
 export default App;
