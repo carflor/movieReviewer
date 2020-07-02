@@ -6,7 +6,7 @@ const MovieCard = (props) => {
       <img src={props.poster_path} className="movie-poster" alt="film-poster" />
       <section className="rating-box">
         <section>AVG {props.average_rating}</section>
-        <section>USER RATING</section>
+        <section>User rating</section>
       </section>
     </section>
   )
