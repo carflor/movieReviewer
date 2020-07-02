@@ -1,6 +1,9 @@
 import React from 'react';
 
 const MovieCard = (props) => {
+  // if (isLoggedIn === true) {
+  //   const userRatings
+  // }
   return (
     <section className="movie-card">
       <img src={props.poster_path} className="movie-poster" alt="film-poster" />

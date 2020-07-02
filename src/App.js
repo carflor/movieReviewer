@@ -14,7 +14,8 @@ class App extends React.Component {
       // isLoggedIn: false,
       // form: false,
       logInMethod: this.logIn,
-      user: null
+      user: null,
+      ratings: null
     }
     this.url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
   }
@@ -22,6 +23,12 @@ class App extends React.Component {
   logIn = () => {
     this.setState({ ...this.state, form: true })
   }
+
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.userID !== prevProps.userID) {
+  //     this.fetchData(this.props.userID);
+  //   }
+  // }
 
   componentDidMount() {
     this.setState({ isLoading: true })
@@ -44,14 +51,15 @@ class App extends React.Component {
     this.setState({user: data.user, isLoggedIn: true})
     fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
       .then(response => response.json())
-      // .then(data => this.setState({userrating= data}))
+      .then(data => this.setState({form: false, ratings: data.ratings}))
+      .then(data => console.log('userdatastate', this.state))
       .catch(error => console.log(error))
+
   
   }
 
   render() {
     const { movies, isLoading, error, form, isLoggedIn } = this.state
-    console.log('state', this.state)
     if(isLoading) {
       return <p>Loading...</p>
     }
@@ -62,12 +70,11 @@ class App extends React.Component {
 
     if(form) {
       return (
-         <LogInForm form={this.state.form} getUserData= {this.getUserData}/>
+         <LogInForm getUserData= {this.getUserData}/>
         )
     }
 
     if(isLoggedIn) {
-      this.getUserData()
       return (
         <main className="App">
           <Nav data={this.state}/>
