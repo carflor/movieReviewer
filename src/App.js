@@ -50,20 +50,20 @@ class App extends React.Component {
     })).catch(error => this.setState({ error, isLoading: false}))
   }
   
-  getUserData = (data) => {
+  getUserRatings = (data) => {
     console.log('data', data)
     this.setState({user: data.user, isLoggedIn: true})
     fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
-      .then(data => console.log('userdatastate', this.state))
+      .then(data => console.log('userratingsstate', this.state))
       .catch(error => console.log(error))
 
   
   }
 
   render() {
-    const { movies, isLoading, error, form, isLoggedIn } = this.state
+    const { movies, isLoading, error, form, isLoggedIn, ratings } = this.state
     if(isLoading) {
       return <p>Loading...</p>
     }
@@ -74,7 +74,7 @@ class App extends React.Component {
 
     if(form) {
       return (
-         <LogInForm getUserData= {this.getUserData}/>
+         <LogInForm getUserRatings= {this.getUserRatings}/>
         )
     }
 
@@ -82,7 +82,7 @@ class App extends React.Component {
       return (
         <main className="App">
           <Nav data={this.state}/>
-          <Body movies={movies} />
+          <Body movies={movies} ratings={ratings} />
         </main>
       )
     }
@@ -90,7 +90,7 @@ class App extends React.Component {
     return (
       <main className="App">
         <Nav data={this.state}/>
-        <Body movies={movies} />
+        <Body movies={movies} ratings={ratings}/>
       </main>
     );
   }

@@ -29,7 +29,7 @@ class LogInForm extends Component {
                 })
             })
             .then(response => response.json())
-            .then(data => this.props.getUserData(data))
+            .then(data => this.props.getUserRatings(data))
             .catch(error => console.log(error))
         )
     }

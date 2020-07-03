@@ -20,9 +20,6 @@ class Nav extends Component {
         )
     }
 
-    // if this.state.isLoggedIn 
-    // renders diff component with logout/welcome mss
-
     if(this.state.isLoggedIn) {
       return (
         <nav className="nav">
