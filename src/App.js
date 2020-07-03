@@ -11,8 +11,9 @@ class App extends React.Component {
       movies: null,
       isLoading: false,
       error: null,
-      // isLoggedIn: false,
+      isLoggedIn: false,
       // form: false,
+      logOutMethod: this.logOut,
       logInMethod: this.logIn,
       user: null,
       ratings: null
@@ -22,6 +23,10 @@ class App extends React.Component {
 
   logIn = () => {
     this.setState({ ...this.state, form: true })
+  }
+
+  logOut = () => {
+    this.setState({...this.state, ratings: null, isLoggedIn: false})
   }
 
   // componentDidUpdate(prevProps) {
