@@ -15,8 +15,5 @@ describe('Body', () => {
     const { getByText } = render(<Body />);
     const linkElement = getByText(/Loading.../);
     expect(linkElement).toBeInTheDocument();
-    });
-
-
-
+  });
 })

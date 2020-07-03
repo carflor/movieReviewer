@@ -7,7 +7,7 @@ const MovieCard = (props) => {
     if (findMovieRating) {
       userRate = <section>User: {findMovieRating.rating}</section>
     } else {
-      userRate = <section>RATE ME</section>
+      userRate = <button>RATE ME</button>
     }
   }
 
