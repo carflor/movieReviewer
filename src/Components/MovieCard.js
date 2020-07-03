@@ -1,15 +1,22 @@
 import React from 'react';
 
 const MovieCard = (props) => {
-  // if (isLoggedIn === true) {
-  //   const userRatings
-  // }
+  let userRate;
+  if (props.ratings) {
+    const findMovieRating = props.ratings.find(film => film.movie_id === props.id)
+    if (findMovieRating) {
+      userRate = <section>User: {findMovieRating.rating}</section>
+    } else {
+      userRate = <section>RATE ME</section>
+    }
+  }
+
   return (
     <section className="movie-card">
       <img src={props.poster_path} className="movie-poster" alt="film-poster" />
       <section className="rating-box">
-        <section>AVG {props.average_rating}</section>
-        <section>User rating</section>
+        <section>AVG: {Math.floor(props.average_rating)}</section>
+        {userRate}
       </section>
     </section>
   )

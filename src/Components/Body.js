@@ -3,10 +3,11 @@ import './Body.css'
 import MovieCard from './MovieCard'
 
 const Body = props => {
+  console.log(props, 'props in body')
   // create a variable to contain the mapping of the cards and interpolate in section
   if(props.movies) {
     const movieCards = props.movies.map(movie => (
-      <MovieCard {...movie} key={movie.id} />
+      <MovieCard {...movie} key={movie.id} ratings={props.ratings} />
     ))
     return (
       <section className="movie-container">
