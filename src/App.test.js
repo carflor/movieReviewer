@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render, fireEvent, waitFor, mockClear } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
-import Nav from './Components/Nav'
-
-
 
 describe('App', () => {
   it('renders without crashing', () => {
@@ -21,13 +18,9 @@ describe('App', () => {
   });
 
   it('Should be able to bring up a log in form', async () => {
-    //Set up
-    const { getByText, getByRole} = render(<App />) 
-    // Execute
-    
+    const { getByText, getByRole } = render(<App />) 
     const title = await waitFor(() => getByText('DOPE NOPE'))
     const logInButton = await waitFor(() => getByRole('button', {name: 'LOG IN'}))
-    //Assert
     expect(title).toBeInTheDocument()
     expect(logInButton).toBeInTheDocument()
   })
@@ -39,7 +32,7 @@ describe('App', () => {
     })
   );
     const { getByText } = render(<App />);
-    const linkElement = await waitFor(() => getByText(/Pardon the disturbance.../));
+    const linkElement = await waitFor(() => getByText(/Pardon the disturbance in the force.../));
     expect(linkElement).toBeInTheDocument();
   })
 });

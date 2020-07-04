@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor, mockClear, getByPlaceholderText } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Nav from './Nav';
 
@@ -29,7 +29,7 @@ describe('Nav', () => {
   });
 
   it('Should bring up the log in form when clicked', () => {
-    const { getByText, getByRole} = render (<Nav
+    const { getByText, getByRole } = render (<Nav
         data={state}
       />)
 

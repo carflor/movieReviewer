@@ -1,28 +1,44 @@
 import React, { Component } from 'react'
 import './MoviePage.css'
 
-
 class MoviePage extends Component {
-    constructor(props) {
-      super(props); 
-        this.state = {}
-    }
+  constructor(props) {
+    super(props); 
+      this.state = {
+        isLoading: false,
+      }
+  }
 
-    componentDidMount() {
-      fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${this.props.moviePageID}`)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .then(response => this.setState({movieTitle: response.movie.title,}))
-        .catch(error => console.log(error.message))
-    }
+  componentDidMount() {
+    fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${this.props.moviePageID}`)
+      .then(response => response.json())
+      .then(response => this.setState({ 
+        title: response.movie.title,
+        avgRating: response.movie.average_rating,
+        backdrop: response.movie.backdrop_path,
+        genre: response.movie.genres,
+        overview: response.movie.overview,
+        poster: response.movie.poster_path,
+        releaseDate: response.movie.release_date,
+        runtime: response.movie.runtime,
+        tagline: response.movie.tagline,
+        isLoading: true,
+      }))
+      .catch(error => console.log(error.message))
+  }
 
-    render() {
+  render() {
+    if(this.state.isLoading) {
       return (
-        <section className='movie-page'>
-          
-        </section>
+      <section className='movie-page'>
+        <h1>Content</h1>
+      </section>
       )
+    } else {
+      return <p className="loading-message">Loading...</p>
     }
+  }
+}
 
     //movie:
 // average_rating: 3.6666666666666665
@@ -37,6 +53,6 @@ class MoviePage extends Component {
 // runtime: 95
 // tagline: "Remember the name"
 // title: "Artemis Fowl"
- }
+//  }
 
 export default MoviePage

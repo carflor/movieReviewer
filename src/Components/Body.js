@@ -3,7 +3,6 @@ import './Body.css'
 import MovieCard from './MovieCard'
 
 const Body = props => {
-  // create a variable to contain the mapping of the cards and interpolate in section
   if(props.movies) {
     const movieCards = props.movies.map(movie => (
       <MovieCard {...movie} key={movie.id} ratings={props.ratings} handleMovie={props.handleMovie} />
@@ -14,7 +13,7 @@ const Body = props => {
       </section>
     )
   } else {
-    return <p>Loading...</p>
+    return <p className='loading-message'>Loading...</p>
   }
 }
 

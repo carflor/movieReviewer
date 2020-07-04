@@ -13,12 +13,12 @@ class App extends React.Component {
       isLoading: false,
       error: null,
       isLoggedIn: false,
-      // form: false,
       moviePage: false,
       logOutMethod: this.logOut,
       logInMethod: this.logIn,
       user: null,
       ratings: null
+      // form: false,
     }
     this.url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
   }
@@ -36,25 +36,14 @@ class App extends React.Component {
     console.log(event.target) 
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.userID !== prevProps.userID) {
-  //     this.fetchData(this.props.userID);
-  //   }
-  // }
-
   componentDidMount() {
     this.setState({ isLoading: true })
-    // set logged in as a property on state - boolean
-    // switch to true after logged in and conditional render 
-
-    // the other option is to use router, ask teachers
-
     fetch(`${this.url}/movies`)
       .then(response => {
         if(response.ok) {
           return response.json() 
         } else {
-          throw new Error('Pardon the disturbance...')
+          throw new Error('Pardon the disturbance in the force...')
         }})
       .then(data => this.setState({ 
         movies: data.movies, 
@@ -69,14 +58,12 @@ class App extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
       .catch(error => console.log(error))
-
-  
   }
 
   render() {
     const { movies, isLoading, error, form, isLoggedIn, ratings, moviePage } = this.state
     if(isLoading) {
-      return <p>Loading...</p>
+      return <p className='loading-message'>Loading...</p>
     }
 
     if(error) {
@@ -111,7 +98,6 @@ class App extends React.Component {
       </main>
     );
   }
-  // logged out screen component
 }
 
 export default App;

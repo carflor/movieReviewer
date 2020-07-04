@@ -1,11 +1,11 @@
 .nav {
   width: 100vw;
+  max-width: 100vw;
   height: 15vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   text-align: center;
-
   border: 1px solid black;
 }
 
