@@ -22,16 +22,42 @@ class MoviePage extends Component {
         releaseDate: response.movie.release_date,
         runtime: response.movie.runtime,
         tagline: response.movie.tagline,
+        userRating: null,
         isLoading: true,
+        isLoggedIn: false,
       }))
       .catch(error => console.log(error.message))
   }
 
   render() {
+    const backgroundImg = { backgroundImage: `url(${this.state.backdrop})`}
     if(this.state.isLoading) {
       return (
-      <section className='movie-page'>
-        <h1>Content</h1>
+      <section 
+        className='movie-page'
+        style={ backgroundImg } 
+        >
+        <section>
+          <button className='back-btn'>BACK</button>
+          <h1 className='movie-title'>{this.state.title}</h1>
+        </section>
+        <section>
+          <img src={this.state.poster} alt='movie poster' className='movie-poster'/>
+          <section>
+            <section>
+              {Math.floor(this.state.avgRating)}
+              {this.state.isLoggedIn && this.state.userRating}
+            </section>
+            <section>
+              {this.state.overview}
+              {this.state.releaseDate}
+              {this.state.runtime}
+              {this.state.genres}
+            </section>
+
+          </section>
+        </section>
+        <section className="movie-tagline">{this.state.tagline}</section>
       </section>
       )
     } else {
