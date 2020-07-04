@@ -6,7 +6,7 @@ const Body = props => {
   // create a variable to contain the mapping of the cards and interpolate in section
   if(props.movies) {
     const movieCards = props.movies.map(movie => (
-      <MovieCard {...movie} key={movie.id} ratings={props.ratings} />
+      <MovieCard {...movie} key={movie.id} ratings={props.ratings} handleMovie={props.handleMovie} />
     ))
     return (
       <section className="movie-container">

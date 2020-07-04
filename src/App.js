@@ -3,6 +3,7 @@ import './App.css';
 import Nav from './Components/Nav';
 import Body from './Components/Body';
 import LogInForm from './Components/LogInForm';
+import MoviePage from './Components/MoviePage'
 
 class App extends React.Component {
   constructor() {
@@ -13,6 +14,7 @@ class App extends React.Component {
       error: null,
       isLoggedIn: false,
       // form: false,
+      moviePage: false,
       logOutMethod: this.logOut,
       logInMethod: this.logIn,
       user: null,
@@ -27,6 +29,11 @@ class App extends React.Component {
 
   logOut = () => {
     this.setState({...this.state, ratings: null, isLoggedIn: false})
+  }
+
+  handleMovie = (event) => {
+    this.setState({...this.state, moviePage: true, moviePageID: event.target.id})
+    console.log(event.target) 
   }
 
   // componentDidUpdate(prevProps) {
@@ -61,14 +68,13 @@ class App extends React.Component {
     fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
-      .then(data => console.log('userratingsstate', this.state))
       .catch(error => console.log(error))
 
   
   }
 
   render() {
-    const { movies, isLoading, error, form, isLoggedIn, ratings } = this.state
+    const { movies, isLoading, error, form, isLoggedIn, ratings, moviePage } = this.state
     if(isLoading) {
       return <p>Loading...</p>
     }
@@ -79,8 +85,14 @@ class App extends React.Component {
 
     if(form) {
       return (
-         <LogInForm getUserRatings= {this.getUserRatings}/>
+         <LogInForm getUserRatings= {this.getUserRatings} />
         )
+    }
+
+    if(moviePage) {
+      return (
+        <MoviePage data={this.state.movies} moviePageID= {this.state.moviePageID} />
+      )
     }
 
     if(isLoggedIn) {
@@ -95,7 +107,7 @@ class App extends React.Component {
     return (
       <main className="App">
         <Nav data={this.state}/>
-        <Body movies={movies} ratings={ratings}/>
+        <Body movies={movies} ratings={ratings} handleMovie={this.handleMovie}/>
       </main>
     );
   }
