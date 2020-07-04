@@ -8,10 +8,21 @@
 }
 
 .movie-card {
-  border: 4px solid black;
+  border: 1.5px solid black;
   width: 211.5px;
   height: 307px;
   margin: 1vh;
+  border-radius: .3vh;
+}
+
+.movie-card:hover,
+.movie-card:focus {
+  opacity: .6;
+  background-color: silver;
+  box-shadow: 0 0 3px 3px black;
+  cursor: pointer;
+  transform: scale(1.03);
+  transition: transform .3s;
 }
 
 .movie-poster {
