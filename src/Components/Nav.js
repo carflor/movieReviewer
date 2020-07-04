@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../Components/Nav.css';
 import LogInForm from './LogInForm'
 
@@ -14,10 +14,11 @@ const Nav = (props) => {
       <nav className="nav">
         <h1 className="nav-title">DOPE NOPE</h1>
         {/* ICON IMAGE */}
-        <label></label>
+        <label htmlFor="search"></label>
         <input 
           className='search-bar'
-          type='search' 
+          type='search'
+          ariaLabel="search-input" 
           placeholder='Search Movies...'></input>
         <button 
         className="login-btn" 
@@ -35,6 +36,7 @@ const Nav = (props) => {
       <input 
         className='search-bar'
         type='search' 
+        ariaLabel="search-input"
         placeholder='Search Movies...'></input>
       <button 
       className="login-btn" 
