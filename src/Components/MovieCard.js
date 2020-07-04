@@ -7,13 +7,13 @@ const MovieCard = (props) => {
     if (findMovieRating) {
       userRate = <section>User: {findMovieRating.rating}</section>
     } else {
-      userRate = <section>RATE ME</section>
+      userRate = <button>RATE ME</button>
     }
   }
 
   return (
-    <section className="movie-card">
-      <img src={props.poster_path} className="movie-poster" alt="film-poster" />
+    <section className="movie-card" onClick={props.handleMovie}>
+    <img src={props.poster_path} className="movie-poster" alt="film-poster" id={props.id} />
       <section className="rating-box">
         <section>AVG: {Math.floor(props.average_rating)}</section>
         {userRate}
