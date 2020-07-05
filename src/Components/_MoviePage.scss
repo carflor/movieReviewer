@@ -8,7 +8,7 @@
   display: flex;
   justify-content: space-evenly;
   background-color: #0a97b0;
-  height: 10vh;
+  height: 15vh;
   opacity: .8;
   align-items: center;
 }
@@ -21,20 +21,20 @@
 .back-btn:hover,
 .back-btn:focus {
   cursor: pointer;
-  transform: scale(1.08);
+  transform: scale(1.2);
   transition: transform .3s;
 }
 
 .movie-title {
   margin: auto;
-  font-size: 7vh;
+  font-size: 8vh;
 }
 
 .movie-content {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 85vh;
+  height: 75vh;
 }
 
 .movie-data-box {
@@ -69,8 +69,10 @@
 
 .movie-tagline {
   background-color: #0a97b0;
-  height: 5vh;
-  opacity: .8;
-  text-align: center;
-  font-size: 3.5vh;
+  height: 10vh;
+  opacity: 0.8;
+  font-size: 5.5vh;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }

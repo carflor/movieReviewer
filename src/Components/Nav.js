@@ -20,10 +20,12 @@ const Nav = (props) => {
           type='search'
           ariaLabel="search-input" 
           placeholder='Search Movies...'></input>
-        <button 
-        className="login-btn" 
-        onClick={props.data.logOutMethod}>LOG OUT</button>
-        <p className="welcome-message">Welcome {props.data.user.name}</p>
+        <section className="nav-btn-box">
+          <p className="welcome-message">Welcome {props.data.user.name}</p>
+          <button 
+            className="login-btn" 
+            onClick={props.data.logOutMethod}>LOG OUT</button>
+        </section>
       </nav>
     )
   }
@@ -38,9 +40,11 @@ const Nav = (props) => {
         type='search' 
         ariaLabel="search-input"
         placeholder='Search Movies...'></input>
-      <button 
-      className="login-btn" 
-      onClick={props.data.logInMethod}>LOG IN</button>
+      <section className="nav-btn-box">
+        <button 
+        className="login-btn" 
+        onClick={props.data.logInMethod}>LOG IN</button>
+      </section>
     </nav>
   )
 }
