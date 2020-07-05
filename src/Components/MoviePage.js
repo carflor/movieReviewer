@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import './MoviePage.css'
+import './_MoviePage.scss'
+import backIcon from '../Assets/angle-double-left-solid.svg'
 
 class MoviePage extends Component {
   constructor(props) {
@@ -8,6 +9,11 @@ class MoviePage extends Component {
         isLoading: false,
       }
   }
+
+  // handleBackBtn = (event) => {
+  //   console.log(this.state, 'state in movie page clicked')
+  //   this.setState({ ...this.state, moviePage: false })
+  // }
 
   componentDidMount() {
     fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${this.props.moviePageID}`)
@@ -31,33 +37,39 @@ class MoviePage extends Component {
 
   render() {
     const backgroundImg = { backgroundImage: `url(${this.state.backdrop})`}
+
     if(this.state.isLoading) {
       return (
       <section 
         className='movie-page'
         style={ backgroundImg } 
         >
-        <section>
-          <button className='back-btn'>BACK</button>
+        <section className="movie-nav">
+          <img 
+            alt='back-btn' 
+            src={ backIcon } 
+            className='back-btn'
+            tabIndex='0'
+            onClick={ this.props.handleBackBtn }
+             />
           <h1 className='movie-title'>{this.state.title}</h1>
         </section>
-        <section>
-          <img src={this.state.poster} alt='movie poster' className='movie-poster'/>
-          <section>
-            <section>
-              {Math.floor(this.state.avgRating)}
+        <section className='movie-content'>
+          <img src={this.state.poster} alt='movie poster' className='movie-poster-selected'/>
+          <section className='movie-data-box'> 
+            <section className='rating-box-selected'>
+              AVG Rating: {Math.floor(this.state.avgRating)}
               {this.state.isLoggedIn && this.state.userRating}
             </section>
-            <section>
-              {this.state.overview}
-              {this.state.releaseDate}
-              {this.state.runtime}
-              {this.state.genres}
+            <section className='movie-data'>
+              <p>{this.state.overview}</p>
+              <p>Release Date: {this.state.releaseDate}</p>
+              <p>Duration: {this.state.runtime} minutes</p>
+              <p>Genres: {this.state.genres}</p>
             </section>
-
           </section>
         </section>
-        <section className="movie-tagline">{this.state.tagline}</section>
+        <section className="movie-tagline">"{this.state.tagline}"</section>
       </section>
       )
     } else {

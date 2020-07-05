@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import App from '../App'
-import './LogInForm.css'
+import './_LogInForm.scss'
 
 class LogInForm extends Component {
     constructor() {

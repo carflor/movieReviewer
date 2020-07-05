@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import Nav from './Components/Nav';
 import Body from './Components/Body';
 import LogInForm from './Components/LogInForm';
@@ -28,12 +28,15 @@ class App extends React.Component {
   }
 
   logOut = () => {
-    this.setState({...this.state, ratings: null, isLoggedIn: false})
+    this.setState({ ...this.state, ratings: null, isLoggedIn: false})
   }
 
   handleMovie = (event) => {
-    this.setState({...this.state, moviePage: true, moviePageID: event.target.id})
-    console.log(event.target) 
+    this.setState({ ...this.state, moviePage: true, moviePageID: event.target.id})
+  }
+
+  handleBackBtn = () => {
+    this.setState({ ...this.state, moviePage: false })
   }
 
   componentDidMount() {
@@ -52,7 +55,6 @@ class App extends React.Component {
   }
   
   getUserRatings = (data) => {
-    console.log('data', data)
     this.setState({user: data.user, isLoggedIn: true})
     fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
       .then(response => response.json())
@@ -78,15 +80,22 @@ class App extends React.Component {
 
     if(moviePage) {
       return (
-        <MoviePage data={this.state.movies} moviePageID= {this.state.moviePageID} />
+        <MoviePage 
+          data={this.state.movies} 
+          moviePageID={this.state.moviePageID}
+          handleBackBtn={this.handleBackBtn} />
       )
     }
 
     if(isLoggedIn) {
       return (
         <main className="App">
-          <Nav data={this.state}/>
-          <Body movies={movies} ratings={ratings} />
+          <Nav data={this.state} />
+          <Body
+            isLoggedIn={isLoggedIn}
+            movies={movies} 
+            ratings={ratings}
+            handleMovie={this.handleMovie} />
         </main>
       )
     }
@@ -94,7 +103,11 @@ class App extends React.Component {
     return (
       <main className="App">
         <Nav data={this.state}/>
-        <Body movies={movies} ratings={ratings} handleMovie={this.handleMovie}/>
+        <Body
+          isLoggedIn={isLoggedIn}
+          movies={movies} 
+          ratings={ratings}
+          handleMovie={this.handleMovie}/>
       </main>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Components/Nav.css';
+import './_Nav.scss';
 import LogInForm from './LogInForm'
 
 const Nav = (props) => {
