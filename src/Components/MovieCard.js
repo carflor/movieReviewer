@@ -21,7 +21,15 @@ const MovieCard = (props) => {
         </section>
       )
     } else {
-      userRate = <section className="rate-me">RATE ME</section>
+      userRate = (
+        <section className="rate-me">
+          <img
+              alt="rated-icon"
+              src={ ratedIcon }
+              className="rated-star-icon" />
+          RATE HERE
+        </section>
+      ) 
     }
   }
 
