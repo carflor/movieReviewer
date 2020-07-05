@@ -1,3 +1,10 @@
+@import './Components/_Body';
+@import './Components/_LogInForm';
+@import './Components/_MovieCard';
+@import './Components/_MoviePage';
+@import './Components/_Nav';
+@import '_variables';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,3 +18,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+

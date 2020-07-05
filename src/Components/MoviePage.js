@@ -1,28 +1,79 @@
 import React, { Component } from 'react'
-import './MoviePage.css'
-
+import './_MoviePage.scss'
+import backIcon from '../Assets/angle-double-left-solid.svg'
 
 class MoviePage extends Component {
-    constructor(props) {
-      super(props); 
-        this.state = {}
-    }
+  constructor(props) {
+    super(props); 
+      this.state = {
+        isLoading: false,
+      }
+  }
 
-    componentDidMount() {
-      fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${this.props.moviePageID}`)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .then(response => this.setState({movieTitle: response.movie.title,}))
-        .catch(error => console.log(error.message))
-    }
+  componentDidMount() {
+    fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${this.props.moviePageID}`)
+      .then(response => response.json())
+      .then(response => this.setState({ 
+        title: response.movie.title,
+        avgRating: response.movie.average_rating,
+        backdrop: response.movie.backdrop_path,
+        genre: response.movie.genres,
+        overview: response.movie.overview,
+        poster: response.movie.poster_path,
+        releaseDate: response.movie.release_date,
+        runtime: response.movie.runtime,
+        tagline: response.movie.tagline,
+        userRating: null,
+        isLoading: true,
+        isLoggedIn: false,
+      }))
+      .catch(error => console.log(error.message))
+  }
 
-    render() {
+  render() {
+    const backgroundImg = { backgroundImage: `url(${this.state.backdrop})`}
+
+    if(this.state.isLoading) {
       return (
-        <section className='movie-page'>
-          
+      <section 
+        className='movie-page'
+        style={ backgroundImg } 
+        >
+        <section className="movie-nav">
+          <img 
+            alt='back-btn' 
+            src={ backIcon } 
+            className='back-btn'
+            tabIndex='0'
+            onClick={ this.props.handleBackBtn }
+             />
+          <h1 className='movie-title'>{this.state.title}</h1>
         </section>
+        <section className='movie-content'>
+          <img 
+            src={this.state.poster} 
+            alt='movie poster' className='movie-poster-selected'/>
+          <section className='movie-data-box'> 
+            <section className='rating-box-selected'>
+              AVG: {Math.floor(this.state.avgRating)}
+              {this.state.isLoggedIn && this.state.userRating}
+            </section>
+            <section className='movie-data'>
+              <p>{this.state.overview}</p>
+              <p>Release Date: {this.state.releaseDate}</p>
+              <p>Duration: {this.state.runtime} minutes</p>
+              <p>Genres: {this.state.genres}</p>
+            </section>
+          </section>
+        </section>
+        <section className="movie-tagline">"{this.state.tagline}"</section>
+      </section>
       )
+    } else {
+      return <p className="loading-message">Loading...</p>
     }
+  }
+}
 
     //movie:
 // average_rating: 3.6666666666666665
@@ -37,6 +88,6 @@ class MoviePage extends Component {
 // runtime: 95
 // tagline: "Remember the name"
 // title: "Artemis Fowl"
- }
+//  }
 
 export default MoviePage

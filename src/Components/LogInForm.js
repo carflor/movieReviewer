@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import App from '../App'
-import './LogInForm.css'
+// import App from '../App'
+import './_LogInForm.scss'
 
 class LogInForm extends Component {
     constructor() {
@@ -45,6 +45,7 @@ class LogInForm extends Component {
                         type='text'
                         placeholder= 'email'
                         name='email'
+                        ariaLabel="email"
                         value={this.state.email}
                         onChange={event => this.handleChange(event)}
                     />
@@ -53,6 +54,7 @@ class LogInForm extends Component {
                         type='text'
                         placeholder= 'password'
                         name='password'
+                        ariaLabel="password"
                         value={this.state.password}
                         onChange={event => this.handleChange(event)}
                     />

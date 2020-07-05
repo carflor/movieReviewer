@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import Nav from './Components/Nav';
 import Body from './Components/Body';
 import LogInForm from './Components/LogInForm';
@@ -13,12 +13,12 @@ class App extends React.Component {
       isLoading: false,
       error: null,
       isLoggedIn: false,
-      // form: false,
       moviePage: false,
       logOutMethod: this.logOut,
       logInMethod: this.logIn,
       user: null,
       ratings: null
+      // form: false,
     }
     this.url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
   }
@@ -28,33 +28,25 @@ class App extends React.Component {
   }
 
   logOut = () => {
-    this.setState({...this.state, ratings: null, isLoggedIn: false})
+    this.setState({ ...this.state, ratings: null, isLoggedIn: false})
   }
 
   handleMovie = (event) => {
-    this.setState({...this.state, moviePage: true, moviePageID: event.target.id})
-    console.log(event.target) 
+    this.setState({ ...this.state, moviePage: true, moviePageID: event.target.id})
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.userID !== prevProps.userID) {
-  //     this.fetchData(this.props.userID);
-  //   }
-  // }
+  handleBackBtn = () => {
+    this.setState({ ...this.state, moviePage: false })
+  }
 
   componentDidMount() {
     this.setState({ isLoading: true })
-    // set logged in as a property on state - boolean
-    // switch to true after logged in and conditional render 
-
-    // the other option is to use router, ask teachers
-
     fetch(`${this.url}/movies`)
       .then(response => {
         if(response.ok) {
           return response.json() 
         } else {
-          throw new Error('Pardon the disturbance...')
+          throw new Error('Pardon the disturbance in the force...')
         }})
       .then(data => this.setState({ 
         movies: data.movies, 
@@ -63,26 +55,25 @@ class App extends React.Component {
   }
   
   getUserRatings = (data) => {
-    console.log('data', data)
     this.setState({user: data.user, isLoggedIn: true})
     fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
       .catch(error => console.log(error))
-
-  
   }
 
   render() {
     const { movies, isLoading, error, form, isLoggedIn, ratings, moviePage } = this.state
     if(isLoading) {
-      return <p>Loading...</p>
+      return <p className='loading-message'>Loading...</p>
     }
 
     if(error) {
     return <p>{error.message}</p>
     }
 
+
+    // HOW IS THIS VALIDATING IF FORM IS NOT IN STATE?!?
     if(form) {
       return (
          <LogInForm getUserRatings= {this.getUserRatings} />
@@ -91,15 +82,22 @@ class App extends React.Component {
 
     if(moviePage) {
       return (
-        <MoviePage data={this.state.movies} moviePageID= {this.state.moviePageID} />
+        <MoviePage 
+          data={this.state.movies} 
+          moviePageID={this.state.moviePageID}
+          handleBackBtn={this.handleBackBtn} />
       )
     }
 
     if(isLoggedIn) {
       return (
         <main className="App">
-          <Nav data={this.state}/>
-          <Body movies={movies} ratings={ratings} />
+          <Nav data={this.state} />
+          <Body
+            isLoggedIn={isLoggedIn}
+            movies={movies} 
+            ratings={ratings}
+            handleMovie={this.handleMovie} />
         </main>
       )
     }
@@ -107,11 +105,14 @@ class App extends React.Component {
     return (
       <main className="App">
         <Nav data={this.state}/>
-        <Body movies={movies} ratings={ratings} handleMovie={this.handleMovie}/>
+        <Body
+          isLoggedIn={isLoggedIn}
+          movies={movies} 
+          ratings={ratings}
+          handleMovie={this.handleMovie}/>
       </main>
     );
   }
-  // logged out screen component
 }
 
 export default App;
