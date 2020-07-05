@@ -43,6 +43,7 @@ class LogInForm extends Component {
                     <label htmlFor='email'></label>
                     <input 
                         type='text'
+                        className='email-input'
                         placeholder= 'email'
                         name='email'
                         ariaLabel="email"
@@ -53,13 +54,14 @@ class LogInForm extends Component {
                     <input 
                         type='text'
                         placeholder= 'password'
+                        className='password-input'
                         name='password'
                         ariaLabel="password"
                         value={this.state.password}
                         onChange={event => this.handleChange(event)}
                     />
-                    <button onClick={event => this.submitLogIn(event)}>Log In</button>
-                    <button onClick={event => this.returnHome(event)}>Back</button>
+                    <button className='submit-log-in-button' onClick={event => this.submitLogIn(event)}>Log In</button>
+                    <button className='back-button' onClick={event => this.returnHome(event)}>Back</button>
                 </form>
             </section>
             </section>
