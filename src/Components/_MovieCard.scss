@@ -1,0 +1,42 @@
+.avg-container {
+  display: flex;
+}
+
+.avg-container {
+  justify-content: left;
+}
+
+.avg-rating-container {
+  font-size: 3.5vw;
+}
+
+.rated-star-icon,
+.star-icon-poster {
+  width: 3vw;
+  margin: 0vh 1vh 0vh 2vh;
+}
+
+.rate-fraction {
+  margin-left: .2vh;
+  font-size: 1.2vw;
+}
+
+.movie-poster {
+  width: 280px;
+  height: 390px;
+}
+
+.rating-box {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.rate-me {
+  margin: auto;
+  font-size: 1.5vw;
+}
+
+.user-rating {
+  align-items: center;
+  display: flex;
+}

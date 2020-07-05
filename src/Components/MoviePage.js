@@ -10,11 +10,6 @@ class MoviePage extends Component {
       }
   }
 
-  // handleBackBtn = (event) => {
-  //   console.log(this.state, 'state in movie page clicked')
-  //   this.setState({ ...this.state, moviePage: false })
-  // }
-
   componentDidMount() {
     fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${this.props.moviePageID}`)
       .then(response => response.json())
@@ -55,7 +50,9 @@ class MoviePage extends Component {
           <h1 className='movie-title'>{this.state.title}</h1>
         </section>
         <section className='movie-content'>
-          <img src={this.state.poster} alt='movie poster' className='movie-poster-selected'/>
+          <img 
+            src={this.state.poster} 
+            alt='movie poster' className='movie-poster-selected'/>
           <section className='movie-data-box'> 
             <section className='rating-box-selected'>
               AVG: {Math.floor(this.state.avgRating)}

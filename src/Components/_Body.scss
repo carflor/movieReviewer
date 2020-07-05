@@ -13,9 +13,9 @@
 .movie-card {
   border: 1.5px solid #0a97b0;
   width: 280px;
-  height: 420px;
+  height: 440px;
   margin: 3.5vh;
-  border-radius: .3vh;
+  border-radius: .5vh;
   background-color: #fce8d5;
 }
 
@@ -29,12 +29,12 @@
   opacity: .8;
 }
 
-.movie-poster {
-  width: 280px;
-  height: 390px;
-}
+// .movie-poster {
+//   width: 280px;
+//   height: 390px;
+// }
 
-.rating-box {
-  display: flex;
-  justify-content: space-around;
-}
+// .rating-box {
+//   display: flex;
+//   justify-content: left;
+// }
