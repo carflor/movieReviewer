@@ -72,6 +72,8 @@ class App extends React.Component {
     return <p>{error.message}</p>
     }
 
+
+    // HOW IS THIS VALIDATING IF FORM IS NOT IN STATE?!?
     if(form) {
       return (
          <LogInForm getUserRatings= {this.getUserRatings} />

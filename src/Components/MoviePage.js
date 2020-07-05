@@ -58,7 +58,7 @@ class MoviePage extends Component {
           <img src={this.state.poster} alt='movie poster' className='movie-poster-selected'/>
           <section className='movie-data-box'> 
             <section className='rating-box-selected'>
-              AVG Rating: {Math.floor(this.state.avgRating)}
+              AVG: {Math.floor(this.state.avgRating)}
               {this.state.isLoggedIn && this.state.userRating}
             </section>
             <section className='movie-data'>
