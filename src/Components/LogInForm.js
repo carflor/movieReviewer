@@ -47,7 +47,7 @@ class LogInForm extends Component {
                         className='email-input'
                         placeholder= 'email'
                         name='email'
-                        ariaLabel="email"
+                        aria-label="email"
                         value={this.state.email}
                         onChange={event => this.handleChange(event)}
                     />
@@ -57,7 +57,7 @@ class LogInForm extends Component {
                         placeholder= 'password'
                         className='password-input'
                         name='password'
-                        ariaLabel="password"
+                        aria-label="password"
                         value={this.state.password}
                         onChange={event => this.handleChange(event)}
                     />

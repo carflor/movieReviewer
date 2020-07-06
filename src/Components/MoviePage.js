@@ -8,7 +8,6 @@ class MoviePage extends Component {
       this.state = {
         isLoading: false,
         value: '',
-        // userRating: this.findMovieRating()
       }
   }
 
@@ -18,19 +17,21 @@ class MoviePage extends Component {
 
   findRatingId = () => {
       const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
-      if(rating) {
+      if(rating.id) {
       console.log('rating', rating.id)  
       return rating.id
-    }
+    } 
   }
 
   removeRating = (event) => {
+    debugger
     this.deleteUserRating(event)
+    .then(console.log('ratings', this.props.ratings))
     .then(
     this.props.ratings.find((film, i) => {
       if (film.movie_id === parseInt(this.props.moviePageID)) {
-        this.props.ratings.splice(i, 1)
-      }
+       return this.props.ratings.splice(i, 1)
+      } 
     }))
     .then(this.setState({...this.state, userRating: null}))
     .catch(error => console.log(error.message))
@@ -66,7 +67,6 @@ class MoviePage extends Component {
   }
 
   submitRating = async (event) => {
-    debugger
     event.preventDefault()
     // return (
       const response = await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings`, {
