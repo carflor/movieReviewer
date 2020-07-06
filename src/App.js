@@ -43,6 +43,10 @@ class App extends React.Component {
   //   return rating
   // }
 
+  componentDidUpdate() {
+
+  }
+
   componentDidMount() {
     this.setState({ isLoading: true })
     fetch(`${this.url}/movies`)
@@ -59,11 +63,13 @@ class App extends React.Component {
   }
   
   getUserRatings = (data) => {
+    if (data) {
     this.setState({user: data.user, isLoggedIn: true})
     fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
       .catch(error => console.log(error))
+    } 
   }
 
   render() {
