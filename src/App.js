@@ -19,6 +19,9 @@ class App extends React.Component {
       user: null,
       ratings: null
       // form: false,
+      // ^^ fix this
+      // be explicit on all state properties - 
+      // DO NOT create a state prop outside of a defined property
     }
     this.url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
   }
@@ -72,8 +75,6 @@ class App extends React.Component {
     return <p>{error.message}</p>
     }
 
-
-    // HOW IS THIS VALIDATING IF FORM IS NOT IN STATE?!?
     if(form) {
       return (
          <LogInForm getUserRatings= {this.getUserRatings} />

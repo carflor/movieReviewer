@@ -7,6 +7,7 @@ class MoviePage extends Component {
     super(props); 
       this.state = {
         isLoading: false,
+        // possibly add ^ all fetch properties to null 
       }
   }
 
@@ -29,6 +30,11 @@ class MoviePage extends Component {
       }))
       .catch(error => console.log(error.message))
   }
+
+  // eventhandler to dispatch post method
+  // updates backend but manage display locally 
+
+  // instead componentDidUpdate - option2 - to do another fetch - mind the inf.loop.
 
   render() {
     const backgroundImg = { backgroundImage: `url(${this.state.backdrop})`}
