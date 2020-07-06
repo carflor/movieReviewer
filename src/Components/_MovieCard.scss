@@ -1,18 +1,17 @@
 .avg-container {
   display: flex;
-}
-
-.avg-container {
   justify-content: left;
-}
-
-.avg-rating-container {
-  font-size: 3.5vw;
 }
 
 .rated-star-icon,
 .star-icon-poster {
-  width: 3vw;
+  width: 2vw;
+  margin: 0vh 1vh 0vh 2vh;
+}
+
+.rated-star-icon-moviePage,
+.star-icon-poster-moviePage {
+  width: 4vw;
   margin: 0vh 1vh 0vh 2vh;
 }
 
@@ -29,6 +28,7 @@
 .rating-box {
   display: flex;
   justify-content: space-evenly;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .rate-me {
@@ -37,6 +37,6 @@
 }
 
 .user-rating {
-  align-items: center;
   display: flex;
+  align-items: center;
 }

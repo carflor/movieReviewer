@@ -18,7 +18,7 @@ const Nav = (props) => {
         <input 
           className='search-bar'
           type='search'
-          ariaLabel="search-input" 
+          aria-label="search-input" 
           placeholder='Search Movies...'></input>
         <section className="nav-btn-box">
           <p className="welcome-message">Welcome {props.data.user.name}</p>
@@ -38,7 +38,7 @@ const Nav = (props) => {
       <input 
         className='search-bar'
         type='search' 
-        ariaLabel="search-input"
+        aria-label="search-input"
         placeholder='Search Movies...'></input>
       <section className="nav-btn-box">
         <button 

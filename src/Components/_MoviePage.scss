@@ -11,6 +11,7 @@
   height: 15vh;
   opacity: .8;
   align-items: center;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .back-btn {
@@ -32,20 +33,25 @@
 
 .movie-content {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   height: 75vh;
 }
 
 .movie-data-box {
   display: flex;
-  flex-direction: column;
+  font-size: larger;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   background-color: #fce8d5;
   border-radius: .5vh;
   height: 65vh;
+  width: 55vw;
   opacity: .9;
   padding: 2vh;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 2vh;
+  overflow: scroll;
 }
 
 .movie-poster-selected {
@@ -55,10 +61,26 @@
 }
 
 .rating-box-selected {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  margin-top: 3vh;
   background-color: #0a97b0;
   width: 20vw;
   height: 15vh;
-  font-size: 6vh;
+  font-size: 3vh;
+  border-radius: 1vh;
+}
+
+.user-rating-box-selected {
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #0a97b0;
+  width: 20vw;
+  height: 15vh;
+  font-size: 3vh;
   text-align: center;
   border-radius: 1vh;
 }
@@ -67,12 +89,27 @@
   width: 60vw;
 }
 
+.delete-button {
+  height: 2vh;
+}
+
 .movie-tagline {
   background-color: #0a97b0;
   height: 10vh;
   opacity: 0.8;
-  font-size: 4.5vh;
   justify-content: center;
   align-items: center;
   display: flex;
+  font-style: italic;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 3.5vh;
+}
+
+.movie-datum {
+  font-style: italic;
+}
+
+.user-rating, 
+.average-rating {
+  margin: auto;
 }

@@ -17,11 +17,8 @@ class App extends React.Component {
       logOutMethod: this.logOut,
       logInMethod: this.logIn,
       user: null,
-      ratings: null
-      // form: false,
-      // ^^ fix this
-      // be explicit on all state properties - 
-      // DO NOT create a state prop outside of a defined property
+      ratings: null,
+      form: false,
     }
     this.url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
   }
@@ -58,11 +55,16 @@ class App extends React.Component {
   }
   
   getUserRatings = (data) => {
+    if (data instanceof Object) {
     this.setState({user: data.user, isLoggedIn: true})
+    } else {
+      this.setState({user: this.props.user, isLoggedIn: true})
+    }
     fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
       .catch(error => console.log(error))
+    
   }
 
   render() {
@@ -70,26 +72,24 @@ class App extends React.Component {
     if(isLoading) {
       return <p className='loading-message'>Loading...</p>
     }
-
     if(error) {
     return <p>{error.message}</p>
     }
-
     if(form) {
-      return (
-         <LogInForm getUserRatings= {this.getUserRatings} />
-        )
+      return (<LogInForm getUserRatings= {this.getUserRatings} />)
     }
-
     if(moviePage) {
       return (
         <MoviePage 
-          data={this.state.movies} 
+          movies={this.state.movies} 
           moviePageID={this.state.moviePageID}
-          handleBackBtn={this.handleBackBtn} />
+          handleBackBtn={this.handleBackBtn} 
+          user={this.state.user}
+          ratings={ratings}
+          getUserRatings={this.getUserRatings}
+        />
       )
     }
-
     if(isLoggedIn) {
       return (
         <main className="App">
@@ -102,7 +102,6 @@ class App extends React.Component {
         </main>
       )
     }
-    
     return (
       <main className="App">
         <Nav data={this.state}/>
