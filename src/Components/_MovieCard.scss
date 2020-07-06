@@ -1,14 +1,7 @@
 .avg-container {
   display: flex;
-}
-
-.avg-container {
   justify-content: left;
 }
-
-// .avg-rating-container {
-//   font-size: larger;
-// }
 
 .rated-star-icon,
 .star-icon-poster {
@@ -29,6 +22,7 @@
 .rating-box {
   display: flex;
   justify-content: space-evenly;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .rate-me {
@@ -37,6 +31,6 @@
 }
 
 .user-rating {
-  align-items: center;
   display: flex;
+  align-items: center;
 }

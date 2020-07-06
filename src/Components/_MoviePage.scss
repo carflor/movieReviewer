@@ -11,6 +11,7 @@
   height: 15vh;
   opacity: .8;
   align-items: center;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .back-btn {
@@ -39,7 +40,6 @@
 
 .movie-data-box {
   display: flex;
-  // flex-direction: column;
   font-size: larger;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -49,6 +49,9 @@
   width: 55vw;
   opacity: .9;
   padding: 2vh;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 2vh;
+  overflow: scroll;
 }
 
 .movie-poster-selected {
@@ -57,48 +60,33 @@
   border: 2px outset #0a97b0;
 }
 
-// .user-rating-box-selected,
-// .rating-box-selected 
-// {
-//     display: flex;
-//     // flex-wrap: wrap;
-//     // flex-direction: column;
-//     justify-content: space-evenly;
-//     background-color: #0a97b0;
-//     width: 20vw;
-//     height: 15vh;
-//     font-size: 3vh;
-//     text-align: center;
-//     border-radius: 1vh;
-// }
-
 .rating-box-selected {
-  margin-top: 3vh;
-  // margin-bottom: 4vh;
   display: flex;
-  // flex-wrap: wrap;
-  // flex-direction: column;
   justify-content: space-evenly;
+  text-align: center;
+  margin-top: 3vh;
   background-color: #0a97b0;
   width: 20vw;
   height: 15vh;
   font-size: 3vh;
-  text-align: center;
   border-radius: 1vh;
 }
 
 .user-rating-box-selected {
-  margin-top: 3vh;
   display: flex;
-  // flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-evenly;
   background-color: #0a97b0;
-  width: 20vw;
+  width: 25vw;
   height: 15vh;
   font-size: 3vh;
+  margin-top: 3vh;
   text-align: center;
   border-radius: 1vh;
+}
+
+.rating-system {
+  margin: auto;
 }
 
 .movie-data {
@@ -113,12 +101,59 @@
   background-color: #0a97b0;
   height: 10vh;
   opacity: 0.8;
-  font-size: 4.5vh;
   justify-content: center;
   align-items: center;
   display: flex;
+  font-style: italic;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 3.5vh;
 }
 
-.user-rating, .average-rating {
+.movie-datum {
+  font-style: italic;
+}
+
+.user-rating, 
+.average-rating {
   margin: auto;
+}
+
+.rated-star-icon-moviePage,
+.star-icon-poster-moviePage {
+  width: 4vw;
+  margin: 0vh 1vh 0vh 2vh;
+}
+
+.submit-rating-btn {
+  color: #0a97b0;
+  border-radius: .8vh;
+  border: none;
+  background-color: #100f0f;
+  margin: auto;
+  margin-left: 1vh;
+}
+
+.submit-rating-btn:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform .3s;
+}
+
+.delete-button {
+  height: 4vh;
+  width: 8vh;
+  margin: auto;
+  color: #0a97b0;
+  border-radius: .8vh;
+  border: none;
+  background-color: #100f0f;
+}
+
+.delete-button:hover,
+.delete-button:focus {
+  cursor: pointer;
+  opacity: .8;
+  box-shadow: 0 0 3px 3px #100f0f;
+  transform: scale(1.03);
+  transition: transform .3s;
 }

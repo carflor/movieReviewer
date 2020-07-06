@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import './_MoviePage.scss'
 import backIcon from '../Assets/angle-double-left-solid.svg'
+import starIcon from '../Assets/star-regular.svg'
+import ratedIcon from '../Assets/star-golden.svg'
+
 
 class MoviePage extends Component {
   constructor(props) {
@@ -17,17 +20,13 @@ class MoviePage extends Component {
 
   findRatingId = () => {
       const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
-      if(rating.id) {
-      console.log('rating', rating.id)  
+      if(rating.id) { 
       return rating.id
     } 
   }
 
   removeRating = (event) => {
-    debugger
     this.deleteUserRating(event)
-    .then(console.log('ratings', this.props.ratings))
-    // .then(this.props.getUserRatings(this.props))
       .then(
       this.props.ratings.find((film, i) => {
         if (film.movie_id === parseInt(this.props.moviePageID)) {
@@ -41,23 +40,18 @@ class MoviePage extends Component {
   
   deleteUserRating = async (event) => {
     event.preventDefault()
-     const response = fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-      })
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
+    const response = fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    } else {
       const data = await response.json()
       return data
-      }
-      // .then(response => response.json())
-      // .then(response => console.log(response))
-      // .then(this.removeRating())
-      // .then(this.setState({...this.state, userRating: null}))
-      // .catch(error => console.log(error.message))
+    }
   }
 
   enterRating = (event) => {
@@ -69,32 +63,22 @@ class MoviePage extends Component {
 
   submitRating = async (event) => {
     event.preventDefault()
-    // return (
-      const response = await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              movie_id: parseInt(this.props.moviePageID),
-              rating: parseInt(this.state.value)
-          })
+    const response = await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          movie_id: parseInt(this.props.moviePageID),
+          rating: parseInt(this.state.value)
       })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      } else {
+    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    } else {
       const data = await response.json()
-      console.log(data)
       return data
-      }
-
-
-      // .then(response => await response.json())
-      // .then(response => this.setState({...this.state, userRating: this.state.value}))
-      // .then(this.props.getUserRatings(this.props))
-      // .catch(error => console.log(error))
-    // )
+    }
   }
 
   findMovieRating = () => {
@@ -108,19 +92,38 @@ class MoviePage extends Component {
     if (this.props.ratings && this.state.userRating) {
       return (
         <section className='user-rating-box-selected'>
-          <p className='user-rating'>User Rating: {this.state.userRating} </p>
-          <button type='submit' className='delete-button' onClick={event => this.removeRating(event)}>Delete</button>
+          <p className='user-rating'>User 
+          <img
+            alt="rated-icon"
+            src={ ratedIcon }
+            className="rated-star-icon-moviePage" 
+          /> 
+            {this.state.userRating} 
+          </p>
+          <button 
+            type='submit' 
+            className='delete-button' 
+            onClick={event => this.removeRating(event)}>
+            Update
+          </button>
         </section>
       )
     }
     if (this.props.ratings && this.findMovieRating() !== undefined) {
       return (
         <section className='user-rating-box-selected'>
-          <p className='user-rating'>User Rating: {this.findMovieRating()} </p>
+          <p className='user-rating'>User
+          <img
+            alt="rated-icon"
+            src={ ratedIcon }
+            className="rated-star-icon-moviePage" 
+          /> 
+            {this.findMovieRating()} 
+          </p>
           <button 
           type='submit' 
           className='delete-button' 
-          onClick={event => this.removeRating(event)}>Delete</button>
+          onClick={event => this.removeRating(event)}>Change</button>
         </section>
       )
     } 
@@ -138,7 +141,8 @@ class MoviePage extends Component {
           <button 
             type='submit' 
             form='rating-system' 
-            name='number-select' 
+            name='number-select'
+            className='submit-rating-btn' 
             onClick={event => this.enterRating(event)}>
               Submit
           </button>
@@ -168,16 +172,13 @@ class MoviePage extends Component {
       .catch(error => console.log(error.message))
   }
 
-
-
   render() {
     const backgroundImg = { backgroundImage: `url(${this.state.backdrop})`}
     if(this.state.isLoading) {
       return (
       <section 
         className='movie-page'
-        style={ backgroundImg } 
-        >
+        style={ backgroundImg }>
         <section className="movie-nav">
           <img 
             alt='back-btn' 
@@ -194,14 +195,20 @@ class MoviePage extends Component {
             alt='movie poster' className='movie-poster-selected'/>
           <section className='movie-data-box'> 
             <section className='rating-box-selected'>
-             <p className='average-rating'>AVG: {Math.floor(this.state.avgRating)}</p>
+             <p className='average-rating'>AVG
+             <img 
+              alt="star-icon"
+              src={ starIcon }
+              className="star-icon-poster-moviePage" 
+            /> 
+              {Math.floor(this.state.avgRating)}</p>
             </section>
               {this.displayUserRating()}
             <section className='movie-data'>
               <p>{this.state.overview}</p>
-              <p>Release Date: {this.state.releaseDate}</p>
-              <p>Duration: {this.state.runtime} minutes</p>
-              <p>Genres: {this.state.genre.join(', ')}</p>
+              <p className='movie-datum'>Release Date: {this.state.releaseDate}</p>
+              <p className='movie-datum'>Duration: {this.state.runtime} minutes</p>
+              <p className='movie-datum'>Genres: {this.state.genre.join(', ')}</p>
             </section>
           </section>
         </section>
@@ -214,19 +221,4 @@ class MoviePage extends Component {
   }
 }
 
-    //movie:
-// average_rating: 3.6666666666666665
-// backdrop_path: "https://image.tmdb.org/t/p/original//o0F8xAt8YuEm5mEZviX5pEFC12y.jpg"
-// budget: 125000000
-// genres: (4) ["Adventure", "Fantasy", "Science Fiction", "Family"]
-// id: 475430
-// overview: "Artemis Fowl is a 12-year-old genius and descendant of a long line of criminal masterminds. He soon finds himself in an epic battle against a race of powerful underground fairies who may be behind his father's disappearance."
-// poster_path: "https://image.tmdb.org/t/p/original//tI8ocADh22GtQFV28vGHaBZVb0U.jpg"
-// release_date: "2020-06-12"
-// revenue: 0
-// runtime: 95
-// tagline: "Remember the name"
-// title: "Artemis Fowl"
-//  }
-
-export default MoviePage
+export default MoviePage;

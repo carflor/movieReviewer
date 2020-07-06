@@ -24,10 +24,10 @@ const MovieCard = (props) => {
       userRate = (
         <section className="rate-me">
           <img
-              alt="rated-icon"
-              src={ ratedIcon }
-              className="rated-star-icon" />
-          RATE HERE
+            alt="rated-icon"
+            src={ ratedIcon }
+            className="rated-star-icon" />
+          RATE
         </section>
       ) 
     }
@@ -48,7 +48,8 @@ const MovieCard = (props) => {
           <img 
             alt="star-icon"
             src={ starIcon }
-            className="star-icon-poster" />
+            className="star-icon-poster"
+          />
           <section className="avg-rating-container">
             {Math.floor(props.average_rating)}
             <span className="rate-fraction">/10</span>

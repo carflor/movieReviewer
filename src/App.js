@@ -16,8 +16,10 @@ class App extends React.Component {
       moviePage: false,
       logOutMethod: this.logOut,
       logInMethod: this.logIn,
+      returnHomeBtn: this.returnHomeBtn,
       user: null,
-      ratings: null
+      ratings: null,
+      form: false,
     }
     this.url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
   }
@@ -38,10 +40,9 @@ class App extends React.Component {
     this.setState({ ...this.state, moviePage: false })
   }
 
-  // findMovieRating = () => {
-  //   const rating = this.ratings.find(film => film.movie_id === this.id)
-  //   return rating
-  // }
+  returnHomeBtn = () => {
+    this.setState({ form: false })
+}
 
   componentDidMount() {
     this.setState({ isLoading: true })
@@ -68,27 +69,24 @@ class App extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
       .catch(error => console.log(error))
-    
   }
 
   render() {
-    const { movies, isLoading, error, form, isLoggedIn, ratings, moviePage } = this.state
+    const { movies, isLoading, error, form, isLoggedIn, ratings, moviePage, returnHomeBtn } = this.state
     if(isLoading) {
       return <p className='loading-message'>Loading...</p>
     }
-
     if(error) {
-    return <p>{error.message}</p>
+    return <p>{ error.message }</p>
     }
-
-
-    // HOW IS THIS VALIDATING IF FORM IS NOT IN STATE?!?
     if(form) {
       return (
-         <LogInForm getUserRatings= {this.getUserRatings} />
-        )
+        <LogInForm 
+          getUserRatings={ this.getUserRatings }
+          returnHomeBtn={ returnHomeBtn } 
+        />
+      )
     }
-
     if(moviePage) {
       return (
         <MoviePage 
@@ -101,7 +99,6 @@ class App extends React.Component {
         />
       )
     }
-
     if(isLoggedIn) {
       return (
         <main className="App">
@@ -114,7 +111,6 @@ class App extends React.Component {
         </main>
       )
     }
-    
     return (
       <main className="App">
         <Nav data={this.state}/>
