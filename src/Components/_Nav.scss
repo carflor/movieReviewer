@@ -42,6 +42,7 @@
 .welcome-message {
   font-size: 3vh;
   margin: 2vh 0vh 0vh 0vh;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .login-btn {
@@ -49,10 +50,10 @@
   height: 6vh;
   font-size: 2.5vh;
   color: #0a97b0;
-  background-color: #100f0f;
-  margin: auto;
   border-radius: .8vh;
   border: none;
+  background-color: #100f0f;
+  margin: auto;
   font-size: 2vh;
 }
 

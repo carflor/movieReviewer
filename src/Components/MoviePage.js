@@ -27,7 +27,6 @@ class MoviePage extends Component {
 
   removeRating = (event) => {
     this.deleteUserRating(event)
-    .then(console.log('ratings', this.props.ratings))
       .then(
       this.props.ratings.find((film, i) => {
         if (film.movie_id === parseInt(this.props.moviePageID)) {
@@ -93,26 +92,38 @@ class MoviePage extends Component {
     if (this.props.ratings && this.state.userRating) {
       return (
         <section className='user-rating-box-selected'>
-          <p className='user-rating'>User Rating 
+          <p className='user-rating'>User 
           <img
             alt="rated-icon"
             src={ ratedIcon }
-            className="rated-star-icon" 
+            className="rated-star-icon-moviePage" 
           /> 
             {this.state.userRating} 
           </p>
-          <button type='submit' className='delete-button' onClick={event => this.removeRating(event)}>Delete</button>
+          <button 
+            type='submit' 
+            className='delete-button' 
+            onClick={event => this.removeRating(event)}>
+            Update
+          </button>
         </section>
       )
     }
     if (this.props.ratings && this.findMovieRating() !== undefined) {
       return (
         <section className='user-rating-box-selected'>
-          <p className='user-rating'>User: {this.findMovieRating()} </p>
+          <p className='user-rating'>User
+          <img
+            alt="rated-icon"
+            src={ ratedIcon }
+            className="rated-star-icon-moviePage" 
+          /> 
+            {this.findMovieRating()} 
+          </p>
           <button 
           type='submit' 
           className='delete-button' 
-          onClick={event => this.removeRating(event)}>Delete</button>
+          onClick={event => this.removeRating(event)}>Change</button>
         </section>
       )
     } 
@@ -130,7 +141,8 @@ class MoviePage extends Component {
           <button 
             type='submit' 
             form='rating-system' 
-            name='number-select' 
+            name='number-select'
+            className='submit-rating-btn' 
             onClick={event => this.enterRating(event)}>
               Submit
           </button>

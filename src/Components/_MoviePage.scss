@@ -73,16 +73,20 @@
 }
 
 .user-rating-box-selected {
-  margin-top: 3vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   background-color: #0a97b0;
-  width: 20vw;
+  width: 25vw;
   height: 15vh;
   font-size: 3vh;
+  margin-top: 3vh;
   text-align: center;
   border-radius: 1vh;
+}
+
+.rating-system {
+  margin: auto;
 }
 
 .movie-data {
@@ -112,4 +116,43 @@
 .user-rating, 
 .average-rating {
   margin: auto;
+}
+
+.rated-star-icon-moviePage,
+.star-icon-poster-moviePage {
+  width: 4vw;
+  margin: 0vh 1vh 0vh 2vh;
+}
+
+.submit-rating-btn {
+  color: #0a97b0;
+  border-radius: .8vh;
+  border: none;
+  background-color: #100f0f;
+  margin: auto;
+}
+
+.submit-rating-btn:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform .3s;
+}
+
+.delete-button {
+  height: 4vh;
+  width: 8vh;
+  margin: auto;
+  color: #0a97b0;
+  border-radius: .8vh;
+  border: none;
+  background-color: #100f0f;
+}
+
+.delete-button:hover,
+.delete-button:focus {
+  cursor: pointer;
+  opacity: .8;
+  box-shadow: 0 0 3px 3px #100f0f;
+  transform: scale(1.03);
+  transition: transform .3s;
 }
