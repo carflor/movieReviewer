@@ -7,7 +7,145 @@ class MoviePage extends Component {
     super(props); 
       this.state = {
         isLoading: false,
+        value: '',
       }
+  }
+
+  handleChange = (event) => {
+    this.setState({value: event.target.value})
+  }
+
+  findRatingId = () => {
+      const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
+      if(rating.id) {
+      console.log('rating', rating.id)  
+      return rating.id
+    } 
+  }
+
+  removeRating = (event) => {
+    debugger
+    this.deleteUserRating(event)
+    .then(console.log('ratings', this.props.ratings))
+    // .then(this.props.getUserRatings(this.props))
+      .then(
+      this.props.ratings.find((film, i) => {
+        if (film.movie_id === parseInt(this.props.moviePageID)) {
+          return this.props.ratings.splice(i, 1)
+        } 
+      }))
+    .then(this.setState({...this.state, userRating: null}))
+    .catch(error => console.log(error.message))
+  }
+  
+  
+  deleteUserRating = async (event) => {
+    event.preventDefault()
+     const response = fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+      const data = await response.json()
+      return data
+      }
+      // .then(response => response.json())
+      // .then(response => console.log(response))
+      // .then(this.removeRating())
+      // .then(this.setState({...this.state, userRating: null}))
+      // .catch(error => console.log(error.message))
+  }
+
+  enterRating = (event) => {
+    this.submitRating(event)
+      .then(response => this.props.ratings.push(response.rating))
+      .then(this.setState({...this.state, userRating: this.state.value}))
+      .catch(error => console.log(error))
+  }
+
+  submitRating = async (event) => {
+    event.preventDefault()
+    // return (
+      const response = await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              movie_id: parseInt(this.props.moviePageID),
+              rating: parseInt(this.state.value)
+          })
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+      const data = await response.json()
+      console.log(data)
+      return data
+      }
+
+
+      // .then(response => await response.json())
+      // .then(response => this.setState({...this.state, userRating: this.state.value}))
+      // .then(this.props.getUserRatings(this.props))
+      // .catch(error => console.log(error))
+    // )
+  }
+
+  findMovieRating = () => {
+    const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
+    if (this.props.ratings && rating) {
+      return rating.rating
+    } 
+  }
+
+  displayUserRating = () => {
+    if (this.props.ratings && this.state.userRating) {
+      return (
+        <section className='user-rating-box-selected'>
+          <p className='user-rating'>User Rating: {this.state.userRating} </p>
+          <button type='submit' className='delete-button' onClick={event => this.removeRating(event)}>Delete</button>
+        </section>
+      )
+    }
+    if (this.props.ratings && this.findMovieRating() !== undefined) {
+      return (
+        <section className='user-rating-box-selected'>
+          <p className='user-rating'>User Rating: {this.findMovieRating()} </p>
+          <button 
+          type='submit' 
+          className='delete-button' 
+          onClick={event => this.removeRating(event)}>Delete</button>
+        </section>
+      )
+    } 
+    if (this.props.ratings && this.state.userRating === null) {
+      return (
+        <section className='user-rating-box-selected'>
+        <form className='rating-system'>
+          Rate Me: 
+          <input type='number' 
+            id='number-select' 
+            min='0' max='10' 
+            value={this.state.value} 
+            onChange={this.handleChange}>
+          </input>
+          <button 
+            type='submit' 
+            form='rating-system' 
+            name='number-select' 
+            onClick={event => this.enterRating(event)}>
+              Submit
+          </button>
+        </form>
+      </section>
+      )
+    }
   }
 
   componentDidMount() {
@@ -30,9 +168,10 @@ class MoviePage extends Component {
       .catch(error => console.log(error.message))
   }
 
+
+
   render() {
     const backgroundImg = { backgroundImage: `url(${this.state.backdrop})`}
-
     if(this.state.isLoading) {
       return (
       <section 
@@ -55,18 +194,18 @@ class MoviePage extends Component {
             alt='movie poster' className='movie-poster-selected'/>
           <section className='movie-data-box'> 
             <section className='rating-box-selected'>
-              AVG: {Math.floor(this.state.avgRating)}
-              {this.state.isLoggedIn && this.state.userRating}
+             <p className='average-rating'>AVG: {Math.floor(this.state.avgRating)}</p>
             </section>
+              {this.displayUserRating()}
             <section className='movie-data'>
               <p>{this.state.overview}</p>
               <p>Release Date: {this.state.releaseDate}</p>
               <p>Duration: {this.state.runtime} minutes</p>
-              <p>Genres: {this.state.genres}</p>
+              <p>Genres: {this.state.genre.join(', ')}</p>
             </section>
           </section>
         </section>
-        <section className="movie-tagline">"{this.state.tagline}"</section>
+       {this.state.tagline && <section className="movie-tagline">"{this.state.tagline}"</section>}
       </section>
       )
     } else {

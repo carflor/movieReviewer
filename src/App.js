@@ -18,7 +18,6 @@ class App extends React.Component {
       logInMethod: this.logIn,
       user: null,
       ratings: null
-      // form: false,
     }
     this.url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
   }
@@ -39,6 +38,11 @@ class App extends React.Component {
     this.setState({ ...this.state, moviePage: false })
   }
 
+  // findMovieRating = () => {
+  //   const rating = this.ratings.find(film => film.movie_id === this.id)
+  //   return rating
+  // }
+
   componentDidMount() {
     this.setState({ isLoading: true })
     fetch(`${this.url}/movies`)
@@ -55,11 +59,16 @@ class App extends React.Component {
   }
   
   getUserRatings = (data) => {
+    if (data instanceof Object) {
     this.setState({user: data.user, isLoggedIn: true})
+    } else {
+      this.setState({user: this.props.user, isLoggedIn: true})
+    }
     fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
       .catch(error => console.log(error))
+    
   }
 
   render() {
@@ -83,9 +92,13 @@ class App extends React.Component {
     if(moviePage) {
       return (
         <MoviePage 
-          data={this.state.movies} 
+          movies={this.state.movies} 
           moviePageID={this.state.moviePageID}
-          handleBackBtn={this.handleBackBtn} />
+          handleBackBtn={this.handleBackBtn} 
+          user={this.state.user}
+          ratings={ratings}
+          getUserRatings={this.getUserRatings}
+        />
       )
     }
 
