@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './_LogInForm.scss'
 
 class LogInForm extends Component {
@@ -69,3 +70,8 @@ class LogInForm extends Component {
 }
 
 export default LogInForm
+
+LogInForm.propTypes = {
+    email: PropTypes.string.isRequired,
+    password: PropTypes.number.isRequired
+}
