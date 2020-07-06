@@ -27,12 +27,13 @@ class MoviePage extends Component {
     debugger
     this.deleteUserRating(event)
     .then(console.log('ratings', this.props.ratings))
-    .then(
-    this.props.ratings.find((film, i) => {
-      if (film.movie_id === parseInt(this.props.moviePageID)) {
-       return this.props.ratings.splice(i, 1)
-      } 
-    }))
+    // .then(this.props.getUserRatings(this.props))
+      .then(
+      this.props.ratings.find((film, i) => {
+        if (film.movie_id === parseInt(this.props.moviePageID)) {
+          return this.props.ratings.splice(i, 1)
+        } 
+      }))
     .then(this.setState({...this.state, userRating: null}))
     .catch(error => console.log(error.message))
   }
