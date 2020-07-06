@@ -29,6 +29,7 @@ class LogInForm extends Component {
                 })
             })
             .then(response => response.json())
+            // .then(response => console.log(response))
             .then(data => this.props.getUserRatings(data))
             .catch(error => console.log(error))
         )

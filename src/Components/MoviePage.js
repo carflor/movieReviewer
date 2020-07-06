@@ -8,6 +8,7 @@ class MoviePage extends Component {
       this.state = {
         isLoading: false,
         value: '',
+        // userRating: this.findMovieRating()
       }
   }
 
@@ -22,25 +23,53 @@ class MoviePage extends Component {
       return rating.id
     }
   }
+
+  removeRating = (event) => {
+    this.deleteUserRating(event)
+    .then(
+    this.props.ratings.find((film, i) => {
+      if (film.movie_id === parseInt(this.props.moviePageID)) {
+        this.props.ratings.splice(i, 1)
+      }
+    }))
+    .then(this.setState({...this.state, userRating: null}))
+    .catch(error => console.log(error.message))
+  }
   
-  deleteUserRating = (event) => {
+  
+  deleteUserRating = async (event) => {
     event.preventDefault()
-      fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
+     const response = fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'
           },
       })
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+      const data = await response.json()
+      return data
+      }
       // .then(response => response.json())
-      .then(response => console.log(response))
-      .then(this.setState({...this.state, userRating: undefined}))
-      .catch(error => console.log(error.message))
+      // .then(response => console.log(response))
+      // .then(this.removeRating())
+      // .then(this.setState({...this.state, userRating: null}))
+      // .catch(error => console.log(error.message))
   }
 
-  submitRating = (event) => {
+  enterRating = (event) => {
+    this.submitRating(event)
+      .then(response => this.props.ratings.push(response.rating))
+      .then(this.setState({...this.state, userRating: this.state.value}))
+      .catch(error => console.log(error))
+  }
+
+  submitRating = async (event) => {
+    debugger
     event.preventDefault()
-    return (
-      fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings`, {
+    // return (
+      const response = await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -50,11 +79,21 @@ class MoviePage extends Component {
               rating: parseInt(this.state.value)
           })
       })
-      .then(response => response.json())
-      .then(response => this.setState({...this.state, userRating: this.state.value}))
-      .catch(error => console.log(error))
-      
-    )
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+      const data = await response.json()
+      console.log(data)
+      return data
+      }
+
+
+      // .then(response => await response.json())
+      // .then(response => this.setState({...this.state, userRating: this.state.value}))
+      // .then(this.props.getUserRatings(this.props))
+      // .catch(error => console.log(error))
+    // )
   }
 
   findMovieRating = () => {
@@ -65,11 +104,11 @@ class MoviePage extends Component {
   }
 
   displayUserRating = () => {
-    if (this.state.userRating) {
+    if (this.props.ratings && this.state.userRating) {
       return (
         <section className='user-rating-box-selected'>
           <p className='user-rating'>User Rating: {this.state.userRating} </p>
-          <button type='submit' className='delete-button' onClick={event => this.deleteUserRating(event)}>Delete</button>
+          <button type='submit' className='delete-button' onClick={event => this.removeRating(event)}>Delete</button>
         </section>
       )
     }
@@ -80,11 +119,11 @@ class MoviePage extends Component {
           <button 
           type='submit' 
           className='delete-button' 
-          onClick={event => this.deleteUserRating(event)}>Delete</button>
+          onClick={event => this.removeRating(event)}>Delete</button>
         </section>
       )
     } 
-    if (this.props.ratings && !this.state.userRating) {
+    if (this.props.ratings && this.state.userRating === null) {
       return (
         <section className='user-rating-box-selected'>
         <form className='rating-system'>
@@ -99,7 +138,7 @@ class MoviePage extends Component {
             type='submit' 
             form='rating-system' 
             name='number-select' 
-            onClick={event => this.submitRating(event)}>
+            onClick={event => this.enterRating(event)}>
               Submit
           </button>
         </form>
@@ -132,7 +171,6 @@ class MoviePage extends Component {
 
   render() {
     const backgroundImg = { backgroundImage: `url(${this.state.backdrop})`}
-    
     if(this.state.isLoading) {
       return (
       <section 
@@ -158,7 +196,6 @@ class MoviePage extends Component {
              <p className='average-rating'>AVG: {Math.floor(this.state.avgRating)}</p>
             </section>
               {this.displayUserRating()}
-              {/* {this.state.userRating && <p>{this.state.userRating}</p>} */}
             <section className='movie-data'>
               <p>{this.state.overview}</p>
               <p>Release Date: {this.state.releaseDate}</p>
