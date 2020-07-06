@@ -16,6 +16,7 @@ class App extends React.Component {
       moviePage: false,
       logOutMethod: this.logOut,
       logInMethod: this.logIn,
+      returnHomeBtn: this.returnHomeBtn,
       user: null,
       ratings: null,
       form: false,
@@ -38,6 +39,10 @@ class App extends React.Component {
   handleBackBtn = () => {
     this.setState({ ...this.state, moviePage: false })
   }
+
+  returnHomeBtn = () => {
+    this.setState({ form: false })
+}
 
   componentDidMount() {
     this.setState({ isLoading: true })
@@ -64,19 +69,23 @@ class App extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({form: false, ratings: data.ratings}))
       .catch(error => console.log(error))
-    
   }
 
   render() {
-    const { movies, isLoading, error, form, isLoggedIn, ratings, moviePage } = this.state
+    const { movies, isLoading, error, form, isLoggedIn, ratings, moviePage, returnHomeBtn } = this.state
     if(isLoading) {
       return <p className='loading-message'>Loading...</p>
     }
     if(error) {
-    return <p>{error.message}</p>
+    return <p>{ error.message }</p>
     }
     if(form) {
-      return (<LogInForm getUserRatings= {this.getUserRatings} />)
+      return (
+        <LogInForm 
+          getUserRatings={ this.getUserRatings }
+          returnHomeBtn={ returnHomeBtn } 
+        />
+      )
     }
     if(moviePage) {
       return (

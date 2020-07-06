@@ -221,4 +221,4 @@ class MoviePage extends Component {
   }
 }
 
-export default MoviePage
+export default MoviePage;

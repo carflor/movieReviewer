@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-// import App from '../App'
 import './_LogInForm.scss'
 
 class LogInForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: ''
@@ -29,7 +28,6 @@ class LogInForm extends Component {
                 })
             })
             .then(response => response.json())
-            // .then(response => console.log(response))
             .then(data => this.props.getUserRatings(data))
             .catch(error => console.log(error))
         )
@@ -62,7 +60,7 @@ class LogInForm extends Component {
                         onChange={event => this.handleChange(event)}
                     />
                     <button className='submit-log-in-button' onClick={event => this.submitLogIn(event)}>Log In</button>
-                    <button className='back-button' onClick={event => this.returnHome(event)}>Back</button>
+                    <button className='back-button' onClick={event => this.props.returnHomeBtn(event)}>Back</button>
                 </form>
             </section>
             </section>
