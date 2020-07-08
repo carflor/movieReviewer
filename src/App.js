@@ -60,10 +60,12 @@ class App extends React.Component {
   }
   
   getUserRatings = (data) => {
+    if (!this.state.user) {
       this.setState({user: data, isLoggedIn: true})
+    }
       fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
         .then(response => response.json())
-        .then(response => this.setState({form: false, ratings: response.ratings}))
+        .then(response => this.setState({ form: false, ratings: response.ratings }))
         .catch(error => console.log(error))
   }
 
