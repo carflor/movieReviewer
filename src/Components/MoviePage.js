@@ -25,53 +25,26 @@ class MoviePage extends Component {
     } 
   }
 
-  removeRating = () => {
-    console.log('hey')
-    const ratingsCopy  = [...this.state.ratings]
-    const newRatings = ratingsCopy.reduce((ratings, film, i) => {
+  removeRating = (event) => {
+    const ratingsCopy  = [...this.props.ratings]
+    const newRatings = ratingsCopy.reduce((ratings, film) => {
       if (film.movie_id !== parseInt(this.props.moviePageID)) {
         ratings.push(film)
       }
       return ratings
     }, [])
-    console.log('newRatings', newRatings)
     this.setState({...this.state, userRating: null, ratings: newRatings})
-
-    // this.deleteUserRating(event)
-    // .then(() => this.state.ratings.find((film, i)=> {
-    //   const ratingsCopy = this.state.ratings.map(film => film)
-    //     console.log('copy', ratingsCopy)
-    //     if(film.movie_id === parseInt(this.props.moviePageID)) {
-    //       return ratingsCopy.splice(i, 1)
-    //       // this.setState({...this.state, userRating: null, ratings: ratingsCopy})
-    //     }
-    //   }))
-      // .then((response) => this.setState({...this.state, userRating: null, ratings: response }))
-      // .then(data => console.log(data))
-      // .catch(error => console.log('remove rating error', error.message))
+    this.deleteUserRating(event)
+      .then(() => this.props.getUserRatings(this.props.user))
+      .catch(error => console.log(error.message))
   }
   
   
-  deleteUserRating = (event) => {
-    // debugger
+  deleteUserRating = async (event) => {
     event.preventDefault()
-    fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
+    await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
       method: 'DELETE',
     })
-    .then(response => console.log(response.json))
-    .catch(error => console.log(error.message))
-    
-    // .then(this.props.getUserRatings(this.props.user))
-    // .then(response => response.json())
-    this.props.getUserRatings(this.props.user)
-    this.removeRating()
-    // if (!response.ok) {
-    //   throw new Error(`HTTP error! status: ${response.status}`);
-    // } else {
-    //   const data = await response.json()
-    //   console.log(data)
-    //   return data
-    // }
   }
 
   enterRating = (event) => {
@@ -123,7 +96,7 @@ class MoviePage extends Component {
           <button 
             type='submit' 
             className='delete-button' 
-            onClick={event => this.deleteUserRating(event)}>
+            onClick={event => this.removeRating(event)}>
             Update
           </button>
         </section>
@@ -143,7 +116,7 @@ class MoviePage extends Component {
           <button 
           type='submit' 
           className='delete-button' 
-          onClick={event => this.deleteUserRating(event)}>Change</button>
+          onClick={event => this.removeRating(event)}>Update</button>
         </section>
       )
     } 
