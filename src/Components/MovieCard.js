@@ -27,7 +27,7 @@ const MovieCard = (props) => {
             alt="rated-icon"
             src={ ratedIcon }
             className="rated-star-icon" />
-          RATE
+          <p className="rate-text">Rate</p>
         </section>
       ) 
     }

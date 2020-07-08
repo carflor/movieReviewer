@@ -21,7 +21,7 @@ class MoviePage extends Component {
   findRatingId = () => {
       const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
       if(rating.id) { 
-      return rating.id
+        return rating.id
     } 
   }
 
@@ -58,11 +58,12 @@ class MoviePage extends Component {
       method: 'DELETE',
     })
     .then(response => console.log(response.json))
-    // .then(response => response.json())
+    // .then(this.props.getUserRatings(this.props.user))
     .catch(error => console.log(error.message))
-
-    this.removeRating()
+    
+    // .then(response => response.json())
     this.props.getUserRatings(this.props.user)
+    this.removeRating()
     // if (!response.ok) {
     //   throw new Error(`HTTP error! status: ${response.status}`);
     // } else {
