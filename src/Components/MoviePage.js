@@ -36,6 +36,7 @@ class MoviePage extends Component {
     }, [])
     console.log('newRatings', newRatings)
     this.setState({...this.state, userRating: null, ratings: newRatings})
+
     // this.deleteUserRating(event)
     // .then(() => this.state.ratings.find((film, i)=> {
     //   const ratingsCopy = this.state.ratings.map(film => film)
@@ -52,15 +53,15 @@ class MoviePage extends Component {
   
   
   deleteUserRating = (event) => {
-    debugger
+    // debugger
     event.preventDefault()
     fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
       method: 'DELETE',
     })
     .then(response => console.log(response.json))
-    // .then(this.props.getUserRatings(this.props.user))
     .catch(error => console.log(error.message))
     
+    // .then(this.props.getUserRatings(this.props.user))
     // .then(response => response.json())
     this.props.getUserRatings(this.props.user)
     this.removeRating()
@@ -111,7 +112,7 @@ class MoviePage extends Component {
     if (this.props.ratings && this.state.userRating) {
       return (
         <section className='user-rating-box-selected'>
-          <p className='user-rating'>User 
+          <p className='user-rating-movie'>User 
           <img
             alt="rated-icon"
             src={ ratedIcon }
@@ -131,7 +132,7 @@ class MoviePage extends Component {
     if (this.state.ratings && this.findMovieRating() !== undefined) {
       return (
         <section className='user-rating-box-selected'>
-          <p className='user-rating'>User
+          <p className='user-rating-movie'>User
           <img
             alt="rated-icon"
             src={ ratedIcon }
