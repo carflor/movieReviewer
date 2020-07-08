@@ -25,39 +25,57 @@ class MoviePage extends Component {
     } 
   }
 
-  removeRating = (event) => {
-    this.deleteUserRating(event)
-      .then(
-      this.props.ratings.find((film, i) => {
-        if (film.movie_id === parseInt(this.props.moviePageID)) {
-          return this.props.ratings.splice(i, 1)
-        } 
-      }))
-    .then(this.setState({...this.state, userRating: null}))
-    .catch(error => console.log(error.message))
+  removeRating = () => {
+    console.log('hey')
+    const ratingsCopy  = [...this.state.ratings]
+    const newRatings = ratingsCopy.reduce((ratings, film, i) => {
+      if (film.movie_id !== parseInt(this.props.moviePageID)) {
+        ratings.push(film)
+      }
+      return ratings
+    }, [])
+    console.log('newRatings', newRatings)
+    this.setState({...this.state, userRating: null, ratings: newRatings})
+    // this.deleteUserRating(event)
+    // .then(() => this.state.ratings.find((film, i)=> {
+    //   const ratingsCopy = this.state.ratings.map(film => film)
+    //     console.log('copy', ratingsCopy)
+    //     if(film.movie_id === parseInt(this.props.moviePageID)) {
+    //       return ratingsCopy.splice(i, 1)
+    //       // this.setState({...this.state, userRating: null, ratings: ratingsCopy})
+    //     }
+    //   }))
+      // .then((response) => this.setState({...this.state, userRating: null, ratings: response }))
+      // .then(data => console.log(data))
+      // .catch(error => console.log('remove rating error', error.message))
   }
   
   
-  deleteUserRating = async (event) => {
+  deleteUserRating = (event) => {
+    debugger
     event.preventDefault()
-    const response = fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
+    fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
     })
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    } else {
-      const data = await response.json()
-      return data
-    }
+    .then(response => console.log(response.json))
+    // .then(response => response.json())
+    .catch(error => console.log(error.message))
+
+    this.removeRating()
+    this.props.getUserRatings(this.props.user)
+    // if (!response.ok) {
+    //   throw new Error(`HTTP error! status: ${response.status}`);
+    // } else {
+    //   const data = await response.json()
+    //   console.log(data)
+    //   return data
+    // }
   }
 
   enterRating = (event) => {
+    debugger
     this.submitRating(event)
-      .then(response => this.props.ratings.push(response.rating))
-      .then(this.setState({...this.state, userRating: this.state.value}))
+      .then(() => this.setState({...this.state, userRating: this.state.value, ratings: this.props.getUserRatings(this.props.user) }))
       .catch(error => console.log(error))
   }
 
@@ -82,7 +100,7 @@ class MoviePage extends Component {
   }
 
   findMovieRating = () => {
-    const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
+    const rating = this.state.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
     if (this.props.ratings && rating) {
       return rating.rating
     } 
@@ -103,13 +121,13 @@ class MoviePage extends Component {
           <button 
             type='submit' 
             className='delete-button' 
-            onClick={event => this.removeRating(event)}>
+            onClick={event => this.deleteUserRating(event)}>
             Update
           </button>
         </section>
       )
     }
-    if (this.props.ratings && this.findMovieRating() !== undefined) {
+    if (this.state.ratings && this.findMovieRating() !== undefined) {
       return (
         <section className='user-rating-box-selected'>
           <p className='user-rating'>User
@@ -123,7 +141,7 @@ class MoviePage extends Component {
           <button 
           type='submit' 
           className='delete-button' 
-          onClick={event => this.removeRating(event)}>Change</button>
+          onClick={event => this.deleteUserRating(event)}>Change</button>
         </section>
       )
     } 
@@ -168,6 +186,7 @@ class MoviePage extends Component {
         userRating: null,
         isLoading: true,
         isLoggedIn: false,
+        ratings: this.props.ratings
       }))
       .catch(error => console.log(error.message))
   }

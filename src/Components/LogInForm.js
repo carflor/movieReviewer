@@ -29,7 +29,7 @@ class LogInForm extends Component {
                 })
             })
             .then(response => response.json())
-            .then(data => this.props.getUserRatings(data))
+            .then(data => this.props.getUserRatings(data.user))
             .catch(error => console.log(error))
         )
     }
@@ -72,6 +72,6 @@ class LogInForm extends Component {
 export default LogInForm
 
 LogInForm.propTypes = {
-    email: PropTypes.string.isRequired,
-    password: PropTypes.number.isRequired
+    email: PropTypes.string,
+    password: PropTypes.number
 }

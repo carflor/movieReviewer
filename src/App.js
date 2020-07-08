@@ -60,15 +60,11 @@ class App extends React.Component {
   }
   
   getUserRatings = (data) => {
-    if (data instanceof Object) {
-    this.setState({user: data.user, isLoggedIn: true})
-    } else {
-      this.setState({user: this.props.user, isLoggedIn: true})
-    }
-    fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
-      .then(response => response.json())
-      .then(data => this.setState({form: false, ratings: data.ratings}))
-      .catch(error => console.log(error))
+      this.setState({user: data, isLoggedIn: true})
+      fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
+        .then(response => response.json())
+        .then(response => this.setState({form: false, ratings: response.ratings}))
+        .catch(error => console.log(error))
   }
 
   render() {
@@ -77,7 +73,7 @@ class App extends React.Component {
       return <p className='loading-message'>Loading...</p>
     }
     if(error) {
-    return <p>{ error.message }</p>
+      return <p>{ error.message }</p>
     }
     if(form) {
       return (
@@ -125,3 +121,4 @@ class App extends React.Component {
 }
 
 export default App;
+
