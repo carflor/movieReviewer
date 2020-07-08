@@ -10,11 +10,23 @@ const getMovies = () => {
       }})
 }
 
+const submitUserLogIn = (email, password) => {
+  return fetch('https://rancid-tomatillos.herokuapp.com/api/v2/login', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        email: email,
+        password: password
+    })
+  })
+  .then(response => response.json())
+}
+
 const getUserMovieRatings = (user) => {
   return fetch(`${url}/users/${user}/ratings`) 
   .then(response => response.json())
 }
 
-
-
-export { getMovies, getUserMovieRatings }
+export { getMovies, getUserMovieRatings, submitUserLogIn }
