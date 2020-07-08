@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import './_LogInForm.scss'
 
 class LogInForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: ''
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+        email: '',
+        password: ''
     }
+  }
 
     handleChange = event => {
         this.setState({[event.target.name]: event.target.value})
