@@ -2,11 +2,12 @@ import React from 'react';
 import './_MovieCard.scss'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
+import PropTypes from 'prop-types';
 
-const MovieCard = (props) => {
+const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) => {
   let userRate;
-  if (props.ratings) {
-    const findMovieRating = props.ratings.find(film => film.movie_id === props.id)
+  if (ratings) {
+    const findMovieRating = ratings.find(film => film.movie_id === id)
     if (findMovieRating) {
       userRate = (
         <section className="user-rating">
@@ -37,12 +38,12 @@ const MovieCard = (props) => {
     <section 
       className="movie-card"
       tabIndex="0" 
-      onClick={props.handleMovie}>
+      onClick={handleMovie}>
     <img 
-      src={props.poster_path} 
+      src={poster_path} 
       className="movie-poster" 
       alt="film-poster" 
-      id={props.id} />
+      id={id} />
       <section className="rating-box">
         <section className="avg-container">
           <img 
@@ -51,7 +52,7 @@ const MovieCard = (props) => {
             className="star-icon-poster"
           />
           <section className="avg-rating-container">
-            {Math.floor(props.average_rating)}
+            {Math.floor(average_rating)}
             <span className="rate-fraction">/10</span>
           </section>
         </section>
@@ -62,3 +63,11 @@ const MovieCard = (props) => {
 }
 
 export default MovieCard
+
+MovieCard.propTypes = {
+  id: PropTypes.number, 
+  ratings: PropTypes.array, 
+  handleMovie: PropTypes.func, 
+  poster_path: PropTypes.string, 
+  average_rating: PropTypes.number
+}

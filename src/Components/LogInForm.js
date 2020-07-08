@@ -25,7 +25,7 @@ class LogInForm extends Component {
     
     render() {
         return (
-            <section className='main-page'>
+        <section className='main-page'>
             <section className='log-in-form'>
                 <h2>Log In:</h2>
                 <form>
@@ -49,18 +49,26 @@ class LogInForm extends Component {
                         value={this.state.password}
                         onChange={event => this.handleChange(event)}
                     />
-                    <button className='submit-log-in-button' onClick={event => this.submitLogIn(event)}>Log In</button>
-                    <button className='back-button' onClick={event => this.props.returnHomeBtn(event)}>Back</button>
+                    <button 
+                        className='back-button' 
+                        onClick={event => this.props.returnHomeBtn(event)}>Back
+                    </button>
+                    <button
+                        className='submit-log-in-button' 
+                        onClick={event => this.submitLogIn(event)}>Log In
+                    </button>
                 </form>
             </section>
-            </section>
+        </section>
         )
     }
 }
 
 export default LogInForm
 
+// only do this for data used for rendering rather than
+// checking for valid input types
 LogInForm.propTypes = {
-    email: PropTypes.string,
-    password: PropTypes.number
+  email: PropTypes.string,
+  password: PropTypes.number
 }
