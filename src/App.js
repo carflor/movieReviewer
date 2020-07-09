@@ -4,6 +4,7 @@ import Nav from './Components/Nav';
 import Body from './Components/Body';
 import LogInForm from './Components/LogInForm';
 import MoviePage from './Components/MoviePage'
+import { getMovies, getUserMovieRatings } from './apiCalls'
 
 class App extends React.Component {
   constructor() {
@@ -21,7 +22,6 @@ class App extends React.Component {
       ratings: null,
       form: false,
     }
-    this.url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
   }
 
   logIn = () => {
@@ -42,31 +42,24 @@ class App extends React.Component {
 
   returnHomeBtn = () => {
     this.setState({ form: false })
-}
+  }
 
   componentDidMount() {
     this.setState({ isLoading: true })
-    fetch(`${this.url}/movies`)
-      .then(response => {
-        if(response.ok) {
-          return response.json() 
-        } else {
-          throw new Error('Pardon the disturbance in the force...')
-        }})
+    getMovies()
       .then(data => this.setState({ 
         movies: data.movies, 
         isLoading: false 
     })).catch(error => this.setState({ error, isLoading: false}))
   }
   
-  getUserRatings = (data) => {
+  getUserRatings = (userData) => {
     if (!this.state.user) {
-      this.setState({user: data, isLoggedIn: true})
+      this.setState({user: userData, isLoggedIn: true})
     }
-      fetch(`${this.url}/users/${this.state.user.id}/ratings`) 
-        .then(response => response.json())
-        .then(response => this.setState({ form: false, ratings: response.ratings }))
-        .catch(error => console.log(error))
+    getUserMovieRatings(userData.id)
+      .then(response => this.setState({ form: false, ratings: response.ratings }))
+      .catch(error => console.log(error))
   }
 
   render() {

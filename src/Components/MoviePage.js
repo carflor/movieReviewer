@@ -48,7 +48,6 @@ class MoviePage extends Component {
   }
 
   enterRating = (event) => {
-    debugger
     this.submitRating(event)
       .then(() => this.setState({...this.state, userRating: this.state.value, ratings: this.props.getUserRatings(this.props.user) }))
       .catch(error => console.log(error))
