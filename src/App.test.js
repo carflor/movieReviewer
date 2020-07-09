@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
+// import { getMovies } from '../apiCalls'
+// jest.mock('../apiCalls.js')
 
 describe('App', () => {
   it('renders without crashing', () => {
@@ -17,7 +19,7 @@ describe('App', () => {
   expect(linkElement).toBeInTheDocument();
   });
 
-  it('Should be able to bring up a log in form', async () => {
+  it('Should be able to render the nav items', async () => {
     const { getByText, getByRole } = render(<App />) 
     const title = await waitFor(() => getByText('DOPE NOPE'))
     const logInButton = await waitFor(() => getByRole('button', {name: 'LOG IN'}))

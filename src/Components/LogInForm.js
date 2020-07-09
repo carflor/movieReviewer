@@ -13,21 +13,21 @@ class LogInForm extends Component {
   }
 
     handleChange = event => {
-      this.setState({[event.target.name]: event.target.value})
+      this.setState( {[event.target.name]: event.target.value} )
     }
 
     submitLogIn = event => {
       event.preventDefault()
       submitUserLogIn(this.state.email, this.state.password)
-          .then(data => this.props.getUserRatings(data.user))
-          .catch(error => console.log(error))
+        .then(data => this.props.getUserRatings(data.user))
+        .catch(error => console.log(error))
     }
     
     render() {
         return (
         <section className='main-page'>
             <section className='log-in-form'>
-                <h2>Log In:</h2>
+                <h2>LOG IN</h2>
                 <form>
                     <label htmlFor='email'></label>
                     <input 
@@ -41,7 +41,7 @@ class LogInForm extends Component {
                     />
                     <label htmlFor='password'></label>
                     <input 
-                        type='text'
+                        type='password'
                         placeholder= 'password'
                         className='password-input'
                         name='password'
@@ -66,8 +66,6 @@ class LogInForm extends Component {
 
 export default LogInForm
 
-// only do this for data used for rendering rather than
-// checking for valid input types
 LogInForm.propTypes = {
   email: PropTypes.string,
   password: PropTypes.number

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Nav from './Nav';
 
@@ -28,15 +28,18 @@ describe('Nav', () => {
     expect(logInButton).toBeInTheDocument()
   });
 
-  it('Should bring up the log in form when clicked', () => {
-    const { getByText, getByRole } = render (<Nav
+  it('Should bring up the log in form when clicked', async () => {
+    const { getByText, getByRole, getByPlaceholderText } = render (<Nav
         data={state}
       />)
-
       const logInButton = getByRole('button')
-      
       fireEvent.click(logInButton)
-
+      const logInFormTitle = await waitFor(() => getByText('LOG IN'))
+      // const emailInput = await waitFor(() => screen.getByPlaceholderText('email'))
+      // const passwordInput = await waitFor(() => screen.getByPlaceholderText('password'))
+      // expect(emailInput).toBeInTheDocument()
+      // expect(passwordInput).toBeInTheDocument()
+      expect(logInFormTitle).toBeInTheDocument()
       expect(state.logInMethod).toBeCalledTimes(1)
     })
   })
