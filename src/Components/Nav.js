@@ -1,6 +1,7 @@
 import React from 'react';
 import './_Nav.scss';
 import LogInForm from './LogInForm'
+import { Link } from 'react-router-dom'
 
 const Nav = (props) => {
   if (props.data.form) {
@@ -41,9 +42,13 @@ const Nav = (props) => {
         aria-label="search-input"
         placeholder='Search Movies...'></input>
       <section className="nav-btn-box">
-        <button 
-        className="login-btn" 
-        onClick={props.data.logInMethod}>LOG IN</button>
+        <Link to='/login' >
+          <button 
+            className="login-btn" 
+            onClick={props.data.logInMethod}>
+              LOG IN
+          </button>
+        </Link>
       </section>
     </nav>
   )

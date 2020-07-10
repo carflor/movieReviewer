@@ -3,6 +3,7 @@ import './_MoviePage.scss'
 import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
+import { Link } from 'react-router-dom';
 
 
 class MoviePage extends Component {
@@ -173,13 +174,15 @@ class MoviePage extends Component {
         className='movie-page'
         style={ backgroundImg }>
         <section className="movie-nav">
-          <img 
-            alt='back-btn' 
-            src={ backIcon } 
-            className='back-btn'
-            tabIndex='0'
-            onClick={ this.props.handleBackBtn }
-             />
+          <Link to='/' style={{ textDecoration: 'none' }}>
+            <img 
+              alt='back-btn' 
+              src={ backIcon } 
+              className='back-btn'
+              tabIndex='0'
+              onClick={ this.props.handleBackBtn }
+              />
+          </Link>
           <h1 className='movie-title'>{this.state.title}</h1>
         </section>
         <section className='movie-content'>

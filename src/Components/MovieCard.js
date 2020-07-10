@@ -3,6 +3,7 @@ import './_MovieCard.scss'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) => {
   let userRate;
@@ -35,30 +36,32 @@ const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) =>
   }
 
   return (
-    <section 
-      className="movie-card"
-      tabIndex="0" 
-      onClick={handleMovie}>
-    <img 
-      src={poster_path} 
-      className="movie-poster" 
-      alt="film-poster" 
-      id={id} />
-      <section className="rating-box">
-        <section className="avg-container">
-          <img 
-            alt="star-icon"
-            src={ starIcon }
-            className="star-icon-poster"
-          />
-          <section className="avg-rating-container">
-            {Math.floor(average_rating)}
-            <span className="rate-fraction">/10</span>
+    <Link to={`movies/${id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+      <section 
+        className="movie-card"
+        tabIndex="0" 
+        onClick={handleMovie}>
+      <img 
+        src={poster_path} 
+        className="movie-poster" 
+        alt="film-poster" 
+        id={id} />
+        <section className="rating-box">
+          <section className="avg-container">
+            <img 
+              alt="star-icon"
+              src={ starIcon }
+              className="star-icon-poster"
+            />
+            <section className="avg-rating-container">
+              {Math.floor(average_rating)}
+              <span className="rate-fraction">/10</span>
+            </section>
           </section>
+          {userRate}
         </section>
-        {userRate}
       </section>
-    </section>
+    </Link>
   )
 }
 
