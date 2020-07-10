@@ -3,8 +3,9 @@ import './App.scss';
 import Nav from './Components/Nav';
 import Body from './Components/Body';
 import LogInForm from './Components/LogInForm';
-import MoviePage from './Components/MoviePage'
-import { getMovies, getUserMovieRatings } from './apiCalls'
+import MoviePage from './Components/MoviePage';
+import { getMovies, getUserMovieRatings } from './apiCalls';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 class App extends React.Component {
   constructor() {
@@ -14,13 +15,11 @@ class App extends React.Component {
       isLoading: false,
       error: null,
       isLoggedIn: false,
-      moviePage: false,
       logOutMethod: this.logOut,
       logInMethod: this.logIn,
       returnHomeBtn: this.returnHomeBtn,
       user: null,
       ratings: null,
-      form: false,
     }
   }
 
@@ -63,46 +62,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { movies, isLoading, error, form, isLoggedIn, ratings, moviePage, returnHomeBtn } = this.state
+    const { movies, isLoading, error, isLoggedIn, ratings, returnHomeBtn } = this.state
     if(isLoading) {
       return <p className='loading-message'>Loading...</p>
     }
     if(error) {
       return <p>{ error.message }</p>
     }
-    if(form) {
-      return (
-        <LogInForm 
-          getUserRatings={ this.getUserRatings }
-          returnHomeBtn={ returnHomeBtn } 
-        />
-      )
-    }
-    if(moviePage) {
-      return (
-        <MoviePage 
-          movies={this.state.movies} 
-          moviePageID={this.state.moviePageID}
-          handleBackBtn={this.handleBackBtn} 
-          user={this.state.user}
-          ratings={ratings}
-          getUserRatings={this.getUserRatings}
-        />
-      )
-    }
-    if(isLoggedIn) {
-      return (
-        <main className="App">
-          <Nav data={this.state} />
-          <Body
-            isLoggedIn={isLoggedIn}
-            movies={movies} 
-            ratings={ratings}
-            handleMovie={this.handleMovie} />
-        </main>
-      )
-    }
-    return (
+
+    const app = (
       <main className="App">
         <Nav data={this.state}/>
         <Body
@@ -111,6 +79,38 @@ class App extends React.Component {
           ratings={ratings}
           handleMovie={this.handleMovie}/>
       </main>
+    )
+
+    return (
+      <Switch>
+        <Route
+          exact path="/movies/:id"
+          render={({ match }) => {
+            const { id } = match.params;
+            return <MoviePage 
+              movies={this.state.movies} 
+              moviePageID={id}
+              handleBackBtn={this.handleBackBtn} 
+              user={this.state.user}
+              ratings={ratings}
+              getUserRatings={this.getUserRatings} />
+          }}>  
+        </Route>
+        <Route exact path='/dashboard'> 
+          { isLoggedIn && app }
+          { !isLoggedIn && <Redirect to='/'/> }
+        </Route>
+        <Route exact path='/login'>
+          <LogInForm 
+            getUserRatings={ this.getUserRatings } 
+            returnHomeBtn={ returnHomeBtn } />
+          { isLoggedIn && <Redirect to='/dashboard' />}
+        </Route>
+        <Route exact path='/'>
+          { isLoggedIn && <Redirect to='/dashboard' />}
+          { !isLoggedIn && app }
+        </Route>
+      </Switch>
     );
   }
 }
