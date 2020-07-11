@@ -7,11 +7,12 @@ const getMovies = () => {
         return response.json() 
       } else {
         throw new Error('Pardon the disturbance in the force...')
-      }})
+      }
+    })
 }
 
 const submitUserLogIn = (email, password) => {
-  return fetch('https://rancid-tomatillos.herokuapp.com/api/v2/login', {
+  return fetch(`${url}/login`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -25,7 +26,7 @@ const submitUserLogIn = (email, password) => {
 }
 
 const getMovieData = (moviePageID) => {
-  return fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${moviePageID}`)
+  return fetch(`${url}/movies/${moviePageID}`)
   .then(response => response.json())
 }
 
@@ -35,13 +36,13 @@ const getUserMovieRatings = (user) => {
 }
 
 const deleteUserRating = async (userId, ratingId) => {
-  await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${userId}/ratings/${ratingId}`, {
+  await fetch(`${url}/users/${userId}/ratings/${ratingId}`, {
     method: 'DELETE',
   })
 }
 
 const submitRating = async (userId, moviePageID, value) => {
-  const response = await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${userId}/ratings`, {
+  const response = await fetch(`${url}/users/${userId}/ratings`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 const Nav = (props) => {
   if (props.data.form) {
     return (
-        <LogInForm form={props.data.form}/>
-      )
+      <LogInForm form={props.data.form}/>
+    )
   }
 
   if (props.data.isLoggedIn) {
@@ -55,4 +55,4 @@ const Nav = (props) => {
 }
 
 
-  export default Nav
+export default Nav
