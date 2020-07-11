@@ -4,7 +4,7 @@ import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
 import { Link } from 'react-router-dom';
-import { getMovieData } from '../apiCalls'
+import { getMovieData, deleteUserRating, submitRating } from '../apiCalls'
 
 
 class MoviePage extends Component {
@@ -28,7 +28,9 @@ class MoviePage extends Component {
   }
 
   removeRating = (event) => {
+    event.preventDefault()
     const ratingsCopy  = [...this.props.ratings]
+    const ratingId = this.findRatingId()
     const newRatings = ratingsCopy.reduce((ratings, film) => {
       if (film.movie_id !== parseInt(this.props.moviePageID)) {
         ratings.push(film)
@@ -36,43 +38,16 @@ class MoviePage extends Component {
       return ratings
     }, [])
     this.setState({...this.state, userRating: null, ratings: newRatings})
-    this.deleteUserRating(event)
+    deleteUserRating(this.props.user.id, ratingId)
       .then(() => this.props.getUserRatings(this.props.user))
       .catch(error => console.log(error.message))
   }
-  
-  
-  deleteUserRating = async (event) => {
-    event.preventDefault()
-    await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings/${this.findRatingId()}`, {
-      method: 'DELETE',
-    })
-  }
 
   enterRating = (event) => {
-    this.submitRating(event)
+    event.preventDefault()
+    submitRating(this.props.user.id, this.props.moviePageID, this.state.value)
       .then(() => this.setState({...this.state, userRating: this.state.value, ratings: this.props.getUserRatings(this.props.user) }))
       .catch(error => console.log(error))
-  }
-
-  submitRating = async (event) => {
-    event.preventDefault()
-    const response = await fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/users/${this.props.user.id}/ratings`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          movie_id: parseInt(this.props.moviePageID),
-          rating: parseInt(this.state.value)
-      })
-    })
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    } else {
-      const data = await response.json()
-      return data
-    }
   }
 
   findMovieRating = () => {

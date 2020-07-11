@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import { render, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history'
 import { submitUserLogIn, getUserMovieRatings, getMovies, getMovieData } from './apiCalls'
 jest.mock('./apiCalls.js')
 
@@ -73,7 +74,6 @@ describe('App', () => {
       </BrowserRouter>) 
     const title = await waitFor(() => getByText('DOPE NOPE'))
     const images = await waitFor(() => getAllByRole('img'))
-    // const ratings = await waitFor(() => getAllByText('/10'))
     
     expect(title).toBeInTheDocument(1)
     expect(images).toHaveLength(6)
@@ -89,6 +89,59 @@ describe('App', () => {
         </MemoryRouter>);
       const linkElement = await waitFor(() => getByText('Pardon the disturbance in the force...'));
       expect(linkElement).toBeInTheDocument();
+  })
+
+  it('Should change locations when the log in button is clicked', async () => {
+    const testHistoryObject = createMemoryHistory()
+    const { getByRole } = render( 
+    <Router history={ testHistoryObject }>
+      <App />
+    </Router> )
+
+    expect(testHistoryObject.location.pathname).toEqual('/')
+    const logInButton = await waitFor(() => getByRole('button', {name: 'LOG IN'}))
+
+    fireEvent.click(logInButton) 
+
+    expect(testHistoryObject.location.pathname).toEqual('/login')
+  })
+
+  it('Should change locations when the log in button is clicked', async () => {
+    const testHistoryObject = createMemoryHistory()
+
+    getMovieData.mockResolvedValueOnce({
+      "movie": {
+        "id": 475430,
+        "title": "Artemis Fowl",
+        "poster_path": "https://image.tmdb.org/t/p/original//tI8ocADh22GtQFV28vGHaBZVb0U.jpg",
+        "backdrop_path": "https://image.tmdb.org/t/p/original//o0F8xAt8YuEm5mEZviX5pEFC12y.jpg",
+        "release_date": "2020-06-12",
+        "overview": "Artemis Fowl is a 12-year-old genius and descendant of a long line of criminal masterminds. He soon finds himself in an epic battle against a race of powerful underground fairies who may be behind his father’s disappearance.",
+        "genres": [
+            "Adventure",
+            "Fantasy",
+            "Science Fiction",
+            "Family"
+        ],
+        "budget": 125000000,
+        "revenue": 0,
+        "runtime": 95,
+        "tagline": "Remember the name",
+        "average_rating": 3
+      }
+    })
+
+    const { getAllByAltText } = render( 
+    <Router history={ testHistoryObject }>
+      <App />
+    </Router> )
+
+    expect(testHistoryObject.location.pathname).toEqual('/')
+    const movieLink = await waitFor(() => getAllByAltText('film-poster')[0])
+
+    fireEvent.click(movieLink) 
+
+    expect(testHistoryObject.location.pathname).toEqual('/movies/475430')
   })
 
   it('Should render movie page on click', async () => {
