@@ -4,7 +4,7 @@ import { render, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { submitUserLogIn, getUserMovieRatings, getMovies } from './apiCalls'
+import { submitUserLogIn, getUserMovieRatings, getMovies, getMovieData } from './apiCalls'
 jest.mock('./apiCalls.js')
 
 
@@ -92,20 +92,51 @@ describe('App', () => {
   })
 
   it('Should render movie page on click', async () => {
-    const { getByText, getAllByAltText } = render(
+    getMovieData.mockResolvedValueOnce({
+      "movie": {
+        "id": 475430,
+        "title": "Artemis Fowl",
+        "poster_path": "https://image.tmdb.org/t/p/original//tI8ocADh22GtQFV28vGHaBZVb0U.jpg",
+        "backdrop_path": "https://image.tmdb.org/t/p/original//o0F8xAt8YuEm5mEZviX5pEFC12y.jpg",
+        "release_date": "2020-06-12",
+        "overview": "Artemis Fowl is a 12-year-old genius and descendant of a long line of criminal masterminds. He soon finds himself in an epic battle against a race of powerful underground fairies who may be behind his father’s disappearance.",
+        "genres": [
+            "Adventure",
+            "Fantasy",
+            "Science Fiction",
+            "Family"
+        ],
+        "budget": 125000000,
+        "revenue": 0,
+        "runtime": 95,
+        "tagline": "Remember the name",
+        "average_rating": 3
+      }
+    })
+
+
+    const { getByText, getAllByAltText, getByAltText } = render(
       <MemoryRouter>
         <App />
       </MemoryRouter>) 
+   
     const title = await waitFor(() => getByText('DOPE NOPE'))
     const movieLink = await waitFor(() => getAllByAltText('film-poster')[0])
-    // const ratings = await waitFor(() => getAllByText('/10'))
+
     
     expect(title).toBeInTheDocument(1)
 
     fireEvent.click(movieLink)
 
     const movieTitle = await waitFor(() => getByText('Artemis Fowl'))
+    const releaseDate = await waitFor(() => getByText("Release Date: 2020-06-12"))
+    const starIcon = await waitFor(() => getByAltText('star-icon'))
+    const tagline = await waitFor(() => getByText(`"Remember the name"`))
     
+    expect(movieTitle).toBeInTheDocument()
+    expect(releaseDate).toBeInTheDocument()
+    expect(starIcon).toBeInTheDocument()
+    expect(tagline).toBeInTheDocument()
   })
 
   it('should render the logged in app page on log in submit', async () => {
