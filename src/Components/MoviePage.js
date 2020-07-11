@@ -101,7 +101,8 @@ class MoviePage extends Component {
         <section className='user-rating-box-selected'>
         <form className='rating-system'>
           Rate Me: 
-          <input type='number' 
+          <input type='number'
+            placeholder='5' 
             id='number-select' 
             min='0' max='10' 
             value={this.state.value} 
