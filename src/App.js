@@ -28,7 +28,7 @@ class App extends React.Component {
   }
 
   logOut = () => {
-    this.setState({ ...this.state, ratings: null, isLoggedIn: false})
+    this.setState({ ...this.state, ratings: null, isLoggedIn: false, user: null})
   }
 
   handleMovie = (event) => {
