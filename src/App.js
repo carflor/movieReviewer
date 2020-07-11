@@ -96,9 +96,12 @@ class App extends React.Component {
               getUserRatings={this.getUserRatings} />
           }}>  
         </Route>
-        <Route exact path='/dashboard'> 
-          { isLoggedIn && app }
-          { !isLoggedIn && <Redirect to='/'/> }
+        <Route 
+          exact path='/dashboard'
+          render={() => app}
+          > 
+          {/* { isLoggedIn && app } */}
+          {/* { !isLoggedIn && <Redirect to='/'/> } */}
         </Route>
         <Route exact path='/login'>
           <LogInForm 
@@ -106,9 +109,12 @@ class App extends React.Component {
             returnHomeBtn={ returnHomeBtn } />
           { isLoggedIn && <Redirect to='/dashboard' />}
         </Route>
-        <Route exact path='/'>
-          { isLoggedIn && <Redirect to='/dashboard' />}
-          { !isLoggedIn && app }
+        <Route 
+          exact path='/'
+          render={() => app}  
+          >
+          {/* { isLoggedIn && <Redirect to='/dashboard' />} */}
+          {/* { !isLoggedIn && app } */}
         </Route>
       </Switch>
     );
@@ -116,4 +122,6 @@ class App extends React.Component {
 }
 
 export default App;
+
+// fix back button route functionality
 
