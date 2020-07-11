@@ -24,9 +24,14 @@ const submitUserLogIn = (email, password) => {
   .then(response => response.json())
 }
 
+const getMovieData = (moviePageID) => {
+  return fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${moviePageID}`)
+  .then(response => response.json())
+}
+
 const getUserMovieRatings = (user) => {
   return fetch(`${url}/users/${user}/ratings`) 
   .then(response => response.json())
 }
 
-export { getMovies, getUserMovieRatings, submitUserLogIn }
+export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData }

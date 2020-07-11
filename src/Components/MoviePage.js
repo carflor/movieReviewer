@@ -4,6 +4,7 @@ import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
 import { Link } from 'react-router-dom';
+import { getMovieData } from '../apiCalls'
 
 
 class MoviePage extends Component {
@@ -146,8 +147,7 @@ class MoviePage extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://rancid-tomatillos.herokuapp.com/api/v2/movies/${this.props.moviePageID}`)
-      .then(response => response.json())
+    getMovieData(this.props.moviePageID)
       .then(response => this.setState({ 
         title: response.movie.title,
         avgRating: response.movie.average_rating,
