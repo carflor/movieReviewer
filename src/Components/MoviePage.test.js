@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render, fireEvent, waitFor, getByAltText, mockClear, getByPlaceholderText, GetByRole, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import MoviePage from './MoviePage'
 import { BrowserRouter } from 'react-router-dom'

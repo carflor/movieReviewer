@@ -23,11 +23,8 @@ describe('MovieCard', () => {
           average_rating={2}
         />
     </BrowserRouter>)
-
     const averageRating = getByText('2')
     const imageAltText = screen.getByAltText('film-poster')
-
-
     expect(averageRating).toBeInTheDocument()
     expect(imageAltText).toBeInTheDocument()
   })

@@ -1,15 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import App from '../App'
 import LogInForm from './LogInForm'
-import { BrowserRouter, MemoryRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 jest.mock('../apiCalls.js')
-import { submitUserLogIn, getUserMovieRatings } from '../apiCalls'
-import { createMemoryHistory } from 'history'
-const getUserRatings = jest.fn(getUserMovieRatings())
-
+const getUserRatings = jest.fn()
 
 describe('LogInForm', () => {
   it('should render without crashing', () => {
