@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import { render, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { submitUserLogIn, getUserMovieRatings, getMovies, getMovieData } from './apiCalls'
+import { BrowserRouter, MemoryRouter, Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history'
+import { submitUserLogIn, getUserMovieRatings, getMovies, getMovieData, submitRating } from './apiCalls'
 jest.mock('./apiCalls.js')
 
 
@@ -73,7 +74,6 @@ describe('App', () => {
       </BrowserRouter>) 
     const title = await waitFor(() => getByText('DOPE NOPE'))
     const images = await waitFor(() => getAllByRole('img'))
-    // const ratings = await waitFor(() => getAllByText('/10'))
     
     expect(title).toBeInTheDocument(1)
     expect(images).toHaveLength(6)
@@ -89,6 +89,59 @@ describe('App', () => {
         </MemoryRouter>);
       const linkElement = await waitFor(() => getByText('Pardon the disturbance in the force...'));
       expect(linkElement).toBeInTheDocument();
+  })
+
+  it('Should change locations when the log in button is clicked', async () => {
+    const testHistoryObject = createMemoryHistory()
+    const { getByRole } = render( 
+    <Router history={ testHistoryObject }>
+      <App />
+    </Router> )
+
+    expect(testHistoryObject.location.pathname).toEqual('/')
+    const logInButton = await waitFor(() => getByRole('button', {name: 'LOG IN'}))
+
+    fireEvent.click(logInButton) 
+
+    expect(testHistoryObject.location.pathname).toEqual('/login')
+  })
+
+  it('Should change locations when the log in button is clicked', async () => {
+    const testHistoryObject = createMemoryHistory()
+
+    getMovieData.mockResolvedValueOnce({
+      "movie": {
+        "id": 475430,
+        "title": "Artemis Fowl",
+        "poster_path": "https://image.tmdb.org/t/p/original//tI8ocADh22GtQFV28vGHaBZVb0U.jpg",
+        "backdrop_path": "https://image.tmdb.org/t/p/original//o0F8xAt8YuEm5mEZviX5pEFC12y.jpg",
+        "release_date": "2020-06-12",
+        "overview": "Artemis Fowl is a 12-year-old genius and descendant of a long line of criminal masterminds. He soon finds himself in an epic battle against a race of powerful underground fairies who may be behind his father’s disappearance.",
+        "genres": [
+            "Adventure",
+            "Fantasy",
+            "Science Fiction",
+            "Family"
+        ],
+        "budget": 125000000,
+        "revenue": 0,
+        "runtime": 95,
+        "tagline": "Remember the name",
+        "average_rating": 3
+      }
+    })
+
+    const { getAllByAltText } = render( 
+    <Router history={ testHistoryObject }>
+      <App />
+    </Router> )
+
+    expect(testHistoryObject.location.pathname).toEqual('/')
+    const movieLink = await waitFor(() => getAllByAltText('film-poster')[0])
+
+    fireEvent.click(movieLink) 
+
+    expect(testHistoryObject.location.pathname).toEqual('/movies/475430')
   })
 
   it('Should render movie page on click', async () => {
@@ -193,5 +246,138 @@ describe('App', () => {
 
     expect(pageTitle).toBeInTheDocument()
     expect(welcomeMessage).toBeInTheDocument()
+  })
+
+  it('Should be able to submit a rating on the movie page', async () => {
+    submitUserLogIn.mockResolvedValueOnce({
+      user: {
+        id: 1, 
+        name: "Alan", 
+        email: "alan@turing.io"
+      }
+    })
+
+    getUserMovieRatings.mockResolvedValueOnce(
+      {
+        ratings: [
+            {
+                id: 646,
+                user_id: 59,
+                movie_id: 451184,
+                rating: 2,
+                created_at: "2020-07-08T19:39:07.616Z",
+                updated_at: "2020-07-08T19:39:07.616Z"
+            },
+            {
+                id: 958,
+                user_id: 59,
+                movie_id: 508439,
+                rating: 2,
+                created_at: "2020-07-10T01:11:16.764Z",
+                updated_at: "2020-07-10T01:11:16.764Z"
+            },
+        ]
+      }
+    )
+
+    getMovieData.mockResolvedValueOnce({
+      "movie": {
+        "id": 475430,
+        "title": "Artemis Fowl",
+        "poster_path": "https://image.tmdb.org/t/p/original//tI8ocADh22GtQFV28vGHaBZVb0U.jpg",
+        "backdrop_path": "https://image.tmdb.org/t/p/original//o0F8xAt8YuEm5mEZviX5pEFC12y.jpg",
+        "release_date": "2020-06-12",
+        "overview": "Artemis Fowl is a 12-year-old genius and descendant of a long line of criminal masterminds. He soon finds himself in an epic battle against a race of powerful underground fairies who may be behind his father’s disappearance.",
+        "genres": [
+            "Adventure",
+            "Fantasy",
+            "Science Fiction",
+            "Family"
+        ],
+        "budget": 125000000,
+        "revenue": 0,
+        "runtime": 95,
+        "tagline": "Remember the name",
+        "average_rating": 3
+      }
+    })
+
+    submitRating.mockResolvedValueOnce({
+
+        "rating": {
+            "user_id": 59,
+            "movie_id": 475430,
+            "rating": 8
+        }
+   
+    })
+
+
+    const { getByText, getAllByAltText, getByRole, getByPlaceholderText } = render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>) 
+    const logInButton = await waitFor(() => getByRole('button', {name: 'LOG IN'}))
+
+    fireEvent.click(logInButton)
+    
+    const emailInput = getByPlaceholderText('email')
+    const passwordInput = getByPlaceholderText('password')
+    const submitBtn = getByRole('button', {name: /Log In/})
+
+    fireEvent.change(emailInput, {target: {value: 'alan@turing.io'}})
+    fireEvent.change(passwordInput, {target: {value: '654321'}})
+    fireEvent.click(submitBtn)
+
+    const welcomeMessage = await waitFor(() => getByText('Welcome Alan'));
+
+    expect(welcomeMessage).toBeInTheDocument()
+
+    const movieLink = await waitFor(() => getAllByAltText('film-poster')[0])
+
+    fireEvent.click(movieLink)
+
+    const ratingInput = await waitFor(()=> getByPlaceholderText('5'))
+
+    fireEvent.change(ratingInput, {target: {value: '8'}})
+
+    getUserMovieRatings.mockResolvedValueOnce(
+      {
+        ratings: [
+            {
+                id: 646,
+                user_id: 59,
+                movie_id: 451184,
+                rating: 2,
+                created_at: "2020-07-08T19:39:07.616Z",
+                updated_at: "2020-07-08T19:39:07.616Z"
+            },
+            {
+                id: 958,
+                user_id: 59,
+                movie_id: 508439,
+                rating: 2,
+                created_at: "2020-07-10T01:11:16.764Z",
+                updated_at: "2020-07-10T01:11:16.764Z"
+            },
+            {
+                id: 426,
+                user_id: 59,
+                movie_id: 475430,
+                rating: 8,
+                created_at: "2020-07-10T01:11:16.764Z",
+                updated_at: "2020-07-10T01:11:16.764Z"
+            }
+        ]
+      }
+    )
+
+    const rateBtn = getByRole('button', {name: 'Submit'})
+
+    fireEvent.click(rateBtn)
+
+    const deleteButton = await waitFor(() => getByRole('button', {name: 'Update'}))
+
+    expect(deleteButton).toBeInTheDocument()
   })
 });
