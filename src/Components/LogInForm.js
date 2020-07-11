@@ -8,27 +8,34 @@ class LogInForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        email: '',
-        password: ''
+      email: '',
+      password: '',
+      loginError: false,
     }
   }
 
   handleChange = event => {
-    this.setState( {[event.target.name]: event.target.value} )
+    this.setState({ [event.target.name]: event.target.value, loginError: false })
   }
 
   submitLogIn = event => {
     event.preventDefault()
     submitUserLogIn(this.state.email, this.state.password)
-      .then(data => this.props.getUserRatings(data.user))
+      .then(data => {
+        if (!data.error) {
+          this.props.getUserRatings(data.user)
+        }
+        this.setState({ email: '', password: '', loginError: true })
+      })
       .catch(error => console.log(error))
   }
-    
+  
   render() {
     return (
       <section className='main-page'>
         <section className='log-in-form'>
           <h2>LOG IN</h2>
+          {this.state.loginError && <h4 className="error-message">Incorrect Username or Password Submitted!</h4>}
           <form>
             <label htmlFor='email'></label>
             <input 
