@@ -3,7 +3,7 @@ import './MoviePage.scss'
 import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { getMovieData, deleteUserRating, submitRating } from '../apiCalls'
 
 
@@ -13,6 +13,9 @@ class MoviePage extends Component {
       this.state = {
         isLoading: false,
         value: '',
+        displayingSummary: true,
+        displayingComments: false,
+        displayingTrailer: false
       }
   }
 
@@ -122,6 +125,27 @@ class MoviePage extends Component {
     }
   }
 
+  showComments = (event) => {
+    event.preventDefault()
+    this.setState({ displayingSummary: false,
+      displayingComments: true,
+      displayingTrailer: false })
+  }
+
+  showSummary = (event) => {
+    event.preventDefault()
+    this.setState({ displayingSummary: true,
+      displayingComments: false,
+      displayingTrailer: false })
+  }
+
+  showTrailer = (event) => {
+    event.preventDefault()
+    this.setState({ displayingSummary: false,
+      displayingComments: false,
+      displayingTrailer: true })
+  }
+
   componentDidMount() {
     getMovieData(this.props.moviePageID)
       .then(response => this.setState({ 
@@ -167,11 +191,18 @@ class MoviePage extends Component {
             alt='movie poster' className='movie-poster-selected'/>
           <section>
             <section className='movie-nav-box'>
-              <button className='summary-btn'>Summary</button>
-              <button className='comments-btn'>Comments</button>
-              <button className='trailer-btn'>Trailer</button>
+              <NavLink to='/'>
+                <button className='summary-btn' onClick={(event) => this.showSummary(event)}>Summary</button>
+              </NavLink>
+              <NavLink to='/comments'>
+                <button className='comments-btn' onClick={(event) => this.showComments(event)}>Comments</button>
+              </NavLink>
+              <NavLink to='/trailer'>
+                <button className='trailer-btn' onClick={(event) => this.showTrailer(event)}>Trailer</button>
+              </NavLink>
             </section>
-            <section className='movie-data-box'> 
+            {this.state.displayingSummary && (
+            <section className='movie-summary-box'> 
               <section className='rating-box-selected'>
               <p className='average-rating'>AVG
               <img 
@@ -188,7 +219,48 @@ class MoviePage extends Component {
                 <p className='movie-datum'>Duration: {this.state.runtime} minutes</p>
                 <p className='movie-datum'>Genres: {this.state.genre.join(', ')}</p>
               </section>
-            </section>
+            </section>)}
+            {this.state.displayingComments && (
+            <section className='movie-comment-box'> 
+              <section className='comment-container'>
+                <section className='single-comment-box'>
+                  <p className='name-comment'>Ken:</p>
+                  <article className='comment-text'>Some dummy text for now</article>
+                </section>
+                <section className='single-comment-box'>
+                  <p className='name-comment'>Mary:</p>
+                  <article className='comment-text'>This way more text for examples This way more text for examples This way more text for examples</article>
+                </section>
+                <section className='single-comment-box'>
+                  <p className='name-comment'>Jaime:</p>
+                  <article className='comment-text'>Dummy data Dummy data Dummy data v Dummy data Dummy data Dummy data Dummy data v Dummy data Dummy data Dummy data Dummy data Dummy data Dummy data Dummy data Dummy data v v Dummy data v</article>
+                </section>
+              </section>
+              <footer className="comment-submit-container">
+                <textarea className='comment-box-input'>
+                </textarea>
+                <button className='submit-comment-btn'>Submit</button>
+              </footer>
+            </section>)}
+            {this.state.displayingTrailer && (
+            <section className='movie-trailer-box'> 
+              {/* <section className='rating-box-selected'>
+              <p className='average-rating'>AVG
+              <img 
+                alt="star-icon"
+                src={ starIcon }
+                className="star-icon-poster-moviePage" 
+              /> 
+                {Math.floor(this.state.avgRating)}</p>
+              </section>
+                {this.displayUserRating()}
+              <section className='movie-data'>
+                <p>{this.state.overview}</p>
+                <p className='movie-datum'>Release Date: {this.state.releaseDate}</p>
+                <p className='movie-datum'>Duration: {this.state.runtime} minutes</p>
+                <p className='movie-datum'>Genres: {this.state.genre.join(', ')}</p>
+              </section> */}
+            </section>)}
           </section>
         </section>
        {this.state.tagline && <section className="movie-tagline">"{this.state.tagline}"</section>}

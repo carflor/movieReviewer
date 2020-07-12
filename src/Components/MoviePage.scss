@@ -38,7 +38,9 @@
   height: 75vh;
 }
 
-.movie-data-box {
+.movie-summary-box,
+.movie-comment-box,
+.movie-trailer-box {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
@@ -180,7 +182,8 @@
   margin-left: 1vh;
 }
 
-.submit-rating-btn:hover {
+.submit-rating-btn:hover,
+.submit-rating-btn:focus {
   cursor: pointer;
   transform: scale(1.1);
   transition: transform .3s;
@@ -203,4 +206,62 @@
   box-shadow: 0 0 3px 3px #100f0f;
   transform: scale(1.03);
   transition: transform .3s;
+}
+
+.comment-container {
+  height: 40vh;
+  width: 55vw;
+  opacity: .95;
+  font-family: 'Roboto Mono', monospace;
+  overflow: scroll;
+}
+
+.comment-box-input {
+  width: 45vw;
+  height: 10vh;
+  font-size: 3vh;
+}
+
+.submit-comment-btn {
+  width: 6vw;
+  height: 6vh;
+  font-size: 2vh;
+  border-radius: .8vh;
+  border: none;
+  color: #100f0f;
+  background-color: #0a97b0;
+  letter-spacing: .1vw;
+  margin-left: 2vh;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.submit-comment-btn:hover,
+.submit-comment-btn:focus {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform .3s;
+}
+
+.comment-submit-container {
+  display: flex;
+  align-items: center;
+}
+
+.single-comment-box {
+  display: flex;
+  margin: 1vh;
+}
+
+.comment-text {
+  display: flex;
+  align-items: center;
+  background-color: #0a97b0;
+  padding: 1vh;
+  border-radius: 2vh;
+}
+
+.name-comment {
+  align-items: center;
+  display: flex;
+  margin-right: .5vw;
 }
