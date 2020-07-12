@@ -99,7 +99,9 @@ class App extends React.Component {
         <Route 
           exact path='/dashboard'
           render={() => app} 
-        /> 
+        >
+          {!isLoggedIn && <Redirect to='/' />}
+        </Route> 
         <Route exact path='/login'>
           <LogInForm 
             getUserRatings={ this.getUserRatings } 

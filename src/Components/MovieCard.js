@@ -1,5 +1,5 @@
 import React from 'react';
-import './_MovieCard.scss'
+import './MovieCard.scss'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
 import PropTypes from 'prop-types';

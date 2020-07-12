@@ -28,7 +28,7 @@
 
 .movie-title {
   margin: auto;
-  font-size: 6vh;
+  font-size: 3vw;
 }
 
 .movie-content {
@@ -40,18 +40,56 @@
 
 .movie-data-box {
   display: flex;
-  font-size: larger;
-  flex-wrap: wrap;
   justify-content: space-evenly;
+  flex-wrap: wrap;
   background-color: #fce8d5;
   border-radius: .5vh;
   height: 65vh;
   width: 55vw;
-  opacity: .9;
+  opacity: .95;
   padding: 2vh;
   font-family: 'Roboto Mono', monospace;
   font-size: 2vh;
   overflow: scroll;
+}
+
+.movie-nav-box {
+  width: 100vw;
+  height: 6vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary-btn,
+.comments-btn,
+.trailer-btn {
+  width: 17vw;
+  height: 6vh;
+  font-size: 2.5vh;
+  border-radius: .8vh;
+  border: none;
+  background-color: #100f0f;
+  color: #0a97b0;
+}
+
+.summary-btn:hover,
+.comments-btn:hover,
+.trailer-btn:hover,
+.summary-btn:focus,
+.comments-btn:focus,
+.trailer-btn:focus {
+  cursor: pointer;
+  opacity: .8;
+  box-shadow: 0 0 3px 3px #100f0f;
+  transform: scale(1.03);
+  transition: transform .3s;
+}
+
+.summary-btn:active,
+.comments-btn:active,
+.trailer-btn:active {
+  color: #100f0f;
+  background-color: #0a97b0;
 }
 
 .movie-poster-selected {
@@ -64,10 +102,9 @@
   display: flex;
   justify-content: space-evenly;
   text-align: center;
-  margin-top: 3vh;
   background-color: #0a97b0;
-  width: 20vw;
-  height: 15vh;
+  width: 18vw;
+  height: 14vh;
   font-size: 3vh;
   border-radius: 1vh;
 }
@@ -77,16 +114,17 @@
   flex-direction: column;
   justify-content: space-evenly;
   background-color: #0a97b0;
-  width: 25vw;
-  height: 15vh;
+  width: 18vw;
+  height: 14vh;
   font-size: 3vh;
-  margin-top: 3vh;
   text-align: center;
   border-radius: 1vh;
 }
 
 .rating-system {
   margin: auto;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .movie-data {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './_MoviePage.scss'
+import './MoviePage.scss'
 import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
@@ -166,6 +166,11 @@ class MoviePage extends Component {
             src={this.state.poster} 
             alt='movie poster' className='movie-poster-selected'/>
           <section className='movie-data-box'> 
+            <section className='movie-nav-box'>
+              <button className='summary-btn'>Summary</button>
+              <button className='comments-btn'>Comments</button>
+              <button className='trailer-btn'>Trailer</button>
+            </section>
             <section className='rating-box-selected'>
              <p className='average-rating'>AVG
              <img 
