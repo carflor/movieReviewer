@@ -165,27 +165,29 @@ class MoviePage extends Component {
           <img 
             src={this.state.poster} 
             alt='movie poster' className='movie-poster-selected'/>
-          <section className='movie-data-box'> 
+          <section>
             <section className='movie-nav-box'>
               <button className='summary-btn'>Summary</button>
               <button className='comments-btn'>Comments</button>
               <button className='trailer-btn'>Trailer</button>
             </section>
-            <section className='rating-box-selected'>
-             <p className='average-rating'>AVG
-             <img 
-              alt="star-icon"
-              src={ starIcon }
-              className="star-icon-poster-moviePage" 
-            /> 
-              {Math.floor(this.state.avgRating)}</p>
-            </section>
-              {this.displayUserRating()}
-            <section className='movie-data'>
-              <p>{this.state.overview}</p>
-              <p className='movie-datum'>Release Date: {this.state.releaseDate}</p>
-              <p className='movie-datum'>Duration: {this.state.runtime} minutes</p>
-              <p className='movie-datum'>Genres: {this.state.genre.join(', ')}</p>
+            <section className='movie-data-box'> 
+              <section className='rating-box-selected'>
+              <p className='average-rating'>AVG
+              <img 
+                alt="star-icon"
+                src={ starIcon }
+                className="star-icon-poster-moviePage" 
+              /> 
+                {Math.floor(this.state.avgRating)}</p>
+              </section>
+                {this.displayUserRating()}
+              <section className='movie-data'>
+                <p>{this.state.overview}</p>
+                <p className='movie-datum'>Release Date: {this.state.releaseDate}</p>
+                <p className='movie-datum'>Duration: {this.state.runtime} minutes</p>
+                <p className='movie-datum'>Genres: {this.state.genre.join(', ')}</p>
+              </section>
             </section>
           </section>
         </section>

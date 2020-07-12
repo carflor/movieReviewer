@@ -43,8 +43,11 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
   background-color: #fce8d5;
-  border-radius: .5vh;
-  height: 65vh;
+  // border-top-left-radius: .5vh;
+  // border-top-right-radius: 
+  border-bottom-left-radius: .5vh;
+  border-bottom-right-radius: .5vh;
+  height: 55vh;
   width: 55vw;
   opacity: .95;
   padding: 2vh;
@@ -54,7 +57,12 @@
 }
 
 .movie-nav-box {
-  width: 100vw;
+  border-top-left-radius: .5vh;
+  border-top-right-radius: .5vh;
+  background-color: #fce8d5;
+  padding: 2vh;
+  opacity: .95;
+  width: 55vw;
   height: 6vh;
   display: flex;
   justify-content: space-between;
