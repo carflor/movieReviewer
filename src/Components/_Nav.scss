@@ -47,7 +47,8 @@
   font-family: 'Roboto Mono', monospace;
 }
 
-.login-btn {
+.login-btn,
+.dope-movie-btn {
   width: 11vw;
   height: 6vh;
   font-size: 2.5vh;
@@ -68,3 +69,4 @@
   transform: scale(1.03);
   transition: transform .3s;
 }
+

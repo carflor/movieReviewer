@@ -26,6 +26,7 @@ const Nav = (props) => {
           <button 
             className="login-btn" 
             onClick={props.data.logOutMethod}>LOG OUT</button>
+          <button className="dope-movie-btn">Dope Movies</button>
         </section>
       </nav>
     )

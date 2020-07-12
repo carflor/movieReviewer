@@ -2,6 +2,7 @@ import React from 'react';
 import './_MovieCard.scss'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
+import heartOutlineIcon from '../Assets/heart-outline.png'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) =>
     if (findMovieRating) {
       userRate = (
         <section className="user-rating">
+        <img alt='fave-icon' src={heartOutlineIcon} className='favorite-icon'/>
           <img
             alt="rated-icon"
             src={ ratedIcon }
