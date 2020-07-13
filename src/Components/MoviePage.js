@@ -164,6 +164,10 @@ class MoviePage extends Component {
         ratings: this.props.ratings
       }))
       .catch(error => console.log(error.message))
+    fetch('http://localhost:3001/api/v1/movies/338762/comments')
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -237,13 +241,19 @@ class MoviePage extends Component {
                 </section>
               </section>
               <footer className="comment-submit-container">
-                <textarea className='comment-box-input'>
+                <label for='comment-input'>Comment</label>
+                <textarea 
+                  className='comment-box-input' 
+                  name="text-area-input"
+                  minlength='2' 
+                  maxlength='50'>
                 </textarea>
                 <button className='submit-comment-btn'>Submit</button>
               </footer>
             </section>)}
             {this.state.displayingTrailer && (
-            <section className='movie-trailer-box'> 
+            <section className='movie-trailer-box'>
+              <p>Feature coming soon!</p> 
               {/* <section className='rating-box-selected'>
               <p className='average-rating'>AVG
               <img 
