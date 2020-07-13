@@ -196,12 +196,15 @@ class MoviePage extends Component {
           <section>
             <section className='movie-nav-box'>
               <NavLink to='/'>
+                <label for='summary-btn'></label>
                 <button className='summary-btn' onClick={(event) => this.showSummary(event)}>Summary</button>
               </NavLink>
               <NavLink to='/comments'>
+                <label for='comments-btn'></label>
                 <button className='comments-btn' onClick={(event) => this.showComments(event)}>Comments</button>
               </NavLink>
               <NavLink to='/trailer'>
+                <label for='trailer-btn'></label>
                 <button className='trailer-btn' onClick={(event) => this.showTrailer(event)}>Trailer</button>
               </NavLink>
             </section>
@@ -244,7 +247,7 @@ class MoviePage extends Component {
                 <label for='comment-input'>Comment</label>
                 <textarea 
                   className='comment-box-input' 
-                  name="text-area-input"
+                  name="comment-input"
                   minlength='2' 
                   maxlength='50'>
                 </textarea>
@@ -254,22 +257,6 @@ class MoviePage extends Component {
             {this.state.displayingTrailer && (
             <section className='movie-trailer-box'>
               <p>Feature coming soon!</p> 
-              {/* <section className='rating-box-selected'>
-              <p className='average-rating'>AVG
-              <img 
-                alt="star-icon"
-                src={ starIcon }
-                className="star-icon-poster-moviePage" 
-              /> 
-                {Math.floor(this.state.avgRating)}</p>
-              </section>
-                {this.displayUserRating()}
-              <section className='movie-data'>
-                <p>{this.state.overview}</p>
-                <p className='movie-datum'>Release Date: {this.state.releaseDate}</p>
-                <p className='movie-datum'>Duration: {this.state.runtime} minutes</p>
-                <p className='movie-datum'>Genres: {this.state.genre.join(', ')}</p>
-              </section> */}
             </section>)}
           </section>
         </section>
