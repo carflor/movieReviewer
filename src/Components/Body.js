@@ -8,7 +8,8 @@ const Body = props => {
       <MovieCard {...movie} 
         key={movie.id} 
         ratings={props.ratings} 
-        handleMovie={props.handleMovie} />
+        handleMovie={props.handleMovie}
+        isLoggedIn={props.isLoggedIn} />
     ))
     return (
       <section className="movie-container">

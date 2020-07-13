@@ -1,4 +1,5 @@
 const url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
+const microserviceUrl = `http://localhost:3001/api/v1`
 
 const getMovies = () => {
   return fetch(`${url}/movies`)
@@ -23,6 +24,25 @@ const submitUserLogIn = (email, password) => {
     })
   })
   .then(response => response.json())
+}
+
+const addAFavorite = (userId, movieId) => {
+  return fetch(`${microserviceUrl}/favoriteMovies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userId: userId,
+      movieId: movieId
+    })
+  })
+  .then(response => response.json())
+}
+
+const getUserFavorites = (userId) => {
+  return fetch(`${microserviceUrl}/favoriteMovies/${userId}`)
+    .then(response => response.json())
 }
 
 const getMovieData = (moviePageID) => {
@@ -60,4 +80,4 @@ const submitRating = async (userId, moviePageID, value) => {
   }
 }
 
-export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating }
+export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, addAFavorite, getUserFavorites }

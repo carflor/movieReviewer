@@ -3,68 +3,93 @@ import './_MovieCard.scss'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
 import heartOutlineIcon from '../Assets/heart-outline.png'
+import redHeartIcon from '../Assets/heart-red.png'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) => {
-  let userRate;
-  if (ratings) {
-    const findMovieRating = ratings.find(film => film.movie_id === id)
-    if (findMovieRating) {
-      userRate = (
-        <section className="user-rating">
-        <img alt='fave-icon' src={heartOutlineIcon} className='favorite-icon'/>
-          <img
-            alt="rated-icon"
-            src={ ratedIcon }
-            className="rated-star-icon" />
-          <section className="avg-rating-container">
-            {findMovieRating.rating}
-            <span className="rate-fraction">/10</span>
-          </section>
-        </section>
-      )
-    } else {
-      userRate = (
-        <section className="rate-me">
-          <img
-            alt="rated-icon"
-            src={ ratedIcon }
-            className="rated-star-icon" />
-          <p className="rate-text">Rate</p>
-        </section>
-      ) 
+// const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) => {
+class MovieCard extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      isFavorite: false
+
     }
   }
 
-  return (
-    <Link to={`movies/${id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
-      <section 
-        className="movie-card"
-        tabIndex="0" 
-        onClick={handleMovie}>
-      <img 
-        src={poster_path} 
-        className="movie-poster" 
-        alt="film-poster" 
-        id={id} />
-        <section className="rating-box">
-          <section className="avg-container">
-            <img 
-              alt="star-icon"
-              src={ starIcon }
-              className="star-icon-poster"
-            />
+  toggleFavorite = () => {
+    this.setState({
+      isFavorite: !this.state.isFavorite
+    })
+  }
+
+  faveIcon = () => {
+    if (this.props.isLoggedIn) {
+      return <img alt='fave-icon' src={this.state.isFavorite ? redHeartIcon : heartOutlineIcon} onClick={()=> this.toggleFavorite()} className={'fave-icon-card'}/>
+    }
+  }
+
+  render() {
+    let userRate;
+    if (this.props.ratings) {
+      const findMovieRating = this.props.ratings.find(film => film.movie_id === this.props.id)
+      if (findMovieRating) {
+        userRate = (
+          <section className="user-rating">
+          {this.faveIcon()}
+            <img
+              alt="rated-icon"
+              src={ ratedIcon }
+              className="rated-star-icon" />
             <section className="avg-rating-container">
-              {Math.floor(average_rating)}
+              {findMovieRating.rating}
               <span className="rate-fraction">/10</span>
             </section>
           </section>
-          {userRate}
+        )
+      } else {
+        userRate = (
+          <section className="rate-me">
+           {this.faveIcon()}
+            <img
+              alt="rated-icon"
+              src={ ratedIcon }
+              className="rated-star-icon" />
+            <p className="rate-text">Rate</p>
+          </section>
+        ) 
+      }
+    }
+
+    return (
+      <section 
+          className="movie-card"
+          tabIndex="0" >
+        <Link to={`movies/${this.props.id}`} style={{ textDecoration: 'inherit', color: 'inherit' }}>
+          <img 
+            onClick={this.props.handleMovie}
+            src={this.props.poster_path} 
+            className="movie-poster" 
+            alt="film-poster" 
+            id={this.props.id} />
+        </Link>
+          <section className="rating-box">
+            <section className="avg-container">
+              <img 
+                alt="star-icon"
+                src={ starIcon }
+                className="star-icon-poster"
+                />
+              <section className="avg-rating-container">
+                {Math.floor(this.props.average_rating)}
+                <span className="rate-fraction">/10</span>
+              </section>
+            </section>
+            {userRate}
+          </section>
         </section>
-      </section>
-    </Link>
-  )
+    )
+  }
 }
 
 export default MovieCard

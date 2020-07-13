@@ -4,7 +4,7 @@ import Nav from './Components/Nav';
 import Body from './Components/Body';
 import LogInForm from './Components/LogInForm';
 import MoviePage from './Components/MoviePage';
-import { getMovies, getUserMovieRatings } from './apiCalls';
+import { getMovies, getUserMovieRatings, getUserFavorites } from './apiCalls';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 class App extends React.Component {
@@ -20,6 +20,7 @@ class App extends React.Component {
       returnHomeBtn: this.returnHomeBtn,
       user: null,
       ratings: null,
+      favorite: null
     }
   }
 
@@ -50,6 +51,11 @@ class App extends React.Component {
         movies: data.movies, 
         isLoading: false 
     })).catch(error => this.setState({ error, isLoading: false}))
+  }
+
+  getFavorites = (userData) => {
+    getUserFavorites(userData.id)
+      .then(response => this.setState({favorites: response}))
   }
   
   getUserRatings = (userData) => {
@@ -93,6 +99,7 @@ class App extends React.Component {
               handleBackBtn={this.handleBackBtn} 
               user={this.state.user}
               ratings={ratings}
+              isLoggedIn={this.state.isLoggedIn}
               getUserRatings={this.getUserRatings} />
           }} 
         />  
@@ -103,7 +110,8 @@ class App extends React.Component {
         <Route exact path='/login'>
           <LogInForm 
             getUserRatings={ this.getUserRatings } 
-            returnHomeBtn={ returnHomeBtn } />
+            returnHomeBtn={ returnHomeBtn } 
+            getUserFavorites={ this.getFavorites }/>
           { isLoggedIn && <Redirect to='/dashboard' />}
         </Route>
         <Route 

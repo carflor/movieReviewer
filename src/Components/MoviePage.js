@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import './_MoviePage.scss'
 import backIcon from '../Assets/angle-double-left-solid.svg'
-import starIcon from '../Assets/star-regular.svg'
+import starIcon from '../Assets/star-regular.svg';
 import ratedIcon from '../Assets/star-golden.svg'
+import heartOutlineIcon from '../Assets/heart-outline.png'
+import redHeartIcon from '../Assets/heart-red.png'
 import { Link } from 'react-router-dom';
 import { getMovieData, deleteUserRating, submitRating } from '../apiCalls'
 
@@ -13,7 +15,14 @@ class MoviePage extends Component {
       this.state = {
         isLoading: false,
         value: '',
+        isFavorite: false
       }
+  }
+
+  toggleFavorite = () => {
+    this.setState({
+      isFavorite: !this.state.isFavorite
+    })
   }
 
   handleChange = (event) => {
@@ -136,10 +145,15 @@ class MoviePage extends Component {
         tagline: response.movie.tagline,
         userRating: null,
         isLoading: true,
-        isLoggedIn: false,
         ratings: this.props.ratings
       }))
       .catch(error => console.log(error.message))
+  }
+
+  faveIcon = () => {
+    if (this.props.isLoggedIn) {
+      return <img alt='fave-icon' src={this.state.isFavorite ? redHeartIcon : heartOutlineIcon}onClick={()=> this.toggleFavorite()} className={'fave-icon-movie-page'}/>
+    }
   }
 
   render() {
@@ -160,6 +174,7 @@ class MoviePage extends Component {
               />
           </Link>
           <h1 className='movie-title'>{this.state.title}</h1>
+          {this.faveIcon()}
         </section>
         <section className='movie-content'>
           <img 
