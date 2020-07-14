@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './MoviePage.scss'
+import CommentCard from './CommentCard'
 import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
@@ -15,7 +16,8 @@ class MoviePage extends Component {
         value: '',
         displayingSummary: true,
         displayingComments: false,
-        displayingTrailer: false
+        displayingTrailer: false,
+        userComment: ''
       }
   }
 
@@ -104,10 +106,12 @@ class MoviePage extends Component {
         <section className='user-rating-box-selected'>
         <form className='rating-system'>
           Rate Me: 
-          <input type='number'
+          <input 
+            type='number'
             placeholder='5' 
             id='number-select' 
             min='0' max='10' 
+            className='rate-input'
             value={this.state.value} 
             onChange={this.handleChange}>
           </input>
@@ -130,6 +134,26 @@ class MoviePage extends Component {
     this.setState({ displayingSummary: false,
       displayingComments: true,
       displayingTrailer: false })
+  }
+
+  createComments = () => {
+    const comments = this.state.allComments.filter(comment => comment.movie_id === +this.props.moviePageID)
+    if(comments.length > 0) {
+      const updatedComments = comments.map(comment => (
+        <CommentCard 
+          author={comment.author}
+          message={comment.comment}
+        />
+      ))
+      return updatedComments
+    } else {
+      return <h1 className="no-comments">Please comment below!</h1>
+    }
+  }
+
+  handleComment = (event) => {
+    this.setState({ userComment: event.target.value})
+    console.log(event.target.value, 'textarea')
   }
 
   showSummary = (event) => {
@@ -160,13 +184,13 @@ class MoviePage extends Component {
         tagline: response.movie.tagline,
         userRating: null,
         isLoading: true,
-        isLoggedIn: false,
         ratings: this.props.ratings
       }))
       .catch(error => console.log(error.message))
+
     fetch('http://localhost:3001/api/v1/movies/338762/comments')
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(response => this.setState({ allComments: response }))
       .catch(err => console.log(err))
   }
 
@@ -196,15 +220,15 @@ class MoviePage extends Component {
           <section>
             <section className='movie-nav-box'>
               <NavLink to='/'>
-                <label for='summary-btn'></label>
+                <label htmlFor='summary-btn'></label>
                 <button className='summary-btn' onClick={(event) => this.showSummary(event)}>Summary</button>
               </NavLink>
               <NavLink to='/comments'>
-                <label for='comments-btn'></label>
+                <label htmlFor='comments-btn'></label>
                 <button className='comments-btn' onClick={(event) => this.showComments(event)}>Comments</button>
               </NavLink>
               <NavLink to='/trailer'>
-                <label for='trailer-btn'></label>
+                <label htmlFor='trailer-btn'></label>
                 <button className='trailer-btn' onClick={(event) => this.showTrailer(event)}>Trailer</button>
               </NavLink>
             </section>
@@ -230,29 +254,20 @@ class MoviePage extends Component {
             {this.state.displayingComments && (
             <section className='movie-comment-box'> 
               <section className='comment-container'>
-                <section className='single-comment-box'>
-                  <p className='name-comment'>Ken:</p>
-                  <article className='comment-text'>Some dummy text for now</article>
-                </section>
-                <section className='single-comment-box'>
-                  <p className='name-comment'>Mary:</p>
-                  <article className='comment-text'>This way more text for examples This way more text for examples This way more text for examples</article>
-                </section>
-                <section className='single-comment-box'>
-                  <p className='name-comment'>Jaime:</p>
-                  <article className='comment-text'>Dummy data Dummy data Dummy data v Dummy data Dummy data Dummy data Dummy data v Dummy data Dummy data Dummy data Dummy data Dummy data Dummy data Dummy data Dummy data v v Dummy data v</article>
-                </section>
+              { this.createComments() }
               </section>
-              <footer className="comment-submit-container">
-                <label for='comment-input'>Comment</label>
+              {this.props.isLoggedIn && <section className="comment-submit-container">
+                <label htmlFor='comment-input'></label>
                 <textarea 
                   className='comment-box-input' 
+                  placeholder='Comment here...'
                   name="comment-input"
-                  minlength='2' 
-                  maxlength='50'>
+                  minLength='1' 
+                  maxLength='250'
+                  onChange={(event) => this.handleComment(event)}>
                 </textarea>
                 <button className='submit-comment-btn'>Submit</button>
-              </footer>
+              </section>}
             </section>)}
             {this.state.displayingTrailer && (
             <section className='movie-trailer-box'>
