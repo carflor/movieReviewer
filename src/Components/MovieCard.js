@@ -11,68 +11,40 @@ import { Link } from 'react-router-dom';
 class MovieCard extends React.Component {
   constructor(props) {
     super(props)
-    // this.isFavorite = null
     this.state = {
       isFavorite: false
-
     }
   }
 
-  // setIfFavorite = (isFavorite) => {
-  //   // if(this.props.isLoggedIn) {
-  //   //   this.props.favorites.find(film => {
-  //   //     if(film.movie_id === this.props.id) {
-  //   //       // return this.isFavorite = true
-  //   //       return this.setState({isFavorite: true})
-  //   //     } else {
-  //   //       // return this.isFavorite = false
-  //   //       return this.setState({isFavorite: false})
-  //   //     }
-  //   //   })
-  //   // }
-  //   console.log(isFavorite)
-  //   if (isFavorite) {
-  //     this.setState({isFavorite: true})
-  //   } 
-  // }
-
-  // setIfFavorite = () => {
-  //   if (this.props.isLoggedIn) {
-  //    const favorite = this.props.favorites.find(film => film.movie_id === parseInt(this.props.moviePageID))
-  //   if (favorite) {
-  //     return this.setState({isFavorite: true})
-  //     } 
-  //   }
-  // }
+  heartHandler = () => {
+    debugger
+    this.setState({isFavorite: false})
+  }
   
 
   toggleFavorite = () => {
     return this.setState({isFavorite: !this.state.isFavorite})
   }
 
-  faveIcon = () => {
+  faveIcon = (favorite) => {
+    if (this.props.isLoggedIn && favorite) {
+      console.log(favorite)
+      return <img alt='fave-icon' src={redHeartIcon} onClick={()=> this.heartHandler()} className={'fave-icon-card'}/>
+    }
     if (this.props.isLoggedIn) {
       return <img alt='fave-icon' src={this.state.isFavorite ? redHeartIcon : heartOutlineIcon} onClick={()=> this.toggleFavorite()} className={'fave-icon-card'}/>
     }
   } 
-  
-  componentDidMount() {
-    this.setState({})
-    this.setIfFavorite()
-  }
 
   render() {
     let userRate;
     if (this.props.ratings) {
-      // const seeIfFavorite = this.props.favorites.find(film => film.movie_id === this.props.id)
+      const seeIfFavorite = this.props.favorites.find(film => film.movie_id === this.props.id)
       const findMovieRating = this.props.ratings.find(film => film.movie_id === this.props.id)
-      // console.log('seeIfFavorite', seeIfFavorite)
-      // console.log('rating', findMovieRating)
-      // this.setIfFavorite(seeIfFavorite)
       if (findMovieRating) {
         userRate = (
           <section className="user-rating">
-          {this.faveIcon()}
+          {this.faveIcon(seeIfFavorite)}
             <img
               alt="rated-icon"
               src={ ratedIcon }
@@ -86,7 +58,7 @@ class MovieCard extends React.Component {
       } else {
         userRate = (
           <section className="rate-me">
-           {this.faveIcon()}
+           {this.faveIcon(seeIfFavorite)}
             <img
               alt="rated-icon"
               src={ ratedIcon }

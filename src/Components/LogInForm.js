@@ -20,6 +20,7 @@ class LogInForm extends Component {
 
   submitLogIn = event => {
     event.preventDefault()
+    debugger
     submitUserLogIn(this.state.email, this.state.password)
       .then(data => {
         if (!data.error) {
