@@ -78,4 +78,9 @@ const submitComment = async (commentPost) => {
   return response
 }
 
-export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments }
+const getTrailer = (movieId) => {
+  return fetch(`${url}/movies/${movieId}/videos`)
+    .then(response => response.json())
+}
+
+export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer }
