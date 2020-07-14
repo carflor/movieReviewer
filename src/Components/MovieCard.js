@@ -9,30 +9,66 @@ import { Link } from 'react-router-dom';
 
 // const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) => {
 class MovieCard extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    // this.isFavorite = null
     this.state = {
       isFavorite: false
 
     }
   }
 
+  // setIfFavorite = (isFavorite) => {
+  //   // if(this.props.isLoggedIn) {
+  //   //   this.props.favorites.find(film => {
+  //   //     if(film.movie_id === this.props.id) {
+  //   //       // return this.isFavorite = true
+  //   //       return this.setState({isFavorite: true})
+  //   //     } else {
+  //   //       // return this.isFavorite = false
+  //   //       return this.setState({isFavorite: false})
+  //   //     }
+  //   //   })
+  //   // }
+  //   console.log(isFavorite)
+  //   if (isFavorite) {
+  //     this.setState({isFavorite: true})
+  //   } 
+  // }
+
+  // setIfFavorite = () => {
+  //   if (this.props.isLoggedIn) {
+  //    const favorite = this.props.favorites.find(film => film.movie_id === parseInt(this.props.moviePageID))
+  //   if (favorite) {
+  //     return this.setState({isFavorite: true})
+  //     } 
+  //   }
+  // }
+  
+
   toggleFavorite = () => {
-    this.setState({
-      isFavorite: !this.state.isFavorite
-    })
+    return this.setState({isFavorite: !this.state.isFavorite})
   }
 
   faveIcon = () => {
     if (this.props.isLoggedIn) {
       return <img alt='fave-icon' src={this.state.isFavorite ? redHeartIcon : heartOutlineIcon} onClick={()=> this.toggleFavorite()} className={'fave-icon-card'}/>
     }
+  } 
+  
+  componentDidMount() {
+    this.setState({})
+    this.setIfFavorite()
   }
 
   render() {
     let userRate;
     if (this.props.ratings) {
+      // const seeIfFavorite = this.props.favorites.find(film => film.movie_id === this.props.id)
       const findMovieRating = this.props.ratings.find(film => film.movie_id === this.props.id)
+      // console.log('seeIfFavorite', seeIfFavorite)
+      // console.log('rating', findMovieRating)
+      // this.setIfFavorite(seeIfFavorite)
       if (findMovieRating) {
         userRate = (
           <section className="user-rating">

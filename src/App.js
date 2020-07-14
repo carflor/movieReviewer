@@ -56,6 +56,7 @@ class App extends React.Component {
   getFavorites = (userData) => {
     getUserFavorites(userData.id)
       .then(response => this.setState({favorites: response}))
+      .catch(error => console.log(error.message))
   }
   
   getUserRatings = (userData) => {
@@ -68,7 +69,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { movies, isLoading, error, isLoggedIn, ratings, returnHomeBtn } = this.state
+    const { movies, isLoading, error, isLoggedIn, ratings, returnHomeBtn, favorites } = this.state
     if(isLoading) {
       return <p className='loading-message'>Loading...</p>
     }
@@ -83,7 +84,8 @@ class App extends React.Component {
           isLoggedIn={isLoggedIn}
           movies={movies} 
           ratings={ratings}
-          handleMovie={this.handleMovie}/>
+          handleMovie={this.handleMovie}
+          favorites={favorites}/>
       </main>
     )
 
@@ -100,7 +102,8 @@ class App extends React.Component {
               user={this.state.user}
               ratings={ratings}
               isLoggedIn={this.state.isLoggedIn}
-              getUserRatings={this.getUserRatings} />
+              getUserRatings={this.getUserRatings}
+              favorites={favorites} />
           }} 
         />  
         <Route 
@@ -111,7 +114,7 @@ class App extends React.Component {
           <LogInForm 
             getUserRatings={ this.getUserRatings } 
             returnHomeBtn={ returnHomeBtn } 
-            getUserFavorites={ this.getFavorites }/>
+            getFavorites={ this.getFavorites }/>
           { isLoggedIn && <Redirect to='/dashboard' />}
         </Route>
         <Route 

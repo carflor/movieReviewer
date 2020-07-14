@@ -145,9 +145,20 @@ class MoviePage extends Component {
         tagline: response.movie.tagline,
         userRating: null,
         isLoading: true,
-        ratings: this.props.ratings
+        ratings: this.props.ratings,
+        favorites: this.props.favorites,
+        isFavorite: this.setIfFavorite()
       }))
       .catch(error => console.log(error.message))
+  }
+
+  setIfFavorite = () => {
+    if (this.props.isLoggedIn) {
+     const favorite = this.props.favorites.find(film => film.movie_id === parseInt(this.props.moviePageID))
+    if (favorite) {
+      return true
+      } 
+    }
   }
 
   faveIcon = () => {
