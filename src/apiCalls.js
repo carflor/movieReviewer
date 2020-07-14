@@ -26,7 +26,7 @@ const submitUserLogIn = (email, password) => {
   .then(response => response.json())
 }
 
-const addAFavorite = (userId, movieId) => {
+const addOrRemoveAFavorite = (userId, movieId) => {
   return fetch(`${microserviceUrl}/favoriteMovies`, {
     method: 'POST',
     headers: {
@@ -80,4 +80,4 @@ const submitRating = async (userId, moviePageID, value) => {
   }
 }
 
-export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, addAFavorite, getUserFavorites }
+export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, addOrRemoveAFavorite, getUserFavorites }

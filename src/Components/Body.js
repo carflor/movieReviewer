@@ -10,7 +10,9 @@ const Body = props => {
         ratings={props.ratings} 
         handleMovie={props.handleMovie}
         isLoggedIn={props.isLoggedIn} 
-        favorites={props.favorites}/>
+        favorites={props.favorites}
+        user={props.user}
+        getFavorites={props.getFavorites}/>
     ))
     return (
       <section className="movie-container">

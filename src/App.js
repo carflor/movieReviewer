@@ -69,7 +69,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { movies, isLoading, error, isLoggedIn, ratings, returnHomeBtn, favorites } = this.state
+    const { movies, isLoading, error, isLoggedIn, ratings, returnHomeBtn, favorites, user } = this.state
     if(isLoading) {
       return <p className='loading-message'>Loading...</p>
     }
@@ -85,7 +85,9 @@ class App extends React.Component {
           movies={movies} 
           ratings={ratings}
           handleMovie={this.handleMovie}
-          favorites={favorites}/>
+          favorites={favorites}
+          user={user}
+          getFavorites={this.getFavorites}/>
       </main>
     )
 

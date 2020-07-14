@@ -6,6 +6,7 @@ import heartOutlineIcon from '../Assets/heart-outline.png'
 import redHeartIcon from '../Assets/heart-red.png'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { addOrRemoveAFavorite, getUserFavorites } from '../apiCalls'
 
 // const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) => {
 class MovieCard extends React.Component {
@@ -17,18 +18,20 @@ class MovieCard extends React.Component {
   }
 
   heartHandler = () => {
-    debugger
-    this.setState({isFavorite: false})
+    addOrRemoveAFavorite(this.props.user.id, this.props.id)
+    .then(() => this.setState({isFavorite: false}))
+    .then(() => this.props.getFavorites(this.props.user))
   }
   
 
   toggleFavorite = () => {
-    return this.setState({isFavorite: !this.state.isFavorite})
+    addOrRemoveAFavorite(this.props.user.id, this.props.id)
+    .then(() => this.setState({isFavorite: !this.state.isFavorite}))
+    .then(() => this.props.getFavorites(this.props.user))
   }
 
   faveIcon = (favorite) => {
     if (this.props.isLoggedIn && favorite) {
-      console.log(favorite)
       return <img alt='fave-icon' src={redHeartIcon} onClick={()=> this.heartHandler()} className={'fave-icon-card'}/>
     }
     if (this.props.isLoggedIn) {
