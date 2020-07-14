@@ -5,7 +5,7 @@ import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
 import { NavLink, Link } from 'react-router-dom';
-import { getMovieData, deleteUserRating, submitRating } from '../apiCalls'
+import { getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments } from '../apiCalls'
 
 
 class MoviePage extends Component {
@@ -17,7 +17,8 @@ class MoviePage extends Component {
         displayingSummary: true,
         displayingComments: false,
         displayingTrailer: false,
-        userComment: ''
+        userComment: '',
+        allComments: []
       }
   }
 
@@ -137,8 +138,11 @@ class MoviePage extends Component {
   }
 
   createComments = () => {
-    const comments = this.state.allComments.filter(comment => comment.movie_id === +this.props.moviePageID)
-    if(comments.length > 0) {
+    // if (this.state.allComments.length > 0) {
+
+    // }
+    if(this.state.allComments.length > 0) {
+      const comments = this.state.allComments.filter(comment => comment.movie_id === +this.props.moviePageID)
       const updatedComments = comments.map(comment => (
         <CommentCard 
           author={comment.author}
@@ -153,7 +157,39 @@ class MoviePage extends Component {
 
   handleComment = (event) => {
     this.setState({ userComment: event.target.value})
-    console.log(event.target.value, 'textarea')
+  }
+
+  handleCommentSubmit = (event) => {
+    event.preventDefault()
+    const commentPost = {
+      author: this.props.user.name,
+      movieId: +this.props.moviePageID,
+      comment: this.state.userComment
+    }
+
+    // ISSUE CATCHNG HERE
+    submitComment(commentPost)
+      // .then(response => console.log(response))
+      .catch(error => console.log(error))
+      // .then(() => this.setState({ }))
+    // fetch(`http://localhost:3001/api/v1/movies/${this.props.id}/comments`)
+    //   .then(response => response.json())
+    
+
+
+
+
+    // getMovieComments(this.props.moviePageID)
+    //   .then(comments => this.setState({ allComments: comments }))
+    //   .catch(err => console.log(err))
+
+
+
+
+
+
+      // .then(() => this.setState({...this.state, userRating: this.state.value, ratings: this.props.getUserRatings(this.props.user) }))
+      // .catch(error => console.log(error))
   }
 
   showSummary = (event) => {
@@ -188,8 +224,10 @@ class MoviePage extends Component {
       }))
       .catch(error => console.log(error.message))
 
-    fetch('http://localhost:3001/api/v1/movies/338762/comments')
-      .then(response => response.json())
+    // fetch(`http://localhost:3001/api/v1/movies/${this.props.id}/comments`)
+    //   .then(response => response.json())
+    // .then(response => console.log(response))
+    getMovieComments(this.props.moviePageID)
       .then(response => this.setState({ allComments: response }))
       .catch(err => console.log(err))
   }
@@ -266,7 +304,12 @@ class MoviePage extends Component {
                   maxLength='250'
                   onChange={(event) => this.handleComment(event)}>
                 </textarea>
-                <button className='submit-comment-btn'>Submit</button>
+                <button 
+                  className='submit-comment-btn' 
+                  onClick={(event) => this.handleCommentSubmit(event)}
+                >
+                  Submit
+                </button>
               </section>}
             </section>)}
             {this.state.displayingTrailer && (

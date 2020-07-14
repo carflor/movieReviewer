@@ -3,7 +3,7 @@ import React from 'react';
 const CommentCard = ({ author, message }) => {
   const firstUpper = author.split('')
   const caps = firstUpper[0].toUpperCase()
-  const restOfName = firstUpper.shift()
+  firstUpper.shift()
   const fixedName = [caps, ...firstUpper].join('')
   return  (
     <section className='single-comment-box'>
