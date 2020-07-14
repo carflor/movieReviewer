@@ -1,5 +1,5 @@
 import React from 'react';
-import './_Body.scss'
+import './Body.scss'
 import MovieCard from './MovieCard'
 
 const Body = props => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import './_Nav.scss';
+import './Nav.scss';
 import LogInForm from './LogInForm'
 import { Link } from 'react-router-dom'
 

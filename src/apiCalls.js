@@ -1,4 +1,5 @@
 const url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
+const microUrl = 'http://localhost:3001/api/v1'
 
 const getMovies = () => {
   return fetch(`${url}/movies`)
@@ -35,6 +36,12 @@ const getUserMovieRatings = (user) => {
   .then(response => response.json())
 }
 
+const getMovieComments = (movieId) => {
+  console.log(movieId, 'what the hell')
+  return fetch(`http://localhost:3001/api/v1/movies/${Number(movieId)}/comments`)
+      .then(response => response.json())
+}
+
 const deleteUserRating = async (userId, ratingId) => {
   await fetch(`${url}/users/${userId}/ratings/${ratingId}`, {
     method: 'DELETE',
@@ -60,4 +67,15 @@ const submitRating = async (userId, moviePageID, value) => {
   }
 }
 
-export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating }
+const submitComment = async (commentPost) => {
+  const response = await fetch(`${microUrl}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(commentPost)
+  })
+  return response
+}
+
+export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments }
