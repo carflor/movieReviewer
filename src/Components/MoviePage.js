@@ -138,9 +138,6 @@ class MoviePage extends Component {
   }
 
   createComments = () => {
-    // if (this.state.allComments.length > 0) {
-
-    // }
     if(this.state.allComments.length > 0) {
       const comments = this.state.allComments.filter(comment => comment.movie_id === +this.props.moviePageID)
       const updatedComments = comments.map(comment => (
@@ -151,7 +148,8 @@ class MoviePage extends Component {
       ))
       return updatedComments
     } else {
-      return <h1 className="no-comments">Please comment below!</h1>
+      return this.props.isLoggedIn &&
+        <h1 className="no-comments">Please comment below!</h1>
     }
   }
 
@@ -166,30 +164,12 @@ class MoviePage extends Component {
       movieId: +this.props.moviePageID,
       comment: this.state.userComment
     }
-
-    // ISSUE CATCHNG HERE
     submitComment(commentPost)
-      // .then(response => console.log(response))
       .catch(error => console.log(error))
-      // .then(() => this.setState({ }))
-    // fetch(`http://localhost:3001/api/v1/movies/${this.props.id}/comments`)
-    //   .then(response => response.json())
     
-
-
-
-
-    // getMovieComments(this.props.moviePageID)
-    //   .then(comments => this.setState({ allComments: comments }))
-    //   .catch(err => console.log(err))
-
-
-
-
-
-
-      // .then(() => this.setState({...this.state, userRating: this.state.value, ratings: this.props.getUserRatings(this.props.user) }))
-      // .catch(error => console.log(error))
+    getMovieComments(parseInt(this.props.moviePageID))
+      .then(response => this.setState({ allComments: response }))
+      .catch(err => console.log(err))
   }
 
   showSummary = (event) => {
@@ -224,11 +204,9 @@ class MoviePage extends Component {
       }))
       .catch(error => console.log(error.message))
 
-    // fetch(`http://localhost:3001/api/v1/movies/${this.props.id}/comments`)
-    //   .then(response => response.json())
-    // .then(response => console.log(response))
     getMovieComments(this.props.moviePageID)
       .then(response => this.setState({ allComments: response }))
+      .then(response => console.log(response))
       .catch(err => console.log(err))
   }
 
@@ -294,7 +272,7 @@ class MoviePage extends Component {
               <section className='comment-container'>
               { this.createComments() }
               </section>
-              {this.props.isLoggedIn && <section className="comment-submit-container">
+              {this.props.isLoggedIn ? <section className="comment-submit-container">
                 <label htmlFor='comment-input'></label>
                 <textarea 
                   className='comment-box-input' 
@@ -310,7 +288,7 @@ class MoviePage extends Component {
                 >
                   Submit
                 </button>
-              </section>}
+              </section> : <h1 className='sign-up-message'>Please sign up to comment!</h1>}
             </section>)}
             {this.state.displayingTrailer && (
             <section className='movie-trailer-box'>

@@ -90,7 +90,8 @@ class App extends React.Component {
             return <MoviePage 
               movies={this.state.movies} 
               moviePageID={id}
-              handleBackBtn={this.handleBackBtn} 
+              handleBackBtn={this.handleBackBtn}
+              isLoggedIn={this.state.isLoggedIn} 
               user={this.state.user}
               ratings={ratings}
               getUserRatings={this.getUserRatings} />

@@ -80,9 +80,7 @@ describe('App', () => {
   })
 
   it('renders error message', async () => {
-
     getMovies.mockRejectedValueOnce(new Error('Pardon the disturbance in the force...'))  
-
     const { getByText } = render(
         <MemoryRouter>
           <App />
@@ -97,12 +95,9 @@ describe('App', () => {
     <Router history={ testHistoryObject }>
       <App />
     </Router> )
-
     expect(testHistoryObject.location.pathname).toEqual('/')
     const logInButton = await waitFor(() => getByRole('button', {name: 'LOG IN'}))
-
     fireEvent.click(logInButton) 
-
     expect(testHistoryObject.location.pathname).toEqual('/login')
   })
 
@@ -135,12 +130,9 @@ describe('App', () => {
     <Router history={ testHistoryObject }>
       <App />
     </Router> )
-
     expect(testHistoryObject.location.pathname).toEqual('/')
     const movieLink = await waitFor(() => getAllByAltText('film-poster')[0])
-
     fireEvent.click(movieLink) 
-
     expect(testHistoryObject.location.pathname).toEqual('/movies/475430')
   })
 
