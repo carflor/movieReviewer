@@ -21,15 +21,15 @@ const Nav = (props) => {
           NOPE
         </h1>
         <p className="welcome-message">
-          Welcome
+          Welcome 
           {props.data.user.name}
         </p>
         <section className="nav-btn-box">
           <Link to={props.data.showFavorites ? "/": "/favorites" }>
             <button
               type="button"
-              className={"dope-movie-btn"} 
-              onClick={props.data.showFavoritesBtn} 
+              className={"dope-movie-btn"}
+              onClick={props.data.showFavoritesBtn}
               style={{ textDecoration: 'none' }}
             >
               {props.data.showFavorites ? 'ALL MOVIES' : 'DOPE MOVIES'}
