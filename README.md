@@ -52,7 +52,7 @@ npm install
 ![Favoriting](https://media.giphy.com/media/JmVOQxaPnvsYsz7LNs/giphy.gif)
 
 ### Commenting: 
-![Commenting](https://giphy.com/gifs/H4cehqFZnBlwC6A5Ov)
+![Commenting](https://giphy.com/gifs/H4cehqFZnBlwC6A5Ov/giphy.gif)
 
 ### View Trailers: 
 ![Trailers](https://media.giphy.com/media/LrWQdMSAFCI8ojhr9h/giphy.gif)
