@@ -7,7 +7,7 @@ import ratedIcon from '../Assets/star-golden.svg'
 import heartOutlineIcon from '../Assets/heart-outline.png'
 import redHeartIcon from '../Assets/heart-red.png'
 import { NavLink, Link } from 'react-router-dom';
-import { getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer, addOrRemoveAFavorite } from '../apiCalls'
+import { getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer, addOrRemoveAFavorite,} from '../apiCalls'
 
 class MoviePage extends Component {
   constructor(props) {
@@ -240,7 +240,7 @@ class MoviePage extends Component {
 
   faveIcon = () => {
     if (this.props.isLoggedIn) {
-      return <img alt='fave-icon' src={this.state.isFavorite ? redHeartIcon : heartOutlineIcon}onClick={()=> this.toggleFavorite()} className={'fave-icon-movie-page'}/>
+      return <img alt='fave-icon' src={this.state.isFavorite ? redHeartIcon : heartOutlineIcon} onClick={()=> this.toggleFavorite()} className={'fave-icon-movie-page'}/>
     }
   }
 

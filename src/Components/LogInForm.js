@@ -25,8 +25,9 @@ class LogInForm extends Component {
         if (!data.error) {
           this.props.getUserRatings(data.user)
           this.props.getFavorites(data.user)
-        }
+        } else {
         this.setState({ email: '', password: '', loginError: true })
+        }
       })
       .catch(error => console.log(error))
   }
