@@ -34,4 +34,4 @@ npm install
 
 ## GIFS
 
-![Rating]("https://drive.google.com/file/d/1D0dbfqYbMyyWPJY2ZFnSpy2nRceivoSW/preview" width="640")
+![Rating]("https://drive.google.com/file/d/1D0dbfqYbMyyWPJY2ZFnSpy2nRceivoSW/preview")
