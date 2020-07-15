@@ -10,13 +10,52 @@ jest.mock('./apiCalls.js')
 
 
 describe('App', () => {
+
+  getUserMovieRatings.mockResolvedValue(
+    {
+      ratings: [
+        {
+          id: 646,
+          user_id: 59,
+          movie_id: 451184,
+          rating: 2,
+          created_at: "2020-07-08T19:39:07.616Z",
+          updated_at: "2020-07-08T19:39:07.616Z"
+        },
+        {
+          id: 958,
+          user_id: 59,
+          movie_id: 508439,
+          rating: 2,
+          created_at: "2020-07-10T01:11:16.764Z",
+          updated_at: "2020-07-10T01:11:16.764Z"
+        }
+      ]
+    }
+    )
   
   getUserFavorites.mockResolvedValue( 
     {user_id: 59, movie_id: 475430},
     {user_id: 59, movie_id: 338762},
     {user_id: 59, movie_id: 508439},
     {user_id: 59, movie_id: 603})
-  getMovies.mockResolvedValue(
+
+    getMovieComments.mockResolvedValueOnce(
+      [{  
+      "id": 1, 
+      "author": "alberto", 
+      "movie_id": 338762, 
+      "comment": "Jumping street car! Look at those action scenes!"
+      },
+      { 
+      "id": 2, 
+      "author": "mike", 
+      "movie_id": 475430, 
+      "comment": "Conceptually amazing, it could almost be a book!"
+      }]
+    )
+
+    getMovies.mockResolvedValue(
     {
       movies: [{
         "id": 475430,
@@ -45,12 +84,12 @@ describe('App', () => {
     })
 
     
-    it('renders without crashing', () => {
+  it('renders without crashing', () => {
       const div = document.createElement('div');
       ReactDOM.render(
-        <BrowserRouter>
+        <MemoryRouter>
           <App />
-      </BrowserRouter> , div);
+        </MemoryRouter> , div);
     ReactDOM.unmountComponentAtNode(div);
   });
   
