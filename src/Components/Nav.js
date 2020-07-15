@@ -26,7 +26,9 @@ const Nav = (props) => {
           <button 
             className="login-btn" 
             onClick={props.data.logOutMethod}>LOG OUT</button>
-          <button className={"dope-movie-btn"} onClick={props.data.showFavoritesBtn}>{props.data.showFavorites ? 'All Movies' : 'Dope Movies'}</button>
+            <Link to={'/favorites'}>
+              <button className={"dope-movie-btn"} onClick={props.data.showFavoritesBtn} style={{ textDecoration: 'inherit', color: 'inherit' }>{props.data.showFavorites ? 'All Movies' : 'Dope Movies'}</button>
+            </Link>
         </section>
       </nav>
     )

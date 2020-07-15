@@ -42,6 +42,13 @@ const Body = props => {
         getFavorites={props.getFavorites}/>
       )
     })
+    if(displayFavorites.length === 0) {
+      return (
+        <section className="movie-container">
+        <p className="empty-favorite-message">Click the heart icon on a movie to add it to your favorites!</p>
+        </section>
+      )
+    }
     return (
       <section className="movie-container">
         { displayFavorites }

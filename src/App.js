@@ -121,6 +121,10 @@ class App extends React.Component {
           exact path='/dashboard'
           render={() => app} 
         /> 
+        <Route
+          exact path='/favorites'
+          render={() => app}
+        />
         <Route exact path='/login'>
           <LogInForm 
             getUserRatings={ this.getUserRatings } 
