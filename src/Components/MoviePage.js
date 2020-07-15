@@ -158,8 +158,8 @@ class MoviePage extends Component {
       ))
       return updatedComments
     } else {
-      return this.props.isLoggedIn &&
-        <h1 className="no-comments">Please comment below!</h1>
+      return this.props.isLoggedIn && 
+      <h1 className="no-comments">Please comment below!</h1>
     }
   }
 
