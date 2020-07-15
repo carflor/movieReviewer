@@ -7,6 +7,7 @@ import heartOutlineIcon from '../Assets/heart-outline.png'
 import redHeartIcon from '../Assets/heart-red.png'
 import { Link } from 'react-router-dom';
 import { getMovieData, deleteUserRating, submitRating } from '../apiCalls'
+import { addOrRemoveAFavorite } from '../apiCalls'
 
 
 class MoviePage extends Component {
@@ -20,9 +21,9 @@ class MoviePage extends Component {
   }
 
   toggleFavorite = () => {
-    this.setState({
-      isFavorite: !this.state.isFavorite
-    })
+    addOrRemoveAFavorite(this.props.user.id, parseInt(this.props.moviePageID))
+    .then(() => this.setState({isFavorite: !this.state.isFavorite}))
+    .then(() => this.props.getFavorites(this.props.user))
   }
 
   handleChange = (event) => {

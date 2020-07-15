@@ -18,9 +18,11 @@ class App extends React.Component {
       logOutMethod: this.logOut,
       logInMethod: this.logIn,
       returnHomeBtn: this.returnHomeBtn,
+      showFavoritesBtn: this.showFavoritesBtn,
       user: null,
       ratings: null,
-      favorite: null
+      favorite: null,
+      showFavorites: false
     }
   }
 
@@ -42,6 +44,10 @@ class App extends React.Component {
 
   returnHomeBtn = () => {
     this.setState({ form: false })
+  }
+
+  showFavoritesBtn = () => {
+    this.setState({showFavorites: !this.state.showFavorites})
   }
 
   componentDidMount() {
@@ -87,7 +93,8 @@ class App extends React.Component {
           handleMovie={this.handleMovie}
           favorites={favorites}
           user={user}
-          getFavorites={this.getFavorites}/>
+          getFavorites={this.getFavorites}
+          showFavorites={this.state.showFavorites}/>
       </main>
     )
 
@@ -105,7 +112,9 @@ class App extends React.Component {
               ratings={ratings}
               isLoggedIn={this.state.isLoggedIn}
               getUserRatings={this.getUserRatings}
-              favorites={favorites} />
+              favorites={favorites} 
+              getFavorites={this.getFavorites}
+              showFavorites={this.state.showFavorites}/>
           }} 
         />  
         <Route 

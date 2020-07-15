@@ -26,7 +26,7 @@ const Nav = (props) => {
           <button 
             className="login-btn" 
             onClick={props.data.logOutMethod}>LOG OUT</button>
-          <button className="dope-movie-btn">Dope Movies</button>
+          <button className={"dope-movie-btn"} onClick={props.data.showFavoritesBtn}>{props.data.showFavorites ? 'All Movies' : 'Dope Movies'}</button>
         </section>
       </nav>
     )

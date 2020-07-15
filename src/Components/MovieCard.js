@@ -6,7 +6,7 @@ import heartOutlineIcon from '../Assets/heart-outline.png'
 import redHeartIcon from '../Assets/heart-red.png'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { addOrRemoveAFavorite, getUserFavorites } from '../apiCalls'
+import { addOrRemoveAFavorite } from '../apiCalls'
 
 // const MovieCard = ({ id, ratings, handleMovie, poster_path, average_rating }) => {
 class MovieCard extends React.Component {
