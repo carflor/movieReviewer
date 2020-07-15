@@ -158,19 +158,21 @@ class MoviePage extends Component {
     this.setState({ userComment: event.target.value})
   }
 
-  handleCommentSubmit = (event) => {
+  handleCommentSubmit = async (event) => {
     event.preventDefault()
-    const commentPost = {
-      author: this.props.user.name,
-      movieId: +this.props.moviePageID,
-      comment: this.state.userComment
+    if (this.state.userComment !== '') {
+      const commentPost = {
+        author: this.props.user.name,
+        movieId: +this.props.moviePageID,
+        comment: this.state.userComment
+      }
+      await submitComment(commentPost)
+        .catch(error => console.log(error))
+      getMovieComments(parseInt(this.props.moviePageID))
+        .then(response => this.setState({ allComments: response }))
+        .catch(err => console.log(err))
+      this.setState({ userComment: '' })
     }
-    submitComment(commentPost)
-      .catch(error => console.log(error))
-    getMovieComments(parseInt(this.props.moviePageID))
-      .then(response => this.setState({ allComments: response || [] }))
-      .catch(err => console.log(err))
-    this.setState({ userComment: '' })
   }
 
   showSummary = (event) => {
@@ -211,7 +213,6 @@ class MoviePage extends Component {
         ratings: this.props.ratings
       }))
       .catch(error => console.log(error.message))
-
     getMovieComments(this.props.moviePageID)
       .then(response => this.setState({ allComments: response }))
       .catch(err => console.log(err))

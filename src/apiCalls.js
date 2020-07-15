@@ -38,7 +38,7 @@ const getUserMovieRatings = (user) => {
 
 const getMovieComments = (movieId) => {
   console.log(movieId, 'what the hell')
-  return fetch(`http://localhost:3001/api/v1/movies/${Number(movieId)}/comments`)
+  return fetch(`http://localhost:3001/api/v1/movies/${movieId}/comments`)
       .then(response => response.json())
 }
 
@@ -75,7 +75,7 @@ const submitComment = async (commentPost) => {
     },
     body: JSON.stringify(commentPost)
   })
-  return response
+  return await response.json()
 }
 
 const getTrailer = (movieId) => {
