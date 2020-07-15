@@ -169,7 +169,7 @@ class MoviePage extends Component {
       .catch(error => console.log(error))
     
     getMovieComments(parseInt(this.props.moviePageID))
-      .then(response => this.setState({ allComments: response }))
+      .then(response => this.setState({ allComments: response || [] }))
       .catch(err => console.log(err))
   }
 
@@ -210,7 +210,6 @@ class MoviePage extends Component {
 
     getMovieComments(this.props.moviePageID)
       .then(response => this.setState({ allComments: response }))
-      .then(response => console.log(response))
       .catch(err => console.log(err))
   }
 
