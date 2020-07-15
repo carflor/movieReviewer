@@ -1,5 +1,5 @@
 import React from 'react';
-import './_Nav.scss';
+import './Nav.scss';
 import LogInForm from './LogInForm'
 import { Link } from 'react-router-dom'
 
@@ -14,7 +14,6 @@ const Nav = (props) => {
     return (
       <nav className="nav">
         <h1 className="nav-title">DOPE NOPE</h1>
-        {/* ICON IMAGE */}
         <label htmlFor="search"></label>
         <input 
           className='search-bar'
@@ -37,7 +36,6 @@ const Nav = (props) => {
   return (
     <nav className="nav">
       <h1 className="nav-title">DOPE NOPE</h1>
-      {/* ICON IMAGE */}
       <label></label>
       <input 
         className='search-bar'

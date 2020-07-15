@@ -1,0 +1,286 @@
+.movie-page {
+  height: 100vh;
+  width: auto;
+  background-size: cover;
+}
+
+.movie-nav {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #0a97b0;
+  height: 15vh;
+  opacity: .8;
+  align-items: center;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.back-btn {
+  width: 6vw;
+  margin-left: 4vw;
+}
+
+.back-btn:hover,
+.back-btn:focus {
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: transform .3s;
+}
+
+.movie-title {
+  margin: auto;
+  font-size: 3vw;
+}
+
+.movie-content {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 75vh;
+}
+
+.movie-summary-box,
+.movie-comment-box,
+.movie-trailer-box {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background-color: #fce8d5;
+  border-bottom-left-radius: .5vh;
+  border-bottom-right-radius: .5vh;
+  height: 55vh;
+  width: 55vw;
+  opacity: .95;
+  padding: 2vh;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 2vh;
+  overflow: scroll;
+}
+
+.movie-nav-box {
+  border-top-left-radius: .5vh;
+  border-top-right-radius: .5vh;
+  background-color: #fce8d5;
+  padding: 2vh;
+  opacity: .95;
+  width: 55vw;
+  height: 6vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary-btn,
+.comments-btn,
+.trailer-btn {
+  width: 17vw;
+  height: 6vh;
+  font-size: 2.5vh;
+  border-radius: .8vh;
+  border: none;
+  background-color: #100f0f;
+  color: #0a97b0;
+  letter-spacing: .1vw;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.summary-btn:hover,
+.comments-btn:hover,
+.trailer-btn:hover,
+.summary-btn:active,
+.comments-btn:active,
+.trailer-btn:active {
+  cursor: pointer;
+  opacity: .8;
+  box-shadow: 0 0 3px 3px #100f0f;
+  transform: scale(1.03);
+  transition: transform .3s;
+}
+
+.summary-btn:focus,
+.comments-btn:focus,
+.trailer-btn:focus {
+  color: #100f0f;
+  background-color: #0a97b0;
+}
+
+.movie-poster-selected {
+  width: 280px;
+  height: 390px;
+  border: 2px outset #0a97b0;
+}
+
+.rating-box-selected {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  background-color: #0a97b0;
+  width: 18vw;
+  height: 14vh;
+  font-size: 3vh;
+  border-radius: 1vh;
+}
+
+.user-rating-box-selected {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #0a97b0;
+  width: 18vw;
+  height: 14vh;
+  font-size: 3vh;
+  text-align: center;
+  border-radius: 1vh;
+}
+
+.rating-system {
+  padding: 0vw 0.9vw;
+}
+
+.movie-data {
+  width: 60vw;
+  height: 38vh;
+}
+
+.delete-button {
+  height: 2vh;
+}
+
+.movie-tagline {
+  background-color: #0a97b0;
+  height: 10vh;
+  opacity: 0.8;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-style: italic;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 3.5vh;
+}
+
+.movie-datum {
+  font-style: italic;
+}
+
+.user-rating-movie, 
+.average-rating {
+  margin: auto;
+}
+
+.rated-star-icon-moviePage,
+.star-icon-poster-moviePage {
+  width: 4vw;
+  margin: 0vh 1vh 0vh 2vh;
+}
+
+.submit-rating-btn {
+  height: 4vh;
+  color: #0a97b0;
+  border-radius: .8vh;
+  border: none;
+  background-color: #100f0f;
+  margin: auto;
+  margin-left: 1vh;
+}
+
+.submit-rating-btn:hover,
+.submit-rating-btn:focus {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform .3s;
+}
+
+.delete-button {
+  height: 4vh;
+  width: 8vh;
+  margin: auto;
+  color: #0a97b0;
+  border-radius: .8vh;
+  border: none;
+  background-color: #100f0f;
+}
+
+.delete-button:hover,
+.delete-button:focus {
+  cursor: pointer;
+  opacity: .8;
+  box-shadow: 0 0 3px 3px #100f0f;
+  transform: scale(1.03);
+  transition: transform .3s;
+}
+
+.comment-container {
+  height: 40vh;
+  width: 55vw;
+  opacity: .95;
+  font-family: 'Roboto Mono', monospace;
+  overflow: scroll;
+}
+
+.comment-box-input {
+  width: 45vw;
+  height: 10vh;
+  font-size: 2.1vh;
+  resize: none;
+  overflow: scroll;
+}
+
+.submit-comment-btn {
+  width: 7vw;
+  height: 6vh;
+  font-size: 1.2vw;
+  border-radius: .8vh;
+  border: none;
+  color: #100f0f;
+  background-color: #0a97b0;
+  letter-spacing: .1vw;
+  margin-left: 2vh;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.submit-comment-btn:hover,
+.submit-comment-btn:focus {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform .3s;
+}
+
+.rate-input {
+  height: 3.1vh;
+  width: 6vh;
+  font-size: 3vh;
+  border-radius: .8vh
+}
+
+.comment-submit-container {
+  display: flex;
+  align-items: center;
+}
+
+.single-comment-box {
+  display: flex;
+  margin: 1vh;
+}
+
+.comment-text {
+  display: flex;
+  align-items: center;
+  background-color: #0a97b0;
+  padding: 1vh;
+  border-radius: 2vh;
+}
+
+.name-comment {
+  font-style: italic;
+  align-items: center;
+  display: flex;
+  margin-right: .5vw;
+}
+
+.no-comments {
+  font-size: 1.8vh;
+  margin-left: 2vw;
+}
+
+.sign-up-message {
+  font-style: italic;
+  font-size: 2vw;
+}

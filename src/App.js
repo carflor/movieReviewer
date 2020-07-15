@@ -107,7 +107,8 @@ class App extends React.Component {
             return <MoviePage 
               movies={this.state.movies} 
               moviePageID={id}
-              handleBackBtn={this.handleBackBtn} 
+              handleBackBtn={this.handleBackBtn}
+              isLoggedIn={this.state.isLoggedIn} 
               user={this.state.user}
               ratings={ratings}
               isLoggedIn={this.state.isLoggedIn}
@@ -120,7 +121,9 @@ class App extends React.Component {
         <Route 
           exact path='/dashboard'
           render={() => app} 
-        /> 
+        > 
+          {!isLoggedIn && <Redirect to='/' />}
+        </Route> 
         <Route
           exact path='/favorites'
           render={() => app}

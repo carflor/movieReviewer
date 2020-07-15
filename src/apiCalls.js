@@ -1,5 +1,5 @@
 const url = 'https://rancid-tomatillos.herokuapp.com/api/v2'
-const microserviceUrl = `http://localhost:3001/api/v1`
+const microUrl = 'http://localhost:3001/api/v1'
 
 const getMovies = () => {
   return fetch(`${url}/movies`)
@@ -27,7 +27,7 @@ const submitUserLogIn = (email, password) => {
 }
 
 const addOrRemoveAFavorite = (userId, movieId) => {
-  return fetch(`${microserviceUrl}/favoriteMovies`, {
+  return fetch(`${microUrl}/favoriteMovies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ const addOrRemoveAFavorite = (userId, movieId) => {
 }
 
 const getUserFavorites = (userId) => {
-  return fetch(`${microserviceUrl}/favoriteMovies/${userId}`)
+  return fetch(`${microUrl}/favoriteMovies/${userId}`)
     .then(response => response.json())
 }
 
@@ -53,6 +53,12 @@ const getMovieData = (moviePageID) => {
 const getUserMovieRatings = (user) => {
   return fetch(`${url}/users/${user}/ratings`) 
   .then(response => response.json())
+}
+
+const getMovieComments = (movieId) => {
+  console.log(movieId, 'what the hell')
+  return fetch(`http://localhost:3001/api/v1/movies/${movieId}/comments`)
+      .then(response => response.json())
 }
 
 const deleteUserRating = async (userId, ratingId) => {
@@ -80,4 +86,20 @@ const submitRating = async (userId, moviePageID, value) => {
   }
 }
 
-export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, addOrRemoveAFavorite, getUserFavorites }
+const submitComment = async (commentPost) => {
+  const response = await fetch(`${microUrl}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(commentPost)
+  })
+  return await response.json()
+}
+
+const getTrailer = (movieId) => {
+  return fetch(`${url}/movies/${movieId}/videos`)
+    .then(response => response.json())
+}
+
+export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer, addOrRemoveAFavorite, getUserFavorites }

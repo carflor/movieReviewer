@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import './_MoviePage.scss'
+import './MoviePage.scss'
+import CommentCard from './CommentCard'
 import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg';
 import ratedIcon from '../Assets/star-golden.svg'
 import heartOutlineIcon from '../Assets/heart-outline.png'
 import redHeartIcon from '../Assets/heart-red.png'
-import { Link } from 'react-router-dom';
-import { getMovieData, deleteUserRating, submitRating } from '../apiCalls'
-import { addOrRemoveAFavorite } from '../apiCalls'
-
+import { NavLink, Link } from 'react-router-dom';
+import { getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer, addOrRemoveAFavorite } from '../apiCalls'
 
 class MoviePage extends Component {
   constructor(props) {
@@ -16,7 +15,13 @@ class MoviePage extends Component {
       this.state = {
         isLoading: false,
         value: '',
-        isFavorite: false
+        isFavorite: false,
+        displayingSummary: true,
+        displayingComments: false,
+        displayingTrailer: false,
+        userComment: '',
+        allComments: [],
+        youtubeKey: null,
       }
   }
 
@@ -31,9 +36,9 @@ class MoviePage extends Component {
   }
 
   findRatingId = () => {
-      const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
-      if(rating.id) { 
-        return rating.id
+    const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
+    if(rating.id) { 
+      return rating.id
     } 
   }
 
@@ -111,10 +116,12 @@ class MoviePage extends Component {
         <section className='user-rating-box-selected'>
         <form className='rating-system'>
           Rate Me: 
-          <input type='number'
+          <input 
+            type='number'
             placeholder='5' 
             id='number-select' 
             min='0' max='10' 
+            className='rate-input'
             value={this.state.value} 
             onChange={this.handleChange}>
           </input>
@@ -130,6 +137,72 @@ class MoviePage extends Component {
       </section>
       )
     }
+  }
+
+  showComments = (event) => {
+    event.preventDefault()
+    this.setState({ displayingSummary: false,
+      displayingComments: true,
+      displayingTrailer: false })
+  }
+
+  createComments = () => {
+    if(this.state.allComments.length > 0) {
+      const comments = this.state.allComments.filter(comment => comment.movie_id === +this.props.moviePageID)
+      const updatedComments = comments.map(comment => (
+        <CommentCard 
+          key={comment.id}
+          author={comment.author}
+          message={comment.comment}
+        />
+      ))
+      return updatedComments
+    } else {
+      return this.props.isLoggedIn &&
+        <h1 className="no-comments">Please comment below!</h1>
+    }
+  }
+
+  handleComment = (event) => {
+    this.setState({ userComment: event.target.value})
+  }
+
+  handleCommentSubmit = async (event) => {
+    event.preventDefault()
+    if (this.state.userComment !== '') {
+      const commentPost = {
+        author: this.props.user.name,
+        movieId: +this.props.moviePageID,
+        comment: this.state.userComment
+      }
+      await submitComment(commentPost)
+        .catch(error => console.log(error))
+      getMovieComments(parseInt(this.props.moviePageID))
+        .then(response => this.setState({ allComments: response }))
+        .catch(err => console.log(err))
+      this.setState({ userComment: '' })
+    }
+  }
+
+  showSummary = (event) => {
+    event.preventDefault()
+    this.setState({ 
+      displayingSummary: true,
+      displayingComments: false,
+      displayingTrailer: false 
+    })
+  }
+
+  showTrailer = (event) => {
+    event.preventDefault()
+    this.setState({ 
+      displayingSummary: false,
+      displayingComments: false,
+      displayingTrailer: true 
+    })
+    getTrailer(this.props.moviePageID)
+      .then(response => this.setState({ youtubeKey: response.videos[0].key }))
+      .catch(err => console.log(err))
   }
 
   componentDidMount() {
@@ -151,6 +224,9 @@ class MoviePage extends Component {
         isFavorite: this.setIfFavorite()
       }))
       .catch(error => console.log(error.message))
+    getMovieComments(this.props.moviePageID)
+      .then(response => this.setState({ allComments: response }))
+      .catch(err => console.log(err))
   }
 
   setIfFavorite = () => {
@@ -192,23 +268,74 @@ class MoviePage extends Component {
           <img 
             src={this.state.poster} 
             alt='movie poster' className='movie-poster-selected'/>
-          <section className='movie-data-box'> 
-            <section className='rating-box-selected'>
-             <p className='average-rating'>AVG
-             <img 
-              alt="star-icon"
-              src={ starIcon }
-              className="star-icon-poster-moviePage" 
-            /> 
-              {Math.floor(this.state.avgRating)}</p>
+          <section>
+            <section className='movie-nav-box'>
+              <NavLink to='/'>
+                <label htmlFor='summary-btn'></label>
+                <button className='summary-btn' onClick={(event) => this.showSummary(event)}>Summary</button>
+              </NavLink>
+              <NavLink to='/comments'>
+                <label htmlFor='comments-btn'></label>
+                <button className='comments-btn' onClick={(event) => this.showComments(event)}>Comments</button>
+              </NavLink>
+              <NavLink to='/trailer'>
+                <label htmlFor='trailer-btn'></label>
+                <button className='trailer-btn' onClick={(event) => this.showTrailer(event)}>Trailer</button>
+              </NavLink>
             </section>
-              {this.displayUserRating()}
-            <section className='movie-data'>
-              <p>{this.state.overview}</p>
-              <p className='movie-datum'>Release Date: {this.state.releaseDate}</p>
-              <p className='movie-datum'>Duration: {this.state.runtime} minutes</p>
-              <p className='movie-datum'>Genres: {this.state.genre.join(', ')}</p>
-            </section>
+            {this.state.displayingSummary && (
+            <section className='movie-summary-box'> 
+              <section className='rating-box-selected'>
+              <p className='average-rating'>AVG
+              <img 
+                alt="star-icon"
+                src={ starIcon }
+                className="star-icon-poster-moviePage" 
+              /> 
+                {Math.floor(this.state.avgRating)}</p>
+              </section>
+                {this.displayUserRating()}
+              <section className='movie-data'>
+                <p>{this.state.overview}</p>
+                <p className='movie-datum'>Release Date: {this.state.releaseDate}</p>
+                <p className='movie-datum'>Duration: {this.state.runtime} minutes</p>
+                <p className='movie-datum'>Genres: {this.state.genre.join(', ')}</p>
+              </section>
+            </section>)}
+            {this.state.displayingComments && (
+            <section className='movie-comment-box'> 
+              <section className='comment-container'>
+              { this.createComments() }
+              </section>
+              {this.props.isLoggedIn ? <section className="comment-submit-container">
+                <label htmlFor='comment-input'></label>
+                <textarea 
+                  className='comment-box-input' 
+                  placeholder='Comment here...'
+                  name="comment-input"
+                  minLength='1' 
+                  maxLength='250'
+                  value={this.state.userComment}
+                  onChange={(event) => this.handleComment(event)}>
+                </textarea>
+                <button 
+                  className='submit-comment-btn' 
+                  onClick={(event) => this.handleCommentSubmit(event)}
+                >
+                  Submit
+                </button>
+              </section> : <h1 className='sign-up-message'>Please sign up to comment!</h1>}
+            </section>)}
+            {this.state.displayingTrailer && (
+            <section className='movie-trailer-box'>          
+              {this.state.youtubeKey ? 
+                <iframe 
+                  title={this.state.youtubeKey} 
+                  height="400" 
+                  width="600" 
+                  src={`https://www.youtube.com/embed/${this.state.youtubeKey}`}> 
+              </iframe> : <h1>Loading...</h1>} 
+            </section>)}
           </section>
         </section>
        {this.state.tagline && <section className="movie-tagline">"{this.state.tagline}"</section>}

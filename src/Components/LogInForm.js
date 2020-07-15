@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './_LogInForm.scss'
+import './LogInForm.scss'
 import { submitUserLogIn } from '../apiCalls'
 import { Link } from 'react-router-dom'
 
