@@ -179,7 +179,7 @@ class MoviePage extends Component {
         .catch(error => console.log(error))
       getMovieComments(parseInt(this.props.moviePageID))
         .then(response => this.setState({ allComments: response }))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err.message))
       this.setState({ userComment: '' })
     }
   }

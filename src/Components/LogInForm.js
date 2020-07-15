@@ -50,8 +50,7 @@ class LogInForm extends Component {
             />
             <label htmlFor='password'></label>
             <input 
-              // type='password'
-              type='text'
+              type='password'
               placeholder= 'password'
               className='password-input'
               name='password'

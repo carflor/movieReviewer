@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.scss';
 import Nav from './Components/Nav';
 import Body from './Components/Body';
 import LogInForm from './Components/LogInForm';
@@ -111,7 +110,6 @@ class App extends React.Component {
               isLoggedIn={this.state.isLoggedIn} 
               user={this.state.user}
               ratings={ratings}
-              isLoggedIn={this.state.isLoggedIn}
               getUserRatings={this.getUserRatings}
               favorites={favorites} 
               getFavorites={this.getFavorites}

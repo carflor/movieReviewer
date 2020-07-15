@@ -1,50 +1,50 @@
 .nav {
   width: 100vw;
   height: 15vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+
+  display: grid;
   text-align: center;
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: #0a97b0;
 }
 
 .nav-title {
-  padding: 1%;
-  width: 10vw;
+  width: 25vw;
   margin: auto;
-  font-size: 5vh;
+  padding-right: 4vw;
+  font-size: 4vw;
+  font-family: 'Ranchers', cursive;
+  color: black;
+  letter-spacing: 0.2vw;
+  display: flex;
+  align-items: center;
 }
 
-.search-bar {
-  height: 59%;
-  width: 45%;
-  margin: auto;
-  border-radius: .8vh;
-  background-color: #fce8d5;
-  font-size: 4vh;
-  padding: 1vh;
-  border: none;
-}
-
-.search-bar:hover {
-  cursor: pointer;
-  box-shadow: 0 0 3px 3px #100f0f;
+.hidden {
+  display: none;
 }
 
 .nav-btn-box {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   text-align: center;
-  width: 16vw;  
-  padding-right: 5vw;
-  padding-bottom: 1vw;
+  align-items: center;
+  width: 25vw;  
+  margin: auto;
 }
 
 .welcome-message {
   font-size: 3vh;
-  margin: 2vh 0vh 0vh 0vh;
+
+  margin: auto;
   font-family: 'Roboto Mono', monospace;
+}
+
+.title-span {
+  font-family: 'Ranchers', cursive;
+  margin: .5vw;
+  font-size: 4vw;
+
 }
 
 .login-btn,
@@ -57,12 +57,13 @@
   border: none;
   background-color: #100f0f;
   margin: auto;
-  margin-top: 1.5vh;
   font-size: 2vh;
 }
 
 .login-btn:hover, 
-.login-btn:focus {
+.login-btn:focus,
+.dope-movie-btn:hover,
+.dope-movie-btn:focus {
   cursor: pointer;
   opacity: .8;
   box-shadow: 0 0 3px 3px #100f0f;

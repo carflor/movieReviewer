@@ -56,7 +56,6 @@ const getUserMovieRatings = (user) => {
 }
 
 const getMovieComments = (movieId) => {
-  console.log(movieId, 'what the hell')
   return fetch(`http://localhost:3001/api/v1/movies/${movieId}/comments`)
       .then(response => response.json())
 }
