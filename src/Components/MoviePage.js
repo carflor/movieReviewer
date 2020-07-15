@@ -252,7 +252,7 @@ class MoviePage extends Component {
         className='movie-page'
         style={ backgroundImg }>
         <section className="movie-nav">
-          <Link to='/' style={{ textDecoration: 'none' }}>
+          <Link to={this.props.isLoggedIn ? "/dashboard" : "/"} style={{ textDecoration: 'none' }}>
             <img 
               alt='back-btn' 
               src={ backIcon } 
