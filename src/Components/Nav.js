@@ -13,19 +13,21 @@ const Nav = (props) => {
   if (props.data.isLoggedIn) {
     return (
       <nav className="nav">
-        <h1 className="nav-title">DOPE NOPE</h1>
-        {/* ICON IMAGE */}
-        <label htmlFor="search"></label>
-        <input 
-          className='search-bar'
-          type='search'
-          aria-label="search-input" 
-          placeholder='Search Movies...'></input>
-        <section className="nav-btn-box">
+        <h1 className="nav-title">DOPE <span className="title-span">| |</span> NOPE</h1>
           <p className="welcome-message">Welcome {props.data.user.name}</p>
+        <section className="nav-btn-box">
+            <Link to={props.data.showFavorites ? "/": "/favorites" }>
+              <button 
+                className={"dope-movie-btn"} 
+                onClick={props.data.showFavoritesBtn} 
+                style={{ textDecoration: 'none' }}>
+                {props.data.showFavorites ? 'ALL MOVIES' : 'DOPE MOVIES'}
+              </button>
+            </Link>
           <button 
-            className="login-btn" 
-            onClick={props.data.logOutMethod}>LOG OUT</button>
+            className={props.data.showFavorites ? "hidden" : "login-btn" }
+            onClick={props.data.logOutMethod}>LOG OUT
+          </button>
         </section>
       </nav>
     )
@@ -33,14 +35,8 @@ const Nav = (props) => {
 
   return (
     <nav className="nav">
-      <h1 className="nav-title">DOPE NOPE</h1>
-      {/* ICON IMAGE */}
+      <h1 className="nav-title">DOPE <span className="title-span">| |</span>NOPE</h1>
       <label></label>
-      <input 
-        className='search-bar'
-        type='search' 
-        aria-label="search-input"
-        placeholder='Search Movies...'></input>
       <section className="nav-btn-box">
         <Link to='/login' >
           <button 

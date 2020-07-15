@@ -24,6 +24,7 @@ class LogInForm extends Component {
       .then(data => {
         if (!data.error) {
           this.props.getUserRatings(data.user)
+          this.props.getFavorites(data.user)
         }
         this.setState({ email: '', password: '', loginError: true })
       })
@@ -49,8 +50,7 @@ class LogInForm extends Component {
             />
             <label htmlFor='password'></label>
             <input 
-              // type='password'
-              type='text'
+              type='password'
               placeholder= 'password'
               className='password-input'
               name='password'

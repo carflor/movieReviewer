@@ -26,6 +26,25 @@ const submitUserLogIn = (email, password) => {
   .then(response => response.json())
 }
 
+const addOrRemoveAFavorite = (userId, movieId) => {
+  return fetch(`${microUrl}/favoriteMovies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userId: userId,
+      movieId: movieId
+    })
+  })
+  .then(response => response.json())
+}
+
+const getUserFavorites = (userId) => {
+  return fetch(`${microUrl}/favoriteMovies/${userId}`)
+    .then(response => response.json())
+}
+
 const getMovieData = (moviePageID) => {
   return fetch(`${url}/movies/${moviePageID}`)
   .then(response => response.json())
@@ -37,7 +56,6 @@ const getUserMovieRatings = (user) => {
 }
 
 const getMovieComments = (movieId) => {
-  console.log(movieId, 'what the hell')
   return fetch(`http://localhost:3001/api/v1/movies/${movieId}/comments`)
       .then(response => response.json())
 }
@@ -83,4 +101,4 @@ const getTrailer = (movieId) => {
     .then(response => response.json())
 }
 
-export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer }
+export { getMovies, getUserMovieRatings, submitUserLogIn, getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer, addOrRemoveAFavorite, getUserFavorites }

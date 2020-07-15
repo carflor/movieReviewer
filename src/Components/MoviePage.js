@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import './MoviePage.scss'
 import CommentCard from './CommentCard'
 import backIcon from '../Assets/angle-double-left-solid.svg'
-import starIcon from '../Assets/star-regular.svg'
+import starIcon from '../Assets/star-regular.svg';
 import ratedIcon from '../Assets/star-golden.svg'
+import heartOutlineIcon from '../Assets/heart-outline.png'
+import redHeartIcon from '../Assets/heart-red.png'
 import { NavLink, Link } from 'react-router-dom';
-import { getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer } from '../apiCalls'
+import { getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer, addOrRemoveAFavorite } from '../apiCalls'
 
 class MoviePage extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class MoviePage extends Component {
       this.state = {
         isLoading: false,
         value: '',
+        isFavorite: false,
         displayingSummary: true,
         displayingComments: false,
         displayingTrailer: false,
@@ -20,6 +23,12 @@ class MoviePage extends Component {
         allComments: [],
         youtubeKey: null,
       }
+  }
+
+  toggleFavorite = () => {
+    addOrRemoveAFavorite(this.props.user.id, parseInt(this.props.moviePageID))
+    .then(() => this.setState({isFavorite: !this.state.isFavorite}))
+    .then(() => this.props.getFavorites(this.props.user))
   }
 
   handleChange = (event) => {
@@ -170,7 +179,7 @@ class MoviePage extends Component {
         .catch(error => console.log(error))
       getMovieComments(parseInt(this.props.moviePageID))
         .then(response => this.setState({ allComments: response }))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err.message))
       this.setState({ userComment: '' })
     }
   }
@@ -210,12 +219,29 @@ class MoviePage extends Component {
         tagline: response.movie.tagline,
         userRating: null,
         isLoading: true,
-        ratings: this.props.ratings
+        ratings: this.props.ratings,
+        favorites: this.props.favorites,
+        isFavorite: this.setIfFavorite()
       }))
       .catch(error => console.log(error.message))
     getMovieComments(this.props.moviePageID)
       .then(response => this.setState({ allComments: response }))
       .catch(err => console.log(err))
+  }
+
+  setIfFavorite = () => {
+    if (this.props.isLoggedIn) {
+     const favorite = this.props.favorites.find(film => film.movie_id === parseInt(this.props.moviePageID))
+    if (favorite) {
+      return true
+      } 
+    }
+  }
+
+  faveIcon = () => {
+    if (this.props.isLoggedIn) {
+      return <img alt='fave-icon' src={this.state.isFavorite ? redHeartIcon : heartOutlineIcon}onClick={()=> this.toggleFavorite()} className={'fave-icon-movie-page'}/>
+    }
   }
 
   render() {
@@ -236,6 +262,7 @@ class MoviePage extends Component {
               />
           </Link>
           <h1 className='movie-title'>{this.state.title}</h1>
+          {this.faveIcon()}
         </section>
         <section className='movie-content'>
           <img 
