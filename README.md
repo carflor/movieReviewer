@@ -3,7 +3,7 @@
 ## Dope or Nope
 
 This goal of this project was to build a movie reviewing app with several technologies we had never used before, including React, Express, and Router.
-The project was completed within 21 days and uses jest, dom, and react testing libraries for unit and integration tests. 
+The project was completed within 21 days and uses jest, and react testing libraries for unit and integration tests. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -12,6 +12,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 [Bill Wilke](https://github.com/Billwilke42)
 
 [Carlos Alfredo Flores](https://github.com/carflor)
+
+## Technologies used:
+  - React Framework
+  - Router Library
+  - Jest Testing Library
+  - React Testing Library
+  - Express
+  - Lighthouse
+  - ReactDOM
 
 ## Setup
 
@@ -33,5 +42,17 @@ npm install
 
 
 ## GIFS
-### Logging in
+### Logging in:
 ![Log In](https://media.giphy.com/media/J4ribafDOuCgOYEPp8/giphy.gif)
+
+### Rating:
+![Rating](https://media.giphy.com/media/gfBomw8Qh1Fbq6Pr9h/giphy.gif)
+
+### Favoriting: 
+![Favoriting](https://media.giphy.com/media/JmVOQxaPnvsYsz7LNs/giphy.gif)
+
+### Commenting: 
+![Commenting](https://giphy.com/gifs/H4cehqFZnBlwC6A5Ov)
+
+### View Trailers: 
+![Trailers](https://media.giphy.com/media/LrWQdMSAFCI8ojhr9h/giphy.gif)
