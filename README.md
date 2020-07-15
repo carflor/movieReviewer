@@ -27,17 +27,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 2. Clone down this repo
 
-3. Then install the library dependencies. Run in your terminal:
+3. Get into the repo by running```cd movieReviewer``` in your terminal
+
+4. Then install the library dependencies. Run in your terminal:
 
 ```bash
 npm install
 ```
 
-4. Run `npm start` in your terminal. 
+5. Run `npm start` in your terminal. 
 
-5. Go to `http://localhost:3000/` in your browser and you should see the page!
+6. Go to `http://localhost:3000/` in your browser and you should see the page!
 
-6. When ready to quit hit `ctrl + c` in your terminal to stop the server.
+7. When ready to quit hit `ctrl + c` in your terminal to stop the server.
 
 
 ## GIFS
