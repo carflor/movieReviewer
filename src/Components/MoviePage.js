@@ -5,8 +5,7 @@ import backIcon from '../Assets/angle-double-left-solid.svg'
 import starIcon from '../Assets/star-regular.svg'
 import ratedIcon from '../Assets/star-golden.svg'
 import { NavLink, Link } from 'react-router-dom';
-import { getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments } from '../apiCalls'
-
+import { getMovieData, deleteUserRating, submitRating, submitComment, getMovieComments, getTrailer } from '../apiCalls'
 
 class MoviePage extends Component {
   constructor(props) {
@@ -18,7 +17,8 @@ class MoviePage extends Component {
         displayingComments: false,
         displayingTrailer: false,
         userComment: '',
-        allComments: []
+        allComments: [],
+        youtubeKey: null,
       }
   }
 
@@ -27,9 +27,9 @@ class MoviePage extends Component {
   }
 
   findRatingId = () => {
-      const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
-      if(rating.id) { 
-        return rating.id
+    const rating = this.props.ratings.find(film => film.movie_id === parseInt(this.props.moviePageID))
+    if(rating.id) { 
+      return rating.id
     } 
   }
 
@@ -142,6 +142,7 @@ class MoviePage extends Component {
       const comments = this.state.allComments.filter(comment => comment.movie_id === +this.props.moviePageID)
       const updatedComments = comments.map(comment => (
         <CommentCard 
+          key={comment.id}
           author={comment.author}
           message={comment.comment}
         />
@@ -166,24 +167,31 @@ class MoviePage extends Component {
     }
     submitComment(commentPost)
       .catch(error => console.log(error))
-    
     getMovieComments(parseInt(this.props.moviePageID))
-      .then(response => this.setState({ allComments: response }))
+      .then(response => this.setState({ allComments: response || [] }))
       .catch(err => console.log(err))
+    this.setState({ userComment: '' })
   }
 
   showSummary = (event) => {
     event.preventDefault()
-    this.setState({ displayingSummary: true,
+    this.setState({ 
+      displayingSummary: true,
       displayingComments: false,
-      displayingTrailer: false })
+      displayingTrailer: false 
+    })
   }
 
   showTrailer = (event) => {
     event.preventDefault()
-    this.setState({ displayingSummary: false,
+    this.setState({ 
+      displayingSummary: false,
       displayingComments: false,
-      displayingTrailer: true })
+      displayingTrailer: true 
+    })
+    getTrailer(this.props.moviePageID)
+      .then(response => this.setState({ youtubeKey: response.videos[0].key }))
+      .catch(err => console.log(err))
   }
 
   componentDidMount() {
@@ -206,7 +214,6 @@ class MoviePage extends Component {
 
     getMovieComments(this.props.moviePageID)
       .then(response => this.setState({ allComments: response }))
-      .then(response => console.log(response))
       .catch(err => console.log(err))
   }
 
@@ -280,6 +287,7 @@ class MoviePage extends Component {
                   name="comment-input"
                   minLength='1' 
                   maxLength='250'
+                  value={this.state.userComment}
                   onChange={(event) => this.handleComment(event)}>
                 </textarea>
                 <button 
@@ -291,8 +299,14 @@ class MoviePage extends Component {
               </section> : <h1 className='sign-up-message'>Please sign up to comment!</h1>}
             </section>)}
             {this.state.displayingTrailer && (
-            <section className='movie-trailer-box'>
-              <p>Feature coming soon!</p> 
+            <section className='movie-trailer-box'>          
+              {this.state.youtubeKey ? 
+                <iframe 
+                  title={this.state.youtubeKey} 
+                  height="400" 
+                  width="600" 
+                  src={`https://www.youtube.com/embed/${this.state.youtubeKey}`}> 
+              </iframe> : <h1>Loading...</h1>} 
             </section>)}
           </section>
         </section>
