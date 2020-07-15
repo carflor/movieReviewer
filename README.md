@@ -24,7 +24,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Setup
 
-1. Go to this repository and follow the directions in the README.md : https://github.com/carflor/movieReviewerMicro/pull/11
+1. Go to this repository and follow the directions in the README.md : https://github.com/carflor/movieReviewerMicro
 
 2. Clone down this repo
 
