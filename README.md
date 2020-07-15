@@ -28,7 +28,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 2. Clone down this repo
 
-3. Then install the library dependencies. Run:
+3. Then install the library dependencies. Run in your terminal:
 
 ```bash
 npm install
