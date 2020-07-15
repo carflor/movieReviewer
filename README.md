@@ -33,5 +33,5 @@ npm install
 
 
 ## GIFS
-
-![Rating]("https://drive.google.com/file/d/1D0dbfqYbMyyWPJY2ZFnSpy2nRceivoSW/preview")
+### Logging in
+![Log In](https://media.giphy.com/media/J4ribafDOuCgOYEPp8/giphy.gif)
