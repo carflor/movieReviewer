@@ -2,8 +2,7 @@
 
 ## Dope or Nope
 
-This goal of this project was to build a movie reviewing app with several technologies we had never used before, including React, Express, and Router.
-The project was completed within 21 days and uses jest, and react testing libraries for unit and integration tests. 
+This goal of this project was to build a movie reviewing website with several technologies we had never used before, including React, Express, and Router. We used Express to build a microservice to add the commenting and favoriting feature to the site. The project was completed within 21 days and uses jest, and react testing libraries for unit and integration tests. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
