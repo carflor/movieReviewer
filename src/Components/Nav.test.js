@@ -17,16 +17,14 @@ describe('Nav', () => {
     ratings: null
   }
 
-  it('should render a title, a search, and a button', () => {
+  it('should render a title and a button', () => {
    const { getByText, getByRole, getByPlaceholderText } = render (
       <BrowserRouter>
         <Nav data={state}/>
       </BrowserRouter>)
     const navTitle = getByText('DOPE NOPE')
-    const searchInput = getByPlaceholderText('Search Movies...')
     const logInButton = getByRole('button', {name: 'LOG IN'})
     expect(navTitle).toBeInTheDocument()
-    expect(searchInput).toBeInTheDocument()
     expect(logInButton).toBeInTheDocument()
   });
 
