@@ -1,13 +1,13 @@
-import React from 'react';
-import './Nav.scss';
-import { Link } from 'react-router-dom';
-import LogInForm from './LogInForm';
+import React from 'react'
+import './Nav.scss'
+import { Link } from 'react-router-dom'
+import LogInForm from './LogInForm'
 
 const Nav = (props) => {
   if (props.data.form) {
     return (
       <LogInForm form={ props.data.form } />
-    );
+    )
   }
 
   if (props.data.isLoggedIn) {
@@ -44,7 +44,7 @@ const Nav = (props) => {
           </button>
         </section>
       </nav>
-    );
+    )
   }
 
   return (
@@ -67,7 +67,7 @@ const Nav = (props) => {
         </Link>
       </section>
     </nav>
-  );
-};
+  )
+}
 
-export default Nav;
+export default Nav
