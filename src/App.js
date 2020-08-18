@@ -8,7 +8,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 class App extends React.Component {
   constructor() {
-    super();
+    super()
     this.state = {
       movies: null,
       isLoading: false,
@@ -46,7 +46,7 @@ class App extends React.Component {
   }
 
   showFavoritesBtn = () => {
-    this.setState({showFavorites: !this.state.showFavorites})
+    this.setState({ showFavorites: !this.state.showFavorites})
   }
 
   componentDidMount() {
