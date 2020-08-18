@@ -21,8 +21,7 @@ const Nav = (props) => {
           NOPE
         </h1>
         <p className="welcome-message">
-          Welcome 
-          {props.data.user.name}
+          Welcome {props.data.user.name}
         </p>
         <section className="nav-btn-box">
           <Link to={props.data.showFavorites ? "/": "/favorites" }>
